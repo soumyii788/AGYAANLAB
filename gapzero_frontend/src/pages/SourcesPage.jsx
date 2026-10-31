@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Search,
   BookOpen,
@@ -17,7 +18,8 @@ import {
   FileCheck,
   CheckCircle2,
   X,
-  Filter
+  Filter,
+  Sparkles
 } from 'lucide-react';
 import projectService from '../services/projectService';
 import { Card } from '../components/ui/Card';
@@ -609,6 +611,16 @@ export const SourcesPage = () => {
 
                   {/* Right Action Buttons */}
                   <div className="flex items-center sm:flex-col gap-2 flex-shrink-0 pt-1">
+                    <Link to="/evidence">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="w-full text-xs"
+                        leftIcon={<FileCheck className="w-3.5 h-3.5 text-[#3B82F6]" />}
+                      >
+                        Claims
+                      </Button>
+                    </Link>
                     <Button
                       size="sm"
                       variant="secondary"

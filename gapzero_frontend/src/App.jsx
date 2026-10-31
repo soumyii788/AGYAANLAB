@@ -9,6 +9,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { SourcesPage } from './pages/SourcesPage';
+import { EvidenceExplorerPage } from './pages/EvidenceExplorerPage';
 import { AnalysesPage } from './pages/AnalysesPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
@@ -83,6 +84,8 @@ export const App = () => {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/sources" element={<SourcesPage />} />
+            <Route path="/evidence" element={<EvidenceExplorerPage />} />
+            <Route path="/evidence-explorer" element={<Navigate to="/evidence" replace />} />
             <Route path="/analyses" element={<AnalysesPage />} />
             <Route path="/reports" element={<ReportsPage />} />
 

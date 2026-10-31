@@ -146,6 +146,36 @@ export const projectService = {
       content: content
     });
     return response.data;
+  },
+
+  async getClaims(params = {}) {
+    const response = await api.get('/analysis/claims/', { params });
+    return response.data;
+  },
+
+  async getClaim(id) {
+    const response = await api.get(`/analysis/claims/${id}/`);
+    return response.data;
+  },
+
+  async deleteClaim(id) {
+    const response = await api.delete(`/analysis/claims/${id}/`);
+    return response.data;
+  },
+
+  async getEvidence(params = {}) {
+    const response = await api.get('/analysis/evidence/', { params });
+    return response.data;
+  },
+
+  async getEvidenceStats(params = {}) {
+    const response = await api.get('/analysis/evidence-stats/', { params });
+    return response.data;
+  },
+
+  async extractClaims(payload) {
+    const response = await api.post('/analysis/extract-claims/', payload);
+    return response.data;
   }
 };
 

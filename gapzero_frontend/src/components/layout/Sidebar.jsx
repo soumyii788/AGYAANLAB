@@ -4,6 +4,7 @@ import {
   Compass,
   FolderGit2,
   Layers,
+  FileCheck,
   Sparkles,
   FileText
 } from 'lucide-react';
@@ -14,6 +15,7 @@ export const Sidebar = () => {
     { name: 'Overview', href: '/dashboard', icon: Compass },
     { name: 'Research Projects', href: '/projects', icon: FolderGit2 },
     { name: 'Literature Sources', href: '/sources', icon: Layers },
+    { name: 'Evidence Explorer', href: '/evidence', icon: FileCheck },
     { name: 'Gap Analyses', href: '/analyses', icon: Sparkles },
     { name: 'Reports', href: '/reports', icon: FileText },
   ];
