@@ -127,32 +127,32 @@ export const NewResearchPage = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto pb-12 text-[#F8FAFC]">
+    <div className="space-y-6 max-w-4xl mx-auto pb-12 text-[#202124]">
       {/* Header */}
-      <div className="pb-2 border-b border-[#1E2C4A]">
+      <div className="pb-3 border-b border-gray-200/80">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Launch New Research Investigation</h1>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#141F36] text-[#60A5FA] border border-[#1E2C4A]">
-            GAPZERO
+          <h1 className="text-2xl font-bold text-[#202124] tracking-tight">Launch New Research Investigation</h1>
+          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EBF7FF] text-[#0083B0] border border-[#BCE4FA]">
+            AGYAAN LAB
           </span>
         </div>
-        <p className="text-xs text-[#94A3B8] mt-1">
+        <p className="text-xs text-gray-500 mt-1">
           Define your research objective and attach preliminary sources (web pages, PDFs, or raw observations) for negative-space analysis.
         </p>
       </div>
 
       {errorMsg && (
-        <div className="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
-          <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2">
+          <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
           <p className="leading-relaxed">{errorMsg}</p>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Objective & Domain */}
-        <Card className="p-6 space-y-4">
-          <h2 className="text-sm font-bold text-white flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#3B82F6]" />
+        <div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-xs space-y-4">
+          <h2 className="text-sm font-bold text-[#202124] flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#20BEFF]" />
             1. Research Scope & Objective
           </h2>
 
@@ -165,26 +165,26 @@ export const NewResearchPage = () => {
           />
 
           <div className="space-y-1">
-            <label className="block text-xs font-semibold text-[#F8FAFC]">
-              Research Objective & Hypotheses <span className="text-rose-400">*</span>
+            <label className="block text-xs font-semibold text-[#202124]">
+              Research Objective & Hypotheses <span className="text-rose-500">*</span>
             </label>
             <textarea
               rows={4}
               placeholder="State the central scientific question, expected bounds, mechanisms under investigation, and target empirical outcomes..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full bg-[#080C15] text-[#F8FAFC] border border-[#1E2C4A] rounded-lg px-3 py-2 text-xs placeholder:text-[#94A3B8]/50 focus:outline-none focus:border-[#3B82F6] transition-colors leading-relaxed"
+              className="w-full bg-white text-[#202124] border border-gray-300 rounded-xl px-3.5 py-2.5 text-xs placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#202124]/10 focus:border-[#202124] transition-colors leading-relaxed"
               required
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-[#F8FAFC]">Research Domain</label>
+              <label className="block text-xs font-semibold text-[#202124]">Research Domain</label>
               <select
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
-                className="w-full bg-[#080C15] text-[#F8FAFC] border border-[#1E2C4A] rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-[#3B82F6]"
+                className="w-full bg-white text-[#202124] border border-gray-300 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-[#202124]"
               >
                 {DOMAIN_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -201,24 +201,24 @@ export const NewResearchPage = () => {
               onChange={(e) => setKeywords(e.target.value)}
             />
           </div>
-        </Card>
+        </div>
 
         {/* Section 2: Ingest Sources (URL, PDF, Text) */}
-        <Card className="p-6 space-y-5">
+        <div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-xs space-y-5">
           <div>
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <PlusCircle className="w-4 h-4 text-[#60A5FA]" />
+            <h2 className="text-sm font-bold text-[#202124] flex items-center gap-2">
+              <PlusCircle className="w-4 h-4 text-blue-600" />
               2. Initial Source Ingestion (Optional)
             </h2>
-            <p className="text-xs text-[#94A3B8] mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               Attach publications, web pages, or experiment notes to immediately seed the claim extraction engine.
             </p>
           </div>
 
           {/* Sub-item A: URL Ingestion */}
-          <div className="p-4 rounded-xl bg-[#080C15] border border-[#1E2C4A] space-y-2">
-            <div className="flex items-center gap-2 text-xs font-semibold text-white">
-              <Globe className="w-3.5 h-3.5 text-[#3B82F6]" />
+          <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/80 space-y-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#202124]">
+              <Globe className="w-3.5 h-3.5 text-blue-600" />
               Public Web URL Ingestion
             </div>
             <Input
@@ -226,18 +226,18 @@ export const NewResearchPage = () => {
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
             />
-            <p className="text-[11px] text-[#94A3B8]">
+            <p className="text-[11px] text-gray-500">
               Protected against SSRF (blocks private networks & loopback). Enforces robots.txt and 5 MB stream limit.
             </p>
           </div>
 
           {/* Sub-item B: PDF Upload */}
-          <div className="p-4 rounded-xl bg-[#080C15] border border-[#1E2C4A] space-y-2">
-            <div className="flex items-center gap-2 text-xs font-semibold text-white">
-              <FileText className="w-3.5 h-3.5 text-[#60A5FA]" />
+          <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/80 space-y-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#202124]">
+              <FileText className="w-3.5 h-3.5 text-blue-600" />
               PDF Document Upload (PyMuPDF)
             </div>
-            <div className="border border-dashed border-[#1E2C4A] hover:border-[#3B82F6] rounded-xl p-5 text-center cursor-pointer transition-colors bg-[#0E1626]">
+            <div className="border border-dashed border-gray-300 hover:border-black rounded-xl p-5 text-center cursor-pointer transition-colors bg-white">
               <input
                 type="file"
                 accept=".pdf,application/pdf"
@@ -246,15 +246,15 @@ export const NewResearchPage = () => {
                 id="initial-pdf-upload"
               />
               <label htmlFor="initial-pdf-upload" className="cursor-pointer space-y-1 block">
-                <UploadCloud className="w-6 h-6 text-[#3B82F6] mx-auto" />
+                <UploadCloud className="w-6 h-6 text-gray-500 mx-auto" />
                 {pdfFile ? (
-                  <p className="text-xs font-bold text-white">
+                  <p className="text-xs font-bold text-[#202124]">
                     Selected: {pdfFile.name} ({(pdfFile.size / 1024 / 1024).toFixed(2)} MB)
                   </p>
                 ) : (
                   <div>
-                    <p className="text-xs text-white font-medium">Click to attach a PDF document</p>
-                    <p className="text-[10px] text-[#94A3B8]">Up to 15 MB • Preserves page numbers</p>
+                    <p className="text-xs text-[#202124] font-medium">Click to attach a PDF document</p>
+                    <p className="text-[10px] text-gray-500">Up to 15 MB • Preserves page numbers</p>
                   </div>
                 )}
               </label>
@@ -262,9 +262,9 @@ export const NewResearchPage = () => {
           </div>
 
           {/* Sub-item C: Pasted Text */}
-          <div className="p-4 rounded-xl bg-[#080C15] border border-[#1E2C4A] space-y-2">
-            <div className="flex items-center gap-2 text-xs font-semibold text-white">
-              <FileEdit className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/80 space-y-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#202124]">
+              <FileEdit className="w-3.5 h-3.5 text-emerald-600" />
               Pasted Research Notes / Raw Protocol
             </div>
             <Input
@@ -277,15 +277,15 @@ export const NewResearchPage = () => {
               placeholder="Paste raw research notes, experimental protocol excerpt, or laboratory observations..."
               value={textContent}
               onChange={(e) => setTextContent(e.target.value)}
-              className="w-full bg-[#0E1626] text-[#F8FAFC] border border-[#1E2C4A] rounded-lg px-3 py-2 text-xs placeholder:text-[#94A3B8]/50 focus:outline-none focus:border-[#3B82F6] font-mono leading-relaxed"
+              className="w-full bg-white text-[#202124] border border-gray-300 rounded-xl px-3 py-2 text-xs placeholder:text-gray-400 focus:outline-none focus:border-[#202124] font-mono leading-relaxed"
             />
           </div>
-        </Card>
+        </div>
 
         {/* Progress & Submit */}
         {progressMsg && (
-          <div className="p-3 rounded-xl bg-[#141F36] border border-[#1E2C4A] text-xs text-[#60A5FA] flex items-center gap-2">
-            <Sparkles className="w-4 h-4 animate-spin text-[#3B82F6]" />
+          <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-800 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 animate-spin text-[#20BEFF]" />
             {progressMsg}
           </div>
         )}
