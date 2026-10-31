@@ -265,24 +265,33 @@ class ExtractClaimsView(APIView):
             results_list = []
 
             try:
-                for src in sources:
-                    res = engine.extract_from_source(src)
-                    total_extracted += res['claims_extracted']
-                    total_rejected += res['claims_rejected']
-                    results_list.append({
-                        'source_id': src.id,
-                        'source_title': src.title,
-                        'extracted': res['claims_extracted'],
-                    })
+                for idx, src in enumerate(sources):
+                    if idx > 0:
+                        import time
+                        time.sleep(2)  # Pace multi-source extraction to respect Groq rate limits
+                    try:
+                        res = engine.extract_from_source(src)
+                        total_extracted += res['claims_extracted']
+                        total_rejected += res['claims_rejected']
+                        results_list.append({
+                            'source_id': src.id,
+                            'source_title': src.title,
+                            'extracted': res['claims_extracted'],
+                        })
+                    except LLMRateLimitError:
+                        logger.warning(f"Rate limit on source {src.id}; preserving {total_extracted} already-extracted claims.")
+                        if total_extracted == 0 and idx == 0:
+                            raise
+                        break
 
                 all_claims = Claim.objects.filter(project=project)
                 serialized = ClaimSerializer(all_claims, many=True).data
 
                 return Response({
-                    'message': f"Extracted {total_extracted} verified claims across {len(sources)} source(s).",
+                    'message': f"Extracted {total_extracted} verified claims across {len(results_list)} source(s).",
                     'total_extracted': total_extracted,
                     'total_rejected': total_rejected,
-                    'sources_analyzed': len(sources),
+                    'sources_analyzed': len(results_list),
                     'results': results_list,
                     'claims': serialized,
                 }, status=status.HTTP_201_CREATED)
@@ -293,6 +302,12 @@ class ExtractClaimsView(APIView):
                     'detail': str(e),
                     'code': 'LLM_CONFIG_MISSING'
                 }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+            except LLMRateLimitError as e:
+                return Response({
+                    'error': 'Rate Limit Exceeded',
+                    'detail': str(e),
+                }, status=status.HTTP_429_TOO_MANY_REQUESTS)
 
             except Exception as e:
                 logger.exception("Unexpected error during project claim extraction")
