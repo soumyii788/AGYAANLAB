@@ -130,33 +130,80 @@ def analyze_research_gaps(project, sources, notes):
         }
 
 
-def synthesize_intelligence_report(project, sources, analyses, report_type='full'):
+def synthesize_intelligence_report(project, sources, analyses=None, claims=None, findings=None, checklist=None, report_type='full'):
     """
     Generates a full Markdown research intelligence brief synthesizing
-    the literature base and the detected gaps.
+    the literature base, key claims, gaps, contradictions, freshness, and checklist.
+    Guarantees the 8 canonical sections required for GAPZERO reports.
     """
-    sources_list = "\n".join([f"- **{s.title}** ({s.publication_year or 'n/a'}) - {s.journal or 'Preprint'}" for s in sources[:15]])
-    
-    last_analysis_info = ""
-    if analyses:
-        latest = analyses[0]
-        last_analysis_info = json.dumps(latest.results, indent=2)
+    sources = list(sources or [])
+    claims = list(claims or (project.claims.all()[:20] if hasattr(project, 'claims') else []))
+    findings = list(findings or (project.findings.all() if hasattr(project, 'findings') else []))
+    checklist = list(checklist or (project.checklist_items.all() if hasattr(project, 'checklist_items') else []))
+
+    sources_list = "\n".join([
+        f"- **{s.title}** ({s.publication_year or 'n/a'}) • Type: {s.source_type} • URL: {s.canonical_url or s.original_url or 'N/A'}"
+        for s in sources[:15]
+    ]) if sources else "No external sources formally ingested."
+
+    claims_list = "\n".join([
+        f"- **{c.subject}** ({c.attribute}): {c.value} — *\"{c.claim_text}\"* [Confidence: {int((c.confidence or 0.9)*100)}%]"
+        for c in claims[:15]
+    ]) if claims else "No atomic claims extracted yet."
+
+    gaps = [f for f in findings if f.finding_type == 'gap']
+    gaps_list = "\n".join([
+        f"- **[{g.severity.upper()}] {g.title}**: {g.explanation or g.description}"
+        for g in gaps
+    ]) if gaps else "No unresolved information gaps identified in current corpus."
+
+    contradictions = [f for f in findings if f.finding_type == 'contradiction']
+    contradictions_list = "\n".join([
+        f"- **{c.title}**: {c.explanation}"
+        for c in contradictions
+    ]) if contradictions else "No direct cross-source contradictions detected."
+
+    freshness = [f for f in findings if f.finding_type == 'freshness']
+    freshness_list = "\n".join([
+        f"- **{f.title}**: {f.description} ({f.explanation})"
+        for f in freshness
+    ]) if freshness else "All sources meet configured domain freshness relevance thresholds."
+
+    checklist_list = "\n".join([
+        f"- [{'x' if i.is_completed else ' '}] **[{i.priority.upper()}]**: {i.task_text} — *{i.rationale}*"
+        for i in checklist
+    ]) if checklist else "No actionable verification tasks pending."
 
     system_prompt = (
-        "You are AGYAAN LAB's Principal Scientific Synthesizer. "
-        "Generate a publication-grade Research Intelligence & Negative Space Brief in GitHub-flavored Markdown. "
-        "The report must highlight: Executive Abstract, Literature Consensus, Discovered Research Gaps (Negative Space), "
-        "Critical Unaddressed Hypotheses, Methodological Deficits, and Next Actionable Frontiers."
+        "You are GAPZERO's Principal Scientific Synthesizer & Research Intelligence Director. "
+        "Generate a publication-grade Research Intelligence Report in GitHub-flavored Markdown. "
+        "Your report MUST contain these EXACT eight canonical sections:\n"
+        "1. Executive Summary\n"
+        "2. Sources Reviewed\n"
+        "3. Key Claims\n"
+        "4. Potential Gaps\n"
+        "5. Possible Contradictions\n"
+        "6. Freshness Warnings\n"
+        "7. Verification Checklist\n"
+        "8. Methodology and Limitations\n\n"
+        "EPISTEMIC RULES:\n"
+        "- Never fabricate evidence or claim that an absence of evidence is proof of absence.\n"
+        "- Never pick a winner in contradictory findings; present both sides neutrally.\n"
+        "- Do not label historical findings as false, but note when newer protocols apply."
     )
 
     user_prompt = (
-        f"Project Title: {project.title}\n"
-        f"Domain: {project.domain}\n"
-        f"Description: {project.description}\n"
-        f"Literature Sources:\n{sources_list or 'No sources recorded.'}\n\n"
-        f"Latest Gap Analysis Data:\n{last_analysis_info or 'No prior scan.'}\n\n"
-        f"Report Type: {report_type}\n"
-        f"Generate a comprehensive, beautifully structured Markdown intelligence brief."
+        f"PROJECT: {project.title}\n"
+        f"DOMAIN: {project.domain}\n"
+        f"OBJECTIVE: {project.description}\n"
+        f"GAP DEFICIT SCORE: {project.gap_score}%\n\n"
+        f"INGESTED SOURCES:\n{sources_list}\n\n"
+        f"EXTRACTED ATOMIC CLAIMS:\n{claims_list}\n\n"
+        f"INFORMATION GAPS:\n{gaps_list}\n\n"
+        f"CONTRADICTIONS & TENSIONS:\n{contradictions_list}\n\n"
+        f"FRESHNESS ALERTS:\n{freshness_list}\n\n"
+        f"VERIFICATION TASKS:\n{checklist_list}\n\n"
+        f"Generate the comprehensive 8-section Markdown intelligence brief now."
     )
 
     messages = [
@@ -164,4 +211,36 @@ def synthesize_intelligence_report(project, sources, analyses, report_type='full
         {"role": "user", "content": user_prompt}
     ]
 
-    return call_groq_chat(messages, max_tokens=3500, temperature=0.3)
+    try:
+        return call_groq_chat(messages, max_tokens=3500, temperature=0.2)
+    except Exception as e:
+        logger.warning(f"LLM synthesis failed ({e}), generating deterministic structured report fallback.")
+        return f"""# Research Intelligence Brief: {project.title}
+**Domain:** {project.domain.replace('_', ' ').title()} | **Epistemic Deficit Index:** {project.gap_score}%
+
+## 1. Executive Summary
+{project.gap_summary or f"This investigation assesses empirical literature around {project.title}. The objective is to identify unaddressed negative-space hypotheses, cross-source experimental tensions, and chronological relevance boundaries."}
+
+## 2. Sources Reviewed
+{sources_list}
+
+## 3. Key Claims
+{claims_list}
+
+## 4. Potential Gaps
+{gaps_list}
+
+## 5. Possible Contradictions
+{contradictions_list}
+
+## 6. Freshness Warnings
+{freshness_list}
+
+## 7. Verification Checklist
+{checklist_list}
+
+## 8. Methodology and Limitations
+- **Verification Barrier:** All extracted atomic claims require verbatim text passages from ingested sources. Unsupported model assertions are strictly rejected.
+- **Absence of Evidence:** An absence of evidence in the ingested dataset is never treated as proof of absence in wider global science.
+- **Contradiction Neutrality:** Competing findings between distinct authors are preserved without arbitrary automated selection of correctness.
+"""

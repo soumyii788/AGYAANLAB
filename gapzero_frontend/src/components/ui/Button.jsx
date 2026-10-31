@@ -13,14 +13,14 @@ export const Button = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#F9F9FB] disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#080C15] disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
 
   const variants = {
-    primary: 'bg-[#3B82F6] text-white hover:bg-[#2563EB] focus:ring-[#3B82F6] shadow-sm font-semibold',
-    secondary: 'bg-white text-[#1E2022] hover:bg-[#F3F4F6] focus:ring-slate-300 border border-[#E5E7EB] shadow-sm',
-    outline: 'bg-transparent text-[#3B82F6] border border-[#3B82F6] hover:bg-[#EFF6FF] focus:ring-[#3B82F6]',
-    ghost: 'bg-transparent text-[#4A4D55] hover:text-[#1E2022] hover:bg-[#F3F4F6] focus:ring-slate-300',
-    danger: 'bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 focus:ring-rose-500',
+    primary: 'bg-[#3B82F6] text-white hover:bg-[#2563EB] focus:ring-[#3B82F6] shadow-[0_2px_10px_rgba(59,130,246,0.3)] font-semibold',
+    secondary: 'bg-[#141F36] text-[#F8FAFC] hover:bg-[#1E2C4A] hover:text-white focus:ring-[#3B82F6] border border-[#1E2C4A] shadow-sm',
+    outline: 'bg-transparent text-[#60A5FA] border border-[#3B82F6]/50 hover:bg-[#3B82F6]/10 focus:ring-[#3B82F6]',
+    ghost: 'bg-transparent text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#141F36] focus:ring-slate-700',
+    danger: 'bg-rose-500/15 text-rose-400 hover:bg-rose-500/25 border border-rose-500/30 focus:ring-rose-500',
   };
 
   const sizes = {

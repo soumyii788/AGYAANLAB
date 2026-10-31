@@ -69,10 +69,19 @@ class GenerateReportView(APIView):
 
         sources = list(project.sources.all())
         analyses = list(project.analyses.filter(status='completed'))
+        claims = list(project.claims.all()[:25])
+        findings = list(project.findings.all())
+        checklist = list(project.checklist_items.all())
 
         try:
             markdown_content = synthesize_intelligence_report(
-                project, sources, analyses, report_type=report_type
+                project=project,
+                sources=sources,
+                analyses=analyses,
+                claims=claims,
+                findings=findings,
+                checklist=checklist,
+                report_type=report_type
             )
 
             report = Report.objects.create(

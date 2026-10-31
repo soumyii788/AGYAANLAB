@@ -1,25 +1,33 @@
 import React from 'react';
-import { Layers } from 'lucide-react';
-import Button from './Button';
+import { Button } from './Button';
 
 export const EmptyState = ({
-  icon: Icon = Layers,
-  title = 'No items found',
-  description = 'Get started by creating your first entry.',
+  icon: Icon,
+  title,
+  description,
   actionLabel,
   onAction,
+  className = '',
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-12 text-center rounded-xl border border-dashed border-[#E5E7EB] bg-white">
-      <div className="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#DBEAFE] flex items-center justify-center text-[#3B82F6] mb-3">
-        <Icon className="w-6 h-6" />
-      </div>
-      <h4 className="text-sm font-semibold text-[#1E2022]">{title}</h4>
-      <p className="text-xs text-[#4A4D55] max-w-sm mt-1 mb-4 leading-relaxed">{description}</p>
+    <div
+      className={`text-center py-12 px-4 rounded-xl border border-dashed border-[#1E2C4A] bg-[#0E1626]/50 flex flex-col items-center justify-center ${className}`}
+    >
+      {Icon && (
+        <div className="w-12 h-12 rounded-full bg-[#141F36] border border-[#1E2C4A] flex items-center justify-center mb-3 text-[#60A5FA]">
+          <Icon className="w-6 h-6" />
+        </div>
+      )}
+      <h3 className="text-sm font-bold text-[#F8FAFC] tracking-tight">{title}</h3>
+      {description && (
+        <p className="text-xs text-[#94A3B8] max-w-sm mt-1 leading-relaxed">{description}</p>
+      )}
       {actionLabel && onAction && (
-        <Button onClick={onAction} size="sm">
-          {actionLabel}
-        </Button>
+        <div className="mt-4">
+          <Button variant="primary" size="sm" onClick={onAction}>
+            {actionLabel}
+          </Button>
+        </div>
       )}
     </div>
   );

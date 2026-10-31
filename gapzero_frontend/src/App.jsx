@@ -5,13 +5,18 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 import { AuthLayout } from './layouts/AuthLayout';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { LandingPage } from './pages/LandingPage';
 import { Dashboard } from './pages/Dashboard';
+import { NewResearchPage } from './pages/NewResearchPage';
 import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { SourcesPage } from './pages/SourcesPage';
+import { IntelligenceDashboardPage } from './pages/IntelligenceDashboardPage';
+import { FindingsExplorerPage } from './pages/FindingsExplorerPage';
 import { EvidenceExplorerPage } from './pages/EvidenceExplorerPage';
-import { AnalysesPage } from './pages/AnalysesPage';
+import { ChecklistPage } from './pages/ChecklistPage';
 import { ReportsPage } from './pages/ReportsPage';
+import { AnalysesPage } from './pages/AnalysesPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { NotFound } from './pages/NotFound';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
@@ -51,6 +56,9 @@ export const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          {/* Public Landing Page */}
+          <Route path="/landing" element={<LandingPage />} />
+
           {/* Public Auth Routes */}
           <Route element={<AuthLayout />}>
             <Route
@@ -80,14 +88,22 @@ export const App = () => {
             }
           >
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            {/* 9 Core Research Intelligence Pages */}
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/new-research" element={<NewResearchPage />} />
             <Route path="/sources" element={<SourcesPage />} />
+            <Route path="/intelligence" element={<IntelligenceDashboardPage />} />
+            <Route path="/findings" element={<FindingsExplorerPage />} />
             <Route path="/evidence" element={<EvidenceExplorerPage />} />
             <Route path="/evidence-explorer" element={<Navigate to="/evidence" replace />} />
-            <Route path="/analyses" element={<AnalysesPage />} />
+            <Route path="/checklist" element={<ChecklistPage />} />
             <Route path="/reports" element={<ReportsPage />} />
+
+            {/* Additional Project & Exploration Routes */}
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/analyses" element={<AnalysesPage />} />
 
             <Route
               path="/activity"
