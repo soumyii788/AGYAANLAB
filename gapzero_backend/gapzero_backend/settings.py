@@ -1,6 +1,8 @@
 """
 AGYAAN LAB Django Settings
 """
+import dj_database_url
+from decouple import config, Csv
 import os
 from pathlib import Path
 from datetime import timedelta
