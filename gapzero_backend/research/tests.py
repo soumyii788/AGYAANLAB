@@ -14,14 +14,14 @@ class ResearchProjectTests(TestCase):
         self.client = APIClient()
         self.user = User.objects.create_user(
             username='lead_researcher',
-            email='lead@gapzero.ai',
+            email='lead@agyaanlab.ai',
             password='SecurePassword123!',
             first_name='Marie',
             last_name='Curie',
             role='researcher'
         )
         login_response = self.client.post('/api/v1/auth/login/', {
-            'email': 'lead@gapzero.ai',
+            'email': 'lead@agyaanlab.ai',
             'password': 'SecurePassword123!'
         }, format='json')
         self.token = login_response.data['access']

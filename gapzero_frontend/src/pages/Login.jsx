@@ -35,15 +35,15 @@ export const Login = () => {
   };
 
   const fillDemoCredentials = () => {
-    setEmail('admin@gapzero.ai');
-    setPassword('gapzero123');
+    setEmail('admin@agyaanlab.ai');
+    setPassword('agyaanlab123');
     setError('');
   };
 
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-lg font-bold text-[#1E2022]">Sign In to GAPZERO</h2>
+        <h2 className="text-lg font-bold text-[#1E2022]">Sign In to AGYAAN LAB</h2>
         <p className="text-xs text-[#4A4D55] mt-1">
           Access your research projects and negative space intelligence.
         </p>
@@ -55,7 +55,7 @@ export const Login = () => {
           <span className="text-[11px] font-semibold text-[#3B82F6] flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" /> Demo Account Ready
           </span>
-          <p className="text-[11px] text-[#4A4D55] font-mono mt-0.5">admin@gapzero.ai / gapzero123</p>
+          <p className="text-[11px] text-[#4A4D55] font-mono mt-0.5">admin@agyaanlab.ai / agyaanlab123</p>
         </div>
         <Button
           type="button"
@@ -108,7 +108,7 @@ export const Login = () => {
 
       <div className="mt-6 pt-5 border-t border-[#E5E7EB] text-center">
         <p className="text-xs text-[#4A4D55]">
-          New to GAPZERO?{' '}
+          New to AGYAAN LAB?{' '}
           <Link to="/register" className="text-[#3B82F6] font-semibold hover:underline">
             Create an account
           </Link>

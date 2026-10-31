@@ -1,5 +1,5 @@
 """
-GAPZERO Real AI Service Powered by Groq LLM API
+AGYAAN LAB Real AI Service Powered by Groq LLM API
 Performs empirical negative-space literature intelligence, gap detection, and report synthesis.
 """
 import json
@@ -69,7 +69,7 @@ def analyze_research_gaps(project, sources, notes):
     notes_text = "\n".join([f"- {n.title}: {n.content}" for n in notes]) if notes else "No preliminary notes logged."
 
     system_prompt = (
-        "You are the GAPZERO Negative-Space Research Intelligence Engine. "
+        "You are the AGYAAN LAB Negative-Space Research Intelligence Engine. "
         "Unlike conventional tools that merely summarize what is published, your role is to discover WHAT IS MISSING. "
         "Analyze the user's research project objective, the ingested scientific literature, and researcher notes. "
         "Identify the unaddressed hypotheses, contradictory claims across authors, benchmark deficits, and compute an empirical gap deficit score. "
@@ -143,7 +143,7 @@ def synthesize_intelligence_report(project, sources, analyses, report_type='full
         last_analysis_info = json.dumps(latest.results, indent=2)
 
     system_prompt = (
-        "You are GAPZERO's Principal Scientific Synthesizer. "
+        "You are AGYAAN LAB's Principal Scientific Synthesizer. "
         "Generate a publication-grade Research Intelligence & Negative Space Brief in GitHub-flavored Markdown. "
         "The report must highlight: Executive Abstract, Literature Consensus, Discovered Research Gaps (Negative Space), "
         "Critical Unaddressed Hypotheses, Methodological Deficits, and Next Actionable Frontiers."

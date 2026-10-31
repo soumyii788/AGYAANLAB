@@ -1,5 +1,5 @@
 """
-GAPZERO Django Settings
+AGYAAN LAB Django Settings
 """
 import os
 from pathlib import Path

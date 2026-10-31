@@ -10,5 +10,5 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ['email', 'username', 'first_name', 'last_name']
     ordering = ['-created_at']
     fieldsets = BaseUserAdmin.fieldsets + (
-        ('GAPZERO Profile', {'fields': ('role', 'organization', 'bio', 'avatar')}),
+        ('AGYAAN LAB Profile', {'fields': ('role', 'organization', 'bio', 'avatar')}),
     )

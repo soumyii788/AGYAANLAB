@@ -16,12 +16,12 @@ class AuthenticationTests(TestCase):
         self.profile_url = '/api/v1/auth/profile/'
         self.user_data = {
             'username': 'researcher1',
-            'email': 'researcher1@gapzero.ai',
+            'email': 'researcher1@agyaanlab.ai',
             'password': 'SecurePassword123!',
             'password_confirm': 'SecurePassword123!',
             'first_name': 'Alan',
             'last_name': 'Turing',
-            'organization': 'GAPZERO Institute',
+            'organization': 'AGYAAN LAB Institute',
             'role': 'researcher',
         }
 
@@ -31,7 +31,7 @@ class AuthenticationTests(TestCase):
         self.assertIn('tokens', response.data)
         self.assertIn('access', response.data['tokens'])
         self.assertIn('refresh', response.data['tokens'])
-        self.assertEqual(response.data['user']['email'], 'researcher1@gapzero.ai')
+        self.assertEqual(response.data['user']['email'], 'researcher1@agyaanlab.ai')
         self.assertEqual(response.data['user']['full_name'], 'Alan Turing')
 
     def test_user_login(self):
@@ -40,7 +40,7 @@ class AuthenticationTests(TestCase):
 
         # Now login
         login_data = {
-            'email': 'researcher1@gapzero.ai',
+            'email': 'researcher1@agyaanlab.ai',
             'password': 'SecurePassword123!',
         }
         response = self.client.post(self.login_url, login_data, format='json')
@@ -57,4 +57,4 @@ class AuthenticationTests(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         profile_response = self.client.get(self.profile_url)
         self.assertEqual(profile_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(profile_response.data['email'], 'researcher1@gapzero.ai')
+        self.assertEqual(profile_response.data['email'], 'researcher1@agyaanlab.ai')

@@ -23,7 +23,7 @@ def search_openalex_papers(query, limit=10):
         'per_page': min(limit, 25),
     }
     headers = {
-        'User-Agent': 'GAPZERO-Research-Intelligence/1.0 (mailto:dev@gapzero.ai)'
+        'User-Agent': 'AGYAAN-LAB-Research-Intelligence/1.0 (mailto:dev@agyaanlab.ai)'
     }
 
     try:

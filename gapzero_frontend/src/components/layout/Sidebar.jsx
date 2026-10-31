@@ -23,11 +23,11 @@ export const Sidebar = () => {
       {/* Brand Header */}
       <div className="h-16 px-6 flex items-center gap-3 border-b border-[#E5E7EB]">
         <div className="w-8 h-8 rounded-lg bg-[#3B82F6] flex items-center justify-center text-white font-black text-xs shadow-sm">
-          G0
+          AL
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-bold tracking-tight text-[#1E2022]">
-            GAP<span className="text-[#3B82F6]">ZERO</span>
+            AGYAAN<span className="text-[#3B82F6]"> LAB</span>
           </span>
           <span className="text-[10px] text-[#4A4D55] font-medium tracking-tight">
             Research Intelligence

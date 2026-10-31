@@ -16,7 +16,7 @@ export const PlaceholderPage = ({ title, subtitle, icon: Icon = Sparkles }) => {
         <div className="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#DBEAFE] flex items-center justify-center text-[#3B82F6] mb-3">
           <Icon className="w-6 h-6" />
         </div>
-        <CardTitle className="text-base">Section Synchronized to GAPZERO Core</CardTitle>
+        <CardTitle className="text-base">Section Synchronized to AGYAAN LAB Core</CardTitle>
         <p className="text-xs text-[#4A4D55] max-w-md mt-1.5 mb-5 leading-relaxed">
           This module is managed via the REST API endpoints at <code className="text-[#3B82F6] bg-[#F9F9FB] px-1.5 py-0.5 rounded border border-[#E5E7EB]">/api/v1/</code>. Select or manage your active research projects to inspect synchronized records.
         </p>

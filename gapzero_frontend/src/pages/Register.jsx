@@ -57,7 +57,7 @@ export const Register = () => {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-lg font-bold text-[#1E2022]">Create Account</h2>
+        <h2 className="text-lg font-bold text-[#1E2022]">Create AGYAAN LAB Account</h2>
         <p className="text-xs text-[#4A4D55] mt-1">
           Join the intelligence layer designed to find what science missed.
         </p>

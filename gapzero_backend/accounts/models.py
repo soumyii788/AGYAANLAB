@@ -1,5 +1,5 @@
 """
-Accounts app models - Custom User model for GAPZERO
+Accounts app models - Custom User model for AGYAAN LAB
 """
 from django.contrib.auth.models import AbstractUser
 from django.db import models

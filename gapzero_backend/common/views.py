@@ -40,7 +40,7 @@ class HealthCheckView(APIView):
     def get(self, request):
         return Response({
             'status': 'ok',
-            'service': 'GAPZERO API',
+            'service': 'AGYAAN LAB API',
             'version': '1.0.0'
         })
 
