@@ -16,6 +16,7 @@ class ResearchProject(models.Model):
         ARCHIVED = 'archived', 'Archived'
 
     class Domain(models.TextChoices):
+        # General domains
         TECHNOLOGY = 'technology', 'Technology'
         HEALTHCARE = 'healthcare', 'Healthcare'
         FINANCE = 'finance', 'Finance'
@@ -23,6 +24,17 @@ class ResearchProject(models.Model):
         SOCIAL = 'social', 'Social Sciences'
         SCIENCE = 'science', 'Natural Sciences'
         OTHER = 'other', 'Other'
+        # Science-specific domains (aligned with freshness analyser policies)
+        AI_ML = 'ai_ml', 'AI / Machine Learning'
+        BIOTECHNOLOGY = 'biotechnology', 'Biotechnology'
+        MEDICINE_HEALTH = 'medicine_health', 'Medicine & Health'
+        QUANTUM_COMPUTING = 'quantum_computing', 'Quantum Computing'
+        MATERIALS_SCIENCE = 'materials_science', 'Materials Science'
+        RENEWABLE_ENERGY = 'renewable_energy', 'Renewable Energy'
+        PHYSICS = 'physics', 'Physics'
+        POLICY = 'policy', 'Public Policy'
+        ECONOMICS = 'economics', 'Economics'
+        COMPUTER_SCIENCE = 'computer_science', 'Computer Science'
 
     # Core fields
     title = models.CharField(max_length=500)

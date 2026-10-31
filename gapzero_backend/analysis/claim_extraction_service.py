@@ -73,7 +73,7 @@ def call_llm_with_retry(
     messages: List[Dict[str, str]],
     max_tokens: int = 3000,
     temperature: float = 0.05,
-    max_retries: int = 2
+    max_retries: int = 4
 ) -> str:
     """
     Executes Groq LLM completion with rate-limit backoff and fallback handling.
@@ -107,9 +107,13 @@ def call_llm_with_retry(
                 return data['choices'][0]['message']['content']
 
             elif response.status_code == 429:
-                # Rate limit hit
-                wait_time = (2 ** attempt) + 1
-                logger.warning(f"Groq API 429 Rate Limit hit. Backing off for {wait_time}s (attempt {attempt + 1})...")
+                # Rate limit hit - parse retry-after header if provided by Groq
+                retry_after = response.headers.get("retry-after")
+                try:
+                    wait_time = int(float(retry_after)) + 1 if retry_after else (3 * (attempt + 1)) + 2
+                except (ValueError, TypeError):
+                    wait_time = (3 * (attempt + 1)) + 2
+                logger.warning(f"Groq API 429 Rate Limit hit. Backing off for {wait_time}s (attempt {attempt + 1}/{max_retries})...")
                 if attempt < max_retries:
                     time.sleep(wait_time)
                     continue

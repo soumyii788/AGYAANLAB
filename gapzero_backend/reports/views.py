@@ -23,8 +23,8 @@ class ReportListCreateView(generics.ListCreateAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         report_type = self.request.query_params.get('type')
         if report_type:

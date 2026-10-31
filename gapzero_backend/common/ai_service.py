@@ -18,7 +18,7 @@ def get_groq_config():
     return api_key, model
 
 
-def call_groq_chat(messages, max_tokens=2500, temperature=0.2, response_format=None):
+def call_groq_chat(messages, max_tokens=2500, temperature=0.2, response_format=None, max_retries=4):
     api_key, model = get_groq_config()
     if not api_key:
         raise ValueError("GROQ_API_KEY is not configured in environment variables.")
@@ -36,21 +36,35 @@ def call_groq_chat(messages, max_tokens=2500, temperature=0.2, response_format=N
     if response_format:
         payload["response_format"] = response_format
 
-    response = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
-    if response.status_code != 200:
-        logger.error(f"Groq API error: {response.status_code} - {response.text}")
-        # Try fallback model if model failed
-        if response.status_code in (400, 404):
+    for attempt in range(max_retries + 1):
+        response = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
+        if response.status_code == 200:
+            data = response.json()
+            return data['choices'][0]['message']['content']
+
+        elif response.status_code == 429:
+            retry_after = response.headers.get("retry-after")
+            try:
+                wait_time = int(float(retry_after)) + 1 if retry_after else (3 * (attempt + 1)) + 2
+            except (ValueError, TypeError):
+                wait_time = (3 * (attempt + 1)) + 2
+            logger.warning(f"Groq API 429 Rate Limit in call_groq_chat. Backing off for {wait_time}s (attempt {attempt + 1}/{max_retries})...")
+            if attempt < max_retries:
+                import time
+                time.sleep(wait_time)
+                continue
+            raise RuntimeError(f"Groq API rate limit exceeded after {max_retries} retries: {response.text}")
+
+        elif response.status_code in (400, 404):
             fallback_model = "openai/gpt-oss-120b"
-            payload["model"] = fallback_model
-            response = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
-            if response.status_code != 200:
-                raise RuntimeError(f"Groq API request failed ({response.status_code}): {response.text}")
-        else:
+            if payload["model"] != fallback_model:
+                logger.warning(f"Groq model '{payload['model']}' failed ({response.status_code}). Trying fallback '{fallback_model}'...")
+                payload["model"] = fallback_model
+                continue
             raise RuntimeError(f"Groq API request failed ({response.status_code}): {response.text}")
 
-    data = response.json()
-    return data['choices'][0]['message']['content']
+        else:
+            raise RuntimeError(f"Groq API request failed ({response.status_code}): {response.text}")
 
 
 def analyze_research_gaps(project, sources, notes):

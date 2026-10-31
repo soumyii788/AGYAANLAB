@@ -61,8 +61,8 @@ class AnalysisListCreateView(generics.ListCreateAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         analysis_type = self.request.query_params.get('type')
         if analysis_type:
@@ -321,12 +321,12 @@ class ClaimListView(generics.ListAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         source_id = self.request.query_params.get('source')
-        if source_id:
-            queryset = queryset.filter(source_id=source_id)
+        if source_id and source_id not in ('all', 'undefined', 'null', 'None') and str(source_id).isdigit():
+            queryset = queryset.filter(source_id=int(source_id))
 
         claim_type = self.request.query_params.get('claim_type') or self.request.query_params.get('type')
         if claim_type and claim_type != 'all':
@@ -373,16 +373,16 @@ class EvidenceListView(generics.ListAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(claim__project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(claim__project_id=int(project_id))
 
         source_id = self.request.query_params.get('source')
-        if source_id:
-            queryset = queryset.filter(source_id=source_id)
+        if source_id and source_id not in ('all', 'undefined', 'null', 'None') and str(source_id).isdigit():
+            queryset = queryset.filter(source_id=int(source_id))
 
         claim_id = self.request.query_params.get('claim')
-        if claim_id:
-            queryset = queryset.filter(claim_id=claim_id)
+        if claim_id and claim_id not in ('all', 'undefined', 'null', 'None') and str(claim_id).isdigit():
+            queryset = queryset.filter(claim_id=int(claim_id))
 
         return queryset.select_related('claim', 'source')
 
@@ -404,9 +404,9 @@ class EvidenceExplorerStatsView(APIView):
             Q(claim__project__owner=user) | Q(claim__project__collaborators=user) | Q(claim__created_by=user)
         ).distinct()
 
-        if project_id and project_id != 'all':
-            claims_qs = claims_qs.filter(project_id=project_id)
-            evidence_qs = evidence_qs.filter(claim__project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            claims_qs = claims_qs.filter(project_id=int(project_id))
+            evidence_qs = evidence_qs.filter(claim__project_id=int(project_id))
 
         total_claims = claims_qs.count()
         total_evidence = evidence_qs.count()
@@ -579,8 +579,8 @@ class ResearchQuestionListView(generics.ListAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         importance = self.request.query_params.get('importance')
         if importance and importance != 'all':
@@ -611,8 +611,8 @@ class FindingListView(generics.ListAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         finding_type = self.request.query_params.get('type') or self.request.query_params.get('finding_type')
         if finding_type and finding_type != 'all':
@@ -652,8 +652,8 @@ class ChecklistItemListView(generics.ListCreateAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         priority = self.request.query_params.get('priority')
         if priority and priority != 'all':

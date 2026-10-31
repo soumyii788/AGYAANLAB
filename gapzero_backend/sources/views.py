@@ -63,8 +63,8 @@ class SourceListCreateView(generics.ListCreateAPIView):
         ).distinct()
 
         project_id = self.request.query_params.get('project')
-        if project_id:
-            queryset = queryset.filter(project_id=project_id)
+        if project_id and project_id not in ('all', 'undefined', 'null', 'None') and str(project_id).isdigit():
+            queryset = queryset.filter(project_id=int(project_id))
 
         source_type = self.request.query_params.get('type') or self.request.query_params.get('source_type')
         if source_type:
@@ -150,8 +150,15 @@ class IngestURLView(APIView):
             serializer = SourceSerializer(source)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        except (SSRFProtectionError, RobotsDisallowedError, SizeLimitExceededError, IngestionError) as e:
-            # Keep source extraction error visible in database
+        except SSRFProtectionError as e:
+            # SSRF / security policy rejection: return 400, do NOT write to database
+            return Response(
+                {'error': str(e), 'code': 'SSRF_BLOCKED'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        except (RobotsDisallowedError, SizeLimitExceededError, IngestionError) as e:
+            # Non-SSRF ingestion errors: record the failure so it is visible in Source Manager
             error_msg = str(e)
             failed_source = Source.objects.create(
                 project=project,
