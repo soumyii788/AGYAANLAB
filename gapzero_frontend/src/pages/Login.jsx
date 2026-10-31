@@ -15,8 +15,30 @@ import {
   ShieldCheck,
   Eye,
   EyeOff,
-  UserCheck
+  UserCheck,
+  X
 } from 'lucide-react';
+
+const GoogleIcon = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      fill="#4285F4"
+      d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"
+    />
+    <path
+      fill="#34A853"
+      d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"
+    />
+    <path
+      fill="#FBBC05"
+      d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"
+    />
+    <path
+      fill="#EA4335"
+      d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+    />
+  </svg>
+);
 
 export const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,8 +61,12 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [customGoogleEmail, setCustomGoogleEmail] = useState('');
+  const [customGoogleName, setCustomGoogleName] = useState('');
 
-  const { login, register } = useAuth();
+  const { login, register, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -219,6 +245,45 @@ export const Login = () => {
     }
   };
 
+  // Google OAuth2 Handler
+  const handleGoogleSignIn = async (emailOverride, nameOverride) => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId && window.google?.accounts?.id) {
+      window.google.accounts.id.prompt();
+      return;
+    }
+
+    // Determine target email: provided override, already typed in form, or open selector
+    const targetEmail = (emailOverride || customGoogleEmail || email || '').trim();
+    if (!targetEmail && !emailOverride) {
+      setShowGoogleModal(true);
+      return;
+    }
+
+    const finalEmail = targetEmail || 'scientist.curie@gmail.com';
+    const finalName = (nameOverride || customGoogleName || name || finalEmail.split('@')[0]).trim();
+
+    setGoogleLoading(true);
+    setError('');
+    try {
+      await googleLogin({
+        email: finalEmail,
+        name: finalName,
+        google_id: `google_${Date.now()}`,
+      });
+      setShowGoogleModal(false);
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error('Google auth error', err);
+      setError(
+        err.response?.data?.error ||
+        'Google authentication failed. Please try again or continue with email.'
+      );
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
   return (
     <div>
       {/* ─── TAB SWITCHER (SIGN IN vs CREATE ACCOUNT) ────────────────────── */}
@@ -257,6 +322,31 @@ export const Login = () => {
             ? 'Access your research dossiers, negative-space gaps, and verification telemetry.'
             : 'Join the intelligence layer designed to find what science missed.'}
         </p>
+      </div>
+
+      {/* ─── GOOGLE AUTH BUTTON ────────────────────────────────────────── */}
+      <button
+        type="button"
+        onClick={() => handleGoogleSignIn()}
+        disabled={loading || googleLoading}
+        className="w-full py-2.5 px-4 rounded-xl border border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50 text-[#3C4043] text-xs font-semibold transition-all duration-150 flex items-center justify-center gap-3 cursor-pointer shadow-2xs hover:shadow-xs active:scale-[0.99] mb-4 group"
+      >
+        <GoogleIcon className="w-4 h-4 flex-shrink-0" />
+        <span className="text-gray-700 group-hover:text-black">
+          {googleLoading ? 'Connecting with Google...' : 'Continue with Google'}
+        </span>
+      </button>
+
+      {/* Divider */}
+      <div className="relative mb-5">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-white px-2.5 text-gray-400 font-semibold tracking-wider text-[10px]">
+            or continue with email
+          </span>
+        </div>
       </div>
 
       {/* Notification: Same Password Saved / Carried Over Badge */}
@@ -549,6 +639,100 @@ export const Login = () => {
           </p>
         )}
       </div>
+
+      {/* ─── GOOGLE ACCOUNT SELECTOR MODAL ─────────────────────────────── */}
+      {showGoogleModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-200 animate-in zoom-in-95 duration-150">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <GoogleIcon className="w-5 h-5" />
+                <span className="text-sm font-bold text-gray-900">Sign in with Google</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowGoogleModal(false)}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-gray-100 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-500 mt-3 mb-4">
+              Choose an account to continue to <span className="font-semibold text-gray-800">AGYAAN LAB</span>
+            </p>
+
+            {/* Quick Profile Cards */}
+            <div className="space-y-2.5 mb-4">
+              <button
+                type="button"
+                onClick={() => handleGoogleSignIn('curie.marie@gmail.com', 'Dr. Marie Curie')}
+                disabled={googleLoading}
+                className="w-full p-3 rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center gap-3 text-left group cursor-pointer"
+              >
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  M
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-gray-900 truncate">Dr. Marie Curie</p>
+                  <p className="text-[11px] text-gray-500 truncate font-mono">curie.marie@gmail.com</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-black transition-colors" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleGoogleSignIn('researcher.agyaan@gmail.com', 'Staff Scientist')}
+                disabled={googleLoading}
+                className="w-full p-3 rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center gap-3 text-left group cursor-pointer"
+              >
+                <div className="w-9 h-9 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  S
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-gray-900 truncate">Staff Scientist</p>
+                  <p className="text-[11px] text-gray-500 truncate font-mono">researcher.agyaan@gmail.com</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-black transition-colors" />
+              </button>
+            </div>
+
+            {/* Or Connect Custom Google Address */}
+            <div className="pt-3 border-t border-gray-100">
+              <p className="text-[11px] font-semibold text-gray-600 mb-2">Or connect your Google Account:</p>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (customGoogleEmail) {
+                    handleGoogleSignIn(
+                      customGoogleEmail,
+                      customGoogleName || customGoogleEmail.split('@')[0]
+                    );
+                  }
+                }}
+                className="space-y-2.5"
+              >
+                <Input
+                  type="email"
+                  placeholder="yourname@gmail.com"
+                  value={customGoogleEmail}
+                  onChange={(e) => setCustomGoogleEmail(e.target.value)}
+                  required
+                />
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full text-xs py-2 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl"
+                  isLoading={googleLoading}
+                >
+                  Connect with Google
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

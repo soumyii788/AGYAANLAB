@@ -21,6 +21,16 @@ export const authService = {
     return response.data;
   },
 
+  async googleAuth(payload) {
+    const response = await api.post('/auth/google/', payload);
+    if (response.data.access) {
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('refresh_token', response.data.refresh);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+    }
+    return response.data;
+  },
+
   async getProfile() {
     const response = await api.get('/auth/profile/');
     return response.data;
