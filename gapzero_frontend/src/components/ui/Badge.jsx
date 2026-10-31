@@ -11,9 +11,12 @@ export const Badge = ({
 }) => {
   const variants = {
     default: 'bg-gray-100 text-gray-700 border-gray-200',
-    primary: 'bg-blue-50 text-blue-700 border-blue-200',
+    primary: 'bg-neutral-900 text-white border-neutral-800',
+    dark: 'bg-[#1A1A1A] text-white border-neutral-700',
+    mono: 'bg-neutral-100 text-neutral-900 border-neutral-300',
+    charcoal: 'bg-neutral-800 text-neutral-200 border-neutral-700',
     success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    warning: 'bg-amber-50 text-amber-800 border-amber-200',
+    warning: 'bg-neutral-800 text-white border-neutral-700',
     danger: 'bg-rose-50 text-rose-700 border-rose-200',
     kaggle: 'bg-[#EBF7FF] text-[#0083B0] border-[#BCE4FA]',
   };
@@ -26,9 +29,12 @@ export const Badge = ({
 
   const dotColors = {
     default: 'bg-gray-500',
-    primary: 'bg-blue-600',
+    primary: 'bg-white',
+    dark: 'bg-white',
+    mono: 'bg-neutral-900',
+    charcoal: 'bg-neutral-300',
     success: 'bg-emerald-600',
-    warning: 'bg-amber-500',
+    warning: 'bg-neutral-400',
     danger: 'bg-rose-600',
     kaggle: 'bg-[#20BEFF]',
   };
