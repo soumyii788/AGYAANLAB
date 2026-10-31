@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: agyaanlab-backend
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn --chdir gapzero_backend gapzero_backend.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: "*"
