@@ -221,8 +221,8 @@ export const AnalysesPage = () => {
         </div>
 
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-amber-700 uppercase tracking-wider">Unanswered Gaps</p>
-          <p className="text-2xl font-bold text-amber-600 mt-1">
+          <p className="text-[11px] font-medium text-sky-700 uppercase tracking-wider">Unanswered Gaps</p>
+          <p className="text-2xl font-bold text-sky-600 mt-1">
             {statusData?.questions?.unanswered || 0}
             <span className="text-xs text-[#4A4D55] font-normal ml-1">
               / {statusData?.questions?.total || 0} subquestions
@@ -231,15 +231,15 @@ export const AnalysesPage = () => {
         </div>
 
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-rose-700 uppercase tracking-wider">Contradictions</p>
-          <p className="text-2xl font-bold text-rose-600 mt-1">
+          <p className="text-[11px] font-medium text-indigo-700 uppercase tracking-wider">Contradictions</p>
+          <p className="text-2xl font-bold text-indigo-600 mt-1">
             {statusData?.findings?.contradictions || 0}
           </p>
         </div>
 
         <div className="bg-white border border-[#E5E7EB] rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-emerald-700 uppercase tracking-wider">Tasks Completed</p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">
+          <p className="text-[11px] font-medium text-blue-700 uppercase tracking-wider">Tasks Completed</p>
+          <p className="text-2xl font-bold text-blue-600 mt-1">
             {statusData?.checklist?.completed || 0}
             <span className="text-xs text-[#4A4D55] font-normal ml-1">
               / {statusData?.checklist?.total || 0}

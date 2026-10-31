@@ -322,19 +322,19 @@ export const SourcesPage = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
           <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">Total Sources</p>
-          <p className="text-2xl font-bold text-white mt-1">{sources.length}</p>
+          <p className="text-2xl font-bold text-[#202124] mt-1">{sources.length}</p>
         </div>
         <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-emerald-700 uppercase tracking-wider">Completed / Extracted</p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">{completedCount}</p>
+          <p className="text-[11px] font-medium text-blue-700 uppercase tracking-wider">Completed / Extracted</p>
+          <p className="text-2xl font-bold text-blue-600 mt-1">{completedCount}</p>
         </div>
         <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-amber-700 uppercase tracking-wider">Scanned / OCR Needed</p>
-          <p className="text-2xl font-bold text-amber-600 mt-1">{ocrNeededCount}</p>
+          <p className="text-[11px] font-medium text-sky-700 uppercase tracking-wider">Scanned / OCR Needed</p>
+          <p className="text-2xl font-bold text-sky-600 mt-1">{ocrNeededCount}</p>
         </div>
         <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-rose-700 uppercase tracking-wider">Extraction Failed</p>
-          <p className="text-2xl font-bold text-rose-600 mt-1">{failedCount}</p>
+          <p className="text-[11px] font-medium text-indigo-700 uppercase tracking-wider">Extraction Failed</p>
+          <p className="text-2xl font-bold text-indigo-600 mt-1">{failedCount}</p>
         </div>
       </div>
 

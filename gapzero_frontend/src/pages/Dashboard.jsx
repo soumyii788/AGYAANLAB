@@ -149,13 +149,13 @@ export const Dashboard = () => {
               <Plus className="w-3.5 h-3.5 text-[#20BEFF]" /> New Project
             </Link>
             <Link to="/findings" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-300" /> Negative Gaps
+              <AlertTriangle className="w-3.5 h-3.5 text-sky-300" /> Negative Gaps
             </Link>
             <Link to="/evidence" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
-              <Scale className="w-3.5 h-3.5 text-rose-300" /> Contradictions
+              <Scale className="w-3.5 h-3.5 text-indigo-300" /> Contradictions
             </Link>
             <Link to="/checklist" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Verification Tasks
+              <CheckCircle2 className="w-3.5 h-3.5 text-cyan-300" /> Verification Tasks
             </Link>
             <Link to="/reports" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
               <FileText className="w-3.5 h-3.5 text-blue-300" /> Final Reports
@@ -198,9 +198,9 @@ export const Dashboard = () => {
             <div className="bg-white border border-gray-200/90 rounded-2xl p-4 shadow-xs hover:border-gray-300 hover:shadow-sm transition-all">
               <div className="flex items-center justify-between text-gray-400 mb-1">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Claims</span>
-                <FileCheck className="w-4 h-4 text-emerald-600" />
+                <FileCheck className="w-4 h-4 text-blue-600" />
               </div>
-              <p className="text-2xl font-bold text-emerald-700 mt-1">
+              <p className="text-2xl font-bold text-blue-700 mt-1">
                 {stats?.total_claims || 0}
               </p>
               <p className="text-[11px] text-gray-500 mt-1">Grounded atomic facts</p>
@@ -210,9 +210,9 @@ export const Dashboard = () => {
             <div className="bg-white border border-gray-200/90 rounded-2xl p-4 shadow-xs hover:border-gray-300 hover:shadow-sm transition-all">
               <div className="flex items-center justify-between text-gray-400 mb-1">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Gaps</span>
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
+                <AlertTriangle className="w-4 h-4 text-sky-600" />
               </div>
-              <p className="text-2xl font-bold text-amber-700 mt-1">
+              <p className="text-2xl font-bold text-sky-700 mt-1">
                 {stats?.information_gaps || 0}
               </p>
               <p className="text-[11px] text-gray-500 mt-1">Unaddressed voids</p>
@@ -222,9 +222,9 @@ export const Dashboard = () => {
             <div className="bg-white border border-gray-200/90 rounded-2xl p-4 shadow-xs hover:border-gray-300 hover:shadow-sm transition-all">
               <div className="flex items-center justify-between text-gray-400 mb-1">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Tensions</span>
-                <Scale className="w-4 h-4 text-rose-600" />
+                <Scale className="w-4 h-4 text-indigo-600" />
               </div>
-              <p className="text-2xl font-bold text-rose-700 mt-1">
+              <p className="text-2xl font-bold text-indigo-700 mt-1">
                 {stats?.contradictions || 0}
               </p>
               <p className="text-[11px] text-gray-500 mt-1">Empirical conflicts</p>
