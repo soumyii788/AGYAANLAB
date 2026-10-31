@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import Navbar from '../components/layout/Navbar';
+import { useTheme } from '../context/ThemeContext';
 
 export const DashboardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { darkMode } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#202124] flex flex-col">
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
+        darkMode
+          ? 'bg-gray-950 text-gray-100'
+          : 'bg-[#F8F9FA] text-[#202124]'
+      }`}
+    >
       {/* Top Navbar with 3-lines menu icon on left */}
       <Navbar onToggleSidebar={() => setIsMenuOpen((prev) => !prev)} />
 

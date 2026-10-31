@@ -19,6 +19,7 @@ import { ReportsPage } from './pages/ReportsPage';
 import { AnalysesPage } from './pages/AnalysesPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { NotFound } from './pages/NotFound';
+import { ProfilePage } from './pages/ProfilePage';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import { Settings, HelpCircle, Activity } from 'lucide-react';
 
@@ -104,6 +105,7 @@ export const App = () => {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/analyses" element={<AnalysesPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
 
             <Route
               path="/activity"

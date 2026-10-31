@@ -60,6 +60,11 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+    def update(self, request, *args, **kwargs):
+        # Always treat as partial update — only send fields you want to change
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
+
 
 class ChangePasswordView(APIView):
     """Change password for authenticated user."""
