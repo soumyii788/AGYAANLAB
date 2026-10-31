@@ -17,7 +17,8 @@ import {
   CheckCircle2,
   AlertCircle,
   FileText,
-  Activity
+  Activity,
+  Layers
 } from 'lucide-react';
 import projectService from '../services/projectService';
 import { Card } from '../components/ui/Card';
@@ -587,19 +588,30 @@ export const ProjectDetail = () => {
       {/* Tab 3: Analyses */}
       {activeTab === 'analyses' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <p className="text-xs text-[#4A4D55]">
-              Real AI gap detection runs executed on this project using Groq & OpenAlex.
+              Real AI gap detection and 4-module intelligence scans executed on this project.
             </p>
-            <Button
-              variant="primary"
-              size="sm"
-              leftIcon={<Sparkles className="w-3.5 h-3.5" />}
-              onClick={handleRunGapAnalysis}
-              isLoading={runningAnalysis}
-            >
-              Run New Scan
-            </Button>
+            <div className="flex items-center gap-2">
+              <Link to="/analyses">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<Layers className="w-3.5 h-3.5 text-[#3B82F6]" />}
+                >
+                  Core Intelligence Engine
+                </Button>
+              </Link>
+              <Button
+                variant="primary"
+                size="sm"
+                leftIcon={<Sparkles className="w-3.5 h-3.5" />}
+                onClick={handleRunGapAnalysis}
+                isLoading={runningAnalysis}
+              >
+                Quick Scan
+              </Button>
+            </div>
           </div>
 
           {analyses.length === 0 ? (

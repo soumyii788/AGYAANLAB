@@ -8,8 +8,33 @@ from django.utils import timezone
 
 from research.models import ResearchProject
 from sources.models import Source
-from .models import Analysis, Claim, Evidence
-from .serializers import AnalysisSerializer, ClaimSerializer, EvidenceSerializer
+from .models import (
+    Analysis,
+    Claim,
+    Evidence,
+    ResearchQuestion,
+    QuestionCoverage,
+    Finding,
+    FindingEvidence,
+    ChecklistItem,
+)
+from .serializers import (
+    AnalysisSerializer,
+    ClaimSerializer,
+    EvidenceSerializer,
+    ResearchQuestionSerializer,
+    QuestionCoverageSerializer,
+    FindingSerializer,
+    FindingEvidenceSerializer,
+    ChecklistItemSerializer,
+)
+from .core_engine import (
+    InformationGapDetector,
+    ContradictionDetector,
+    FreshnessAnalyzer,
+    VerificationChecklistGenerator,
+    UnifiedIntelligenceOrchestrator,
+)
 from .claim_extraction_service import (
     ClaimExtractionEngine,
     LLMConfigurationError,
@@ -400,3 +425,338 @@ class EvidenceExplorerStatsView(APIView):
             'avg_confidence': round(avg_confidence * 100, 1),
             'claims_by_type': type_counts,
         })
+
+
+# =============================================================================
+# CORE INTELLIGENCE ENGINE VIEWS (MODULES 1 - 4 & ORCHESTRATION)
+# =============================================================================
+
+class RunIntelligenceEngineView(APIView):
+    """
+    Executes the complete 4-module intelligence pipeline:
+    1. Information Gap Detection
+    2. Contradiction Detection
+    3. Freshness Analysis
+    4. Verification Checklist
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        project_id = request.data.get('project_id')
+        if not project_id:
+            return Response({'error': 'project_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+        if project.owner != request.user and not project.collaborators.filter(id=request.user.id).exists():
+            return Response({'error': 'You do not have access to this project.'}, status=status.HTTP_403_FORBIDDEN)
+
+        policy = request.data.get('policy', {})
+        force_regenerate = request.data.get('force_regenerate_questions', False)
+
+        try:
+            orchestrator = UnifiedIntelligenceOrchestrator(project, user=request.user, policy=policy)
+            results = orchestrator.run_full_pipeline(force_regenerate_questions=force_regenerate)
+            return Response(results, status=status.HTTP_201_CREATED)
+
+        except LLMConfigurationError as e:
+            return Response({
+                'error': 'LLM API Configuration Required',
+                'detail': str(e),
+                'code': 'LLM_CONFIG_MISSING'
+            }, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        except LLMRateLimitError as e:
+            return Response({'error': 'Rate Limit Exceeded', 'detail': str(e)}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
+        except Exception as e:
+            logger.exception("Unified intelligence pipeline execution error")
+            return Response({'error': f"Intelligence engine execution failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RunModule1GapDetectionView(APIView):
+    """Runs Module 1 (Information Gap Detection) independently."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        project_id = request.data.get('project_id')
+        if not project_id:
+            return Response({'error': 'project_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+        force_regenerate = request.data.get('force_regenerate', False)
+
+        try:
+            detector = InformationGapDetector(project, user=request.user)
+            results = detector.run(force_regenerate=force_regenerate)
+            return Response(results, status=status.HTTP_200_OK)
+        except LLMConfigurationError as e:
+            return Response({'error': 'LLM Configuration Error', 'detail': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except Exception as e:
+            logger.exception("Module 1 Gap Detection error")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RunModule2ContradictionView(APIView):
+    """Runs Module 2 (Contradiction Detection) independently."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        project_id = request.data.get('project_id')
+        if not project_id:
+            return Response({'error': 'project_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+
+        try:
+            detector = ContradictionDetector(project, user=request.user)
+            results = detector.run()
+            return Response(results, status=status.HTTP_200_OK)
+        except LLMConfigurationError as e:
+            return Response({'error': 'LLM Configuration Error', 'detail': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except Exception as e:
+            logger.exception("Module 2 Contradiction error")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RunModule3FreshnessView(APIView):
+    """Runs Module 3 (Freshness Analysis) independently."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        project_id = request.data.get('project_id')
+        if not project_id:
+            return Response({'error': 'project_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+        policy = request.data.get('policy', {})
+
+        try:
+            analyzer = FreshnessAnalyzer(project, policy=policy, user=request.user)
+            results = analyzer.run()
+            return Response(results, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.exception("Module 3 Freshness error")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RunModule4ChecklistView(APIView):
+    """Runs Module 4 (Verification Checklist) independently."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        project_id = request.data.get('project_id')
+        if not project_id:
+            return Response({'error': 'project_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+        refresh = request.data.get('refresh', False)
+
+        try:
+            generator = VerificationChecklistGenerator(project, user=request.user)
+            results = generator.run(refresh=refresh)
+            return Response(results, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.exception("Module 4 Checklist error")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# =============================================================================
+# QUERIES: QUESTIONS, FINDINGS, CHECKLIST, STATUS
+# =============================================================================
+
+class ResearchQuestionListView(generics.ListAPIView):
+    """Lists research subquestions with their coverage metrics."""
+    serializer_class = ResearchQuestionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['question_text', 'domain_category', 'coverage__resolution_explanation']
+    ordering_fields = ['importance', 'created_at', 'coverage__coverage_score']
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = ResearchQuestion.objects.filter(
+            Q(project__owner=user) | Q(project__collaborators=user) | Q(project__is_public=True)
+        ).distinct()
+
+        project_id = self.request.query_params.get('project')
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+
+        importance = self.request.query_params.get('importance')
+        if importance and importance != 'all':
+            queryset = queryset.filter(importance=importance)
+
+        coverage_status = self.request.query_params.get('status')
+        if coverage_status and coverage_status != 'all':
+            queryset = queryset.filter(coverage__status=coverage_status)
+
+        return queryset.select_related('coverage', 'project')
+
+
+class FindingListView(generics.ListAPIView):
+    """
+    Lists epistemic findings (gaps, contradictions, freshness warnings)
+    with linked multi-source evidence.
+    """
+    serializer_class = FindingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'description', 'explanation', 'metadata']
+    ordering_fields = ['severity', 'created_at', 'finding_type']
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Finding.objects.filter(
+            Q(project__owner=user) | Q(project__collaborators=user) | Q(project__is_public=True)
+        ).distinct()
+
+        project_id = self.request.query_params.get('project')
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+
+        finding_type = self.request.query_params.get('type') or self.request.query_params.get('finding_type')
+        if finding_type and finding_type != 'all':
+            queryset = queryset.filter(finding_type=finding_type)
+
+        severity = self.request.query_params.get('severity')
+        if severity and severity != 'all':
+            queryset = queryset.filter(severity=severity)
+
+        return queryset.prefetch_related('evidence_links', 'project', 'question')
+
+
+class FindingDetailView(generics.RetrieveAPIView):
+    """Retrieves full details of a finding with preserved evidence links."""
+    serializer_class = FindingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Finding.objects.filter(
+            Q(project__owner=user) | Q(project__collaborators=user)
+        ).distinct()
+
+
+class ChecklistItemListView(generics.ListCreateAPIView):
+    """Lists and creates actionable verification tasks."""
+    serializer_class = ChecklistItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['task_text', 'rationale', 'finding__title']
+    ordering_fields = ['is_completed', 'priority', 'created_at']
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = ChecklistItem.objects.filter(
+            Q(project__owner=user) | Q(project__collaborators=user) | Q(project__is_public=True)
+        ).distinct()
+
+        project_id = self.request.query_params.get('project')
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+
+        priority = self.request.query_params.get('priority')
+        if priority and priority != 'all':
+            queryset = queryset.filter(priority=priority)
+
+        is_completed = self.request.query_params.get('completed') or self.request.query_params.get('is_completed')
+        if is_completed is not None and is_completed != 'all':
+            val = is_completed.lower() in ('true', '1', 'yes')
+            queryset = queryset.filter(is_completed=val)
+
+        return queryset.select_related('project', 'finding', 'completed_by')
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class ChecklistItemToggleView(APIView):
+    """Toggles or updates the completion status of a checklist item."""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def patch(self, request, pk):
+        item = get_object_or_404(ChecklistItem, pk=pk)
+
+        # Check access
+        if item.project.owner != request.user and not item.project.collaborators.filter(id=request.user.id).exists():
+            return Response({'error': 'Permission denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        completed_val = request.data.get('is_completed')
+        if completed_val is None:
+            new_status = not item.is_completed
+        else:
+            new_status = bool(completed_val)
+
+        item.is_completed = new_status
+        item.completed_at = timezone.now() if new_status else None
+        item.completed_by = request.user if new_status else None
+        item.save()
+
+        serializer = ChecklistItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AnalysisStatusView(APIView):
+    """
+    Returns high-level intelligence engine status and metric counts for a project.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        project_id = request.query_params.get('project')
+        if not project_id:
+            return Response({'error': 'project query param is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        project = get_object_or_404(ResearchProject, pk=project_id)
+
+        # Questions
+        questions_qs = ResearchQuestion.objects.filter(project=project)
+        total_q = questions_qs.count()
+        unanswered_q = questions_qs.filter(coverage__status='unanswered').count()
+        partial_q = questions_qs.filter(coverage__status='partially_answered').count()
+        answered_q = questions_qs.filter(coverage__status='answered').count()
+
+        # Findings
+        findings_qs = Finding.objects.filter(project=project)
+        gaps_count = findings_qs.filter(finding_type='gap').count()
+        contradictions_count = findings_qs.filter(finding_type='contradiction').count()
+        freshness_count = findings_qs.filter(finding_type='freshness').count()
+
+        # Checklist
+        checklist_qs = ChecklistItem.objects.filter(project=project)
+        total_tasks = checklist_qs.count()
+        completed_tasks = checklist_qs.filter(is_completed=True).count()
+        pending_tasks = total_tasks - completed_tasks
+
+        # Sources
+        sources_count = project.sources.count()
+        claims_count = Claim.objects.filter(project=project).count()
+
+        return Response({
+            'project_id': project.id,
+            'gap_score': project.gap_score,
+            'gap_summary': project.gap_summary,
+            'questions': {
+                'total': total_q,
+                'unanswered': unanswered_q,
+                'partially_answered': partial_q,
+                'answered': answered_q,
+            },
+            'findings': {
+                'total': findings_qs.count(),
+                'gaps': gaps_count,
+                'contradictions': contradictions_count,
+                'freshness_warnings': freshness_count,
+            },
+            'checklist': {
+                'total': total_tasks,
+                'completed': completed_tasks,
+                'pending': pending_tasks,
+            },
+            'corpus': {
+                'sources': sources_count,
+                'claims': claims_count,
+            }
+        })
+

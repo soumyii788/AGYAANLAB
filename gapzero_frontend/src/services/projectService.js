@@ -176,6 +176,62 @@ export const projectService = {
   async extractClaims(payload) {
     const response = await api.post('/analysis/extract-claims/', payload);
     return response.data;
+  },
+
+  async runIntelligenceEngine(payload) {
+    const response = await api.post('/analysis/run-intelligence-engine/', payload);
+    return response.data;
+  },
+
+  async runModuleGapDetection(payload) {
+    const response = await api.post('/analysis/modules/gap-detection/', payload);
+    return response.data;
+  },
+
+  async runModuleContradiction(payload) {
+    const response = await api.post('/analysis/modules/contradiction-detection/', payload);
+    return response.data;
+  },
+
+  async runModuleFreshness(payload) {
+    const response = await api.post('/analysis/modules/freshness-analysis/', payload);
+    return response.data;
+  },
+
+  async runModuleChecklist(payload) {
+    const response = await api.post('/analysis/modules/verification-checklist/', payload);
+    return response.data;
+  },
+
+  async getResearchQuestions(params = {}) {
+    const response = await api.get('/analysis/questions/', { params });
+    return response.data;
+  },
+
+  async getFindings(params = {}) {
+    const response = await api.get('/analysis/findings/', { params });
+    return response.data;
+  },
+
+  async getFinding(id) {
+    const response = await api.get(`/analysis/findings/${id}/`);
+    return response.data;
+  },
+
+  async getChecklist(params = {}) {
+    const response = await api.get('/analysis/checklist/', { params });
+    return response.data;
+  },
+
+  async toggleChecklistItem(id, isCompleted = null) {
+    const payload = isCompleted !== null ? { is_completed: isCompleted } : {};
+    const response = await api.patch(`/analysis/checklist/${id}/toggle/`, payload);
+    return response.data;
+  },
+
+  async getAnalysisStatus(projectId) {
+    const response = await api.get('/analysis/status/', { params: { project: projectId } });
+    return response.data;
   }
 };
 

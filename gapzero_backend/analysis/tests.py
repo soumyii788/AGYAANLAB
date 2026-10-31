@@ -7,13 +7,28 @@ from rest_framework.test import APITestCase
 
 from research.models import ResearchProject
 from sources.models import Source
-from .models import Claim, Evidence
+from .models import (
+    Claim,
+    Evidence,
+    ResearchQuestion,
+    QuestionCoverage,
+    Finding,
+    FindingEvidence,
+    ChecklistItem,
+)
 from .claim_extraction_service import (
     ClaimExtractionEngine,
     LLMConfigurationError,
     LLMRateLimitError,
     verify_evidence_in_source,
     chunk_source_content,
+)
+from .core_engine import (
+    InformationGapDetector,
+    ContradictionDetector,
+    FreshnessAnalyzer,
+    VerificationChecklistGenerator,
+    UnifiedIntelligenceOrchestrator,
 )
 
 User = get_user_model()
@@ -300,3 +315,350 @@ class ClaimAndEvidenceExtractionTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Claim.objects.filter(id=claim.id).exists())
         self.assertFalse(Evidence.objects.filter(id=ev.id).exists())
+
+
+class CoreIntelligenceEngineModuleTests(APITestCase):
+    """
+    Tests each of the four independent intelligence modules:
+    Module 1: Information Gap Detection
+    Module 2: Contradiction Detection
+    Module 3: Freshness Analysis
+    Module 4: Verification Checklist
+    And the Complete End-to-End Intelligence Pipeline.
+    """
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='lead_investigator',
+            email='investigator@agyaanlab.ai',
+            password='TestPassword123!',
+            first_name='Rosalind',
+            last_name='Franklin'
+        )
+        self.client.force_authenticate(user=self.user)
+
+        self.project = ResearchProject.objects.create(
+            title='Next-Generation Solid-State Battery Cathodes',
+            description='Investigating high-nickel NMC cathodes for solid-state batteries, interface resistance, and cycle life.',
+            domain='renewable_energy',
+            owner=self.user
+        )
+
+        # Source A (Recent, 2024)
+        self.source_a = Source.objects.create(
+            project=self.project,
+            added_by=self.user,
+            title='High-Nickel Cathodes with Sulfide Solid Electrolytes',
+            source_type=Source.SourceType.PAPER,
+            publication_year=2024,
+            publication_date='2024-03-15',
+            extracted_text='Single-crystal NMC811 cathode showed stable cycling with 91.5% capacity retention over 500 cycles.'
+        )
+
+        # Source B (Older, 2017 - Outdated per 4-year policy)
+        self.source_b = Source.objects.create(
+            project=self.project,
+            added_by=self.user,
+            title='Preliminary Investigation of Polycrystalline Cathode Degradation',
+            source_type=Source.SourceType.PAPER,
+            publication_year=2017,
+            publication_date='2017-06-20',
+            extracted_text='Polycrystalline NMC811 cathode suffered severe degradation, retaining only 48.0% capacity after 500 cycles.'
+        )
+
+        # Source C (Undated)
+        self.source_c = Source.objects.create(
+            project=self.project,
+            added_by=self.user,
+            title='Undated Laboratory Protocol for Electrolyte Pressing',
+            source_type=Source.SourceType.TEXT,
+            extracted_text='Cold isostatic pressing at 350 MPa was applied to sulfide pellets.'
+        )
+
+        # Claims from Source A
+        self.claim_a = Claim.objects.create(
+            project=self.project,
+            source=self.source_a,
+            created_by=self.user,
+            claim_text='NMC811 cathode retained 91.5% capacity over 500 cycles.',
+            subject='NMC811 cathode',
+            attribute='capacity retention after 500 cycles',
+            value='91.5%',
+            claim_type=Claim.ClaimType.EMPIRICAL,
+            confidence=0.95
+        )
+        self.evidence_a = Evidence.objects.create(
+            claim=self.claim_a,
+            source=self.source_a,
+            passage='Single-crystal NMC811 cathode showed stable cycling with 91.5% capacity retention over 500 cycles.',
+            is_verified=True
+        )
+
+        # Claims from Source B (Contradictory to Claim A)
+        self.claim_b = Claim.objects.create(
+            project=self.project,
+            source=self.source_b,
+            created_by=self.user,
+            claim_text='NMC811 cathode suffered degradation, retaining only 48.0% capacity.',
+            subject='NMC811 cathode',
+            attribute='capacity retention after 500 cycles',
+            value='48.0%',
+            claim_type=Claim.ClaimType.EMPIRICAL,
+            confidence=0.90
+        )
+        self.evidence_b = Evidence.objects.create(
+            claim=self.claim_b,
+            source=self.source_b,
+            passage='Polycrystalline NMC811 cathode suffered severe degradation, retaining only 48.0% capacity after 500 cycles.',
+            is_verified=True
+        )
+
+    # =========================================================================
+    # MODULE 1: INFORMATION GAP DETECTION TESTS
+    # =========================================================================
+    @patch('analysis.core_engine.gap_detector.call_llm_with_retry')
+    def test_module_1_information_gap_detection(self, mock_llm_call):
+        """
+        Tests Module 1:
+        1. Decomposes objective into subquestions with importance levels.
+        2. Maps extracted claims to subquestions.
+        3. Identifies unanswered and partially answered questions.
+        4. Verifies resolution explanation explicitly states absence of evidence != proof of absence.
+        5. Verifies unanswered gap findings are flagged as is_ai_suggestion=True.
+        """
+        mock_response = json.dumps({
+            "questions": [
+                {
+                    "question_text": "What is the capacity retention of NMC811 cathodes after 500 cycles?",
+                    "importance": "critical",
+                    "domain_category": "cycle_life"
+                },
+                {
+                    "question_text": "How does interface impedance evolve at -20°C low temperature operation?",
+                    "importance": "high",
+                    "domain_category": "low_temperature_kinetics"
+                }
+            ]
+        })
+        mock_llm_call.return_value = mock_response
+
+        detector = InformationGapDetector(self.project, user=self.user)
+        results = detector.run(force_regenerate=True)
+
+        self.assertEqual(results['total_questions'], 2)
+        # Question 1 has matching claims (NMC811 capacity retention) -> answered or partially answered
+        # Question 2 has zero claims in corpus -> unanswered gap
+        self.assertEqual(results['unanswered_questions'], 1)
+        self.assertGreaterEqual(results['gap_findings_created'], 1)
+
+        # Verify QuestionCoverage in DB
+        unanswered_q = ResearchQuestion.objects.get(domain_category='low_temperature_kinetics')
+        self.assertEqual(unanswered_q.coverage.status, QuestionCoverage.CoverageStatus.UNANSWERED)
+        self.assertEqual(unanswered_q.coverage.coverage_score, 0.0)
+
+        # Epistemic Rule check: Absence of evidence must never be represented as proof of absence
+        self.assertIn("absence of evidence", unanswered_q.coverage.resolution_explanation.lower())
+        self.assertIn("not be construed as proof of absence", unanswered_q.coverage.resolution_explanation.lower())
+
+        # Finding check: Unanswered gap finding must have is_ai_suggestion=True
+        gap_finding = Finding.objects.filter(project=self.project, finding_type=Finding.FindingType.GAP, question=unanswered_q).first()
+        self.assertIsNotNone(gap_finding)
+        self.assertTrue(gap_finding.is_ai_suggestion)
+
+    # =========================================================================
+    # MODULE 2: CONTRADICTION DETECTION TESTS
+    # =========================================================================
+    def test_module_2_contradiction_detection(self):
+        """
+        Tests Module 2:
+        1. Compares claims from different sources (Source A vs Source B).
+        2. Matches claims by subject ('NMC811 cathode') and attribute ('capacity retention after 500 cycles').
+        3. Detects incompatible values ('91.5%' vs '48.0%').
+        4. Preserves both original passages and source references.
+        5. Does not automatically decide which source is correct.
+        """
+        detector = ContradictionDetector(self.project, user=self.user)
+        results = detector.run()
+
+        self.assertEqual(results['candidate_pairs_checked'], 1)
+        self.assertEqual(results['contradictions_found'], 1)
+
+        # Check Finding in database
+        contradiction = Finding.objects.filter(
+            project=self.project,
+            finding_type=Finding.FindingType.CONTRADICTION
+        ).first()
+        self.assertIsNotNone(contradiction)
+        self.assertIn("NMC811 cathode", contradiction.title)
+
+        # Rule check: Never automatically decide which source is correct
+        self.assertIn("does not arbitrarily decide which source is correct", contradiction.explanation)
+
+        # Evidence preservation: Both competing claims and passages must be linked
+        evidence_links = contradiction.evidence_links.all()
+        self.assertEqual(evidence_links.count(), 2)
+
+        roles = {el.role for el in evidence_links}
+        self.assertIn('competing_claim_a', roles)
+        self.assertIn('competing_claim_b', roles)
+
+        passages = [el.passage for el in evidence_links]
+        self.assertTrue(any('91.5%' in p for p in passages))
+        self.assertTrue(any('48.0%' in p for p in passages))
+
+    # =========================================================================
+    # MODULE 3: FRESHNESS ANALYSIS TESTS
+    # =========================================================================
+    def test_module_3_freshness_analysis(self):
+        """
+        Tests Module 3:
+        1. Extracts available publication dates (2024, 2017, Undated).
+        2. Compares against relevance policy (4 years for renewable energy).
+        3. Source A (2024) is fresh (age 2 <= 4).
+        4. Source B (2017) is flagged as outdated (age 9 > 4).
+        5. Source C is flagged as undated.
+        6. Rule check: Does NOT label old information as false.
+        """
+        policy = {'max_age_years': 4}
+        analyzer = FreshnessAnalyzer(self.project, policy=policy, user=self.user)
+        results = analyzer.run()
+
+        self.assertEqual(results['sources_evaluated'], 3)
+        self.assertEqual(results['fresh_sources'], 1)       # Source A
+        self.assertEqual(results['outdated_sources'], 1)    # Source B
+        self.assertEqual(results['undated_sources'], 1)     # Source C
+
+        findings = Finding.objects.filter(project=self.project, finding_type=Finding.FindingType.FRESHNESS)
+        self.assertEqual(findings.count(), 2)
+
+        # Epistemic Rule check: Do not label old information as false
+        outdated_finding = findings.filter(metadata__status='outdated').first()
+        self.assertIsNotNone(outdated_finding)
+        self.assertIn("NOT considered false", outdated_finding.explanation)
+
+    # =========================================================================
+    # MODULE 4: VERIFICATION CHECKLIST TESTS
+    # =========================================================================
+    def test_module_4_verification_checklist_generation_and_toggle(self):
+        """
+        Tests Module 4:
+        1. Generates actionable verification tasks from unresolved findings.
+        2. Assigns priorities matching finding severity.
+        3. Allows users to mark tasks completed.
+        """
+        # Create a sample gap finding and contradiction finding
+        gap_finding = Finding.objects.create(
+            project=self.project,
+            finding_type=Finding.FindingType.GAP,
+            severity=Finding.SeverityLevel.CRITICAL,
+            title='Information Gap: Solid electrolyte conductivity at sub-zero temperatures',
+            description='Unanswered question on sub-zero conductivity',
+            explanation='No literature in corpus reports impedance below 0C'
+        )
+
+        contradiction_finding = Finding.objects.create(
+            project=self.project,
+            finding_type=Finding.FindingType.CONTRADICTION,
+            severity=Finding.SeverityLevel.HIGH,
+            title='Contradiction: NMC811 capacity retention',
+            description='Divergent results: 91.5% vs 48.0%',
+            explanation='Source A reports 91.5% while Source B reports 48.0%',
+            metadata={'subject': 'NMC811', 'attribute': 'retention'}
+        )
+
+        generator = VerificationChecklistGenerator(self.project, user=self.user)
+        results = generator.run()
+
+        self.assertEqual(results['total_tasks'], 2)
+        self.assertEqual(results['completed_tasks'], 0)
+
+        # Check priorities match finding severity
+        items = ChecklistItem.objects.filter(project=self.project)
+        self.assertTrue(items.filter(priority='critical').exists())
+        self.assertTrue(items.filter(priority='high').exists())
+
+        # Toggle task completion via API
+        target_item = items.first()
+        self.assertFalse(target_item.is_completed)
+
+        toggle_url = reverse('analysis-checklist-toggle', kwargs={'pk': target_item.id})
+        res = self.client.patch(toggle_url, {'is_completed': True}, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        target_item.refresh_from_db()
+        self.assertTrue(target_item.is_completed)
+        self.assertIsNotNone(target_item.completed_at)
+        self.assertEqual(target_item.completed_by, self.user)
+
+    # =========================================================================
+    # UNIFIED END-TO-END WORKFLOW PIPELINE TEST
+    # =========================================================================
+    @patch('analysis.core_engine.gap_detector.call_llm_with_retry')
+    def test_complete_unified_intelligence_pipeline_workflow(self, mock_llm_call):
+        """
+        Tests the complete unified intelligence pipeline:
+        Executes Modules 1 -> 2 -> 3 -> 4, updates project gap_score,
+        creates Analysis record, and tests all API query endpoints.
+        """
+        mock_response = json.dumps({
+            "questions": [
+                {
+                    "question_text": "What is the baseline capacity retention of NMC811 cathodes?",
+                    "importance": "critical",
+                    "domain_category": "cycle_stability"
+                },
+                {
+                    "question_text": "What are the mechanical strain thresholds under high charging rates?",
+                    "importance": "high",
+                    "domain_category": "mechanics"
+                }
+            ]
+        })
+        mock_llm_call.return_value = mock_response
+
+        orchestrator = UnifiedIntelligenceOrchestrator(
+            self.project,
+            user=self.user,
+            policy={'max_age_years': 4}
+        )
+        res = orchestrator.run_full_pipeline(force_regenerate_questions=True)
+
+        self.assertEqual(res['project_id'], self.project.id)
+        self.assertIn('analysis_id', res)
+        self.assertGreater(res['gap_score'], 0)
+
+        # Verify Project model was updated
+        self.project.refresh_from_db()
+        self.assertGreater(self.project.gap_score, 0)
+        self.assertTrue(bool(self.project.gap_summary))
+
+        # 1. Test Questions API Endpoint
+        q_url = reverse('analysis-question-list')
+        q_res = self.client.get(q_url, {'project': self.project.id})
+        self.assertEqual(q_res.status_code, status.HTTP_200_OK)
+        q_results = q_res.data.get('results', q_res.data)
+        self.assertEqual(len(q_results), 2)
+
+        # 2. Test Findings API Endpoint with filter
+        f_url = reverse('analysis-finding-list')
+        f_res = self.client.get(f_url, {'project': self.project.id, 'type': 'contradiction'})
+        self.assertEqual(f_res.status_code, status.HTTP_200_OK)
+        f_results = f_res.data.get('results', f_res.data)
+        self.assertGreaterEqual(len(f_results), 1)
+
+        # 3. Test Checklist API Endpoint
+        c_url = reverse('analysis-checklist-list')
+        c_res = self.client.get(c_url, {'project': self.project.id})
+        self.assertEqual(c_res.status_code, status.HTTP_200_OK)
+        c_results = c_res.data.get('results', c_res.data)
+        self.assertGreaterEqual(len(c_results), 1)
+
+        # 4. Test Intelligence Engine Status Endpoint
+        status_url = reverse('analysis-engine-status')
+        s_res = self.client.get(status_url, {'project': self.project.id})
+        self.assertEqual(s_res.status_code, status.HTTP_200_OK)
+        self.assertIn('gap_score', s_res.data)
+        self.assertIn('questions', s_res.data)
+        self.assertIn('findings', s_res.data)
+        self.assertIn('checklist', s_res.data)
+
