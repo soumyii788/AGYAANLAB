@@ -51,13 +51,54 @@ export const projectService = {
     return response.data;
   },
 
+  async searchOnlinePapers(query) {
+    const response = await api.get('/sources/search-online/', { params: { query } });
+    return response.data;
+  },
+
+  async importPaper(projectId, paper) {
+    const response = await api.post('/sources/import-paper/', {
+      project_id: projectId,
+      paper
+    });
+    return response.data;
+  },
+
   async getProjectAnalyses(projectId) {
     const response = await api.get('/analysis/', { params: { project: projectId } });
     return response.data;
   },
 
-  async createAnalysis(analysisData) {
-    const response = await api.post('/analysis/', analysisData);
+  async runGapAnalysis(projectId) {
+    const response = await api.post('/analysis/run-gap-analysis/', { project_id: projectId });
+    return response.data;
+  },
+
+  async getProjectReports(projectId) {
+    const response = await api.get('/reports/', { params: { project: projectId } });
+    return response.data;
+  },
+
+  async generateReport(projectId, reportType = 'full') {
+    const response = await api.post('/reports/generate/', {
+      project_id: projectId,
+      report_type: reportType
+    });
+    return response.data;
+  },
+
+  async getAllSources(params = {}) {
+    const response = await api.get('/sources/', { params });
+    return response.data;
+  },
+
+  async getAllAnalyses(params = {}) {
+    const response = await api.get('/analysis/', { params });
+    return response.data;
+  },
+
+  async getAllReports(params = {}) {
+    const response = await api.get('/reports/', { params });
     return response.data;
   }
 };

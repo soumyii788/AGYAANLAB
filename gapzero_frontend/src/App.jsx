@@ -8,10 +8,13 @@ import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
+import { SourcesPage } from './pages/SourcesPage';
+import { AnalysesPage } from './pages/AnalysesPage';
+import { ReportsPage } from './pages/ReportsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { NotFound } from './pages/NotFound';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
-import { Sparkles, Layers, FileText, Activity, Settings, HelpCircle } from 'lucide-react';
+import { Settings, HelpCircle, Activity } from 'lucide-react';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -79,42 +82,16 @@ export const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
-            <Route
-              path="/analyses"
-              element={
-                <PlaceholderPage
-                  title="Negative Space Gap Analyses"
-                  subtitle="Algorithmic scan history, unaddressed hypotheses, and contradictory findings."
-                  icon={Sparkles}
-                />
-              }
-            />
-            <Route
-              path="/sources"
-              element={
-                <PlaceholderPage
-                  title="Cross-Domain Literature Repository"
-                  subtitle="Indexed academic papers, preprints, and clinical trial datasets."
-                  icon={Layers}
-                />
-              }
-            />
-            <Route
-              path="/reports"
-              element={
-                <PlaceholderPage
-                  title="Intelligence Reports"
-                  subtitle="Peer-ready publications synthesized from identified research blindspots."
-                  icon={FileText}
-                />
-              }
-            />
+            <Route path="/sources" element={<SourcesPage />} />
+            <Route path="/analyses" element={<AnalysesPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+
             <Route
               path="/activity"
               element={
                 <PlaceholderPage
-                  title="Platform Activity & Audit Logs"
-                  subtitle="Immutable record of user actions and AI gap extractions."
+                  title="System Telemetry"
+                  subtitle="Audit log of automated literature extractions and gap models."
                   icon={Activity}
                 />
               }
@@ -124,7 +101,7 @@ export const App = () => {
               element={
                 <PlaceholderPage
                   title="Workspace Settings"
-                  subtitle="Configure organization tokens, JWT lifetimes, and access permissions."
+                  subtitle="Configure Groq AI keys, model selection, and token parameters."
                   icon={Settings}
                 />
               }
@@ -133,8 +110,8 @@ export const App = () => {
               path="/docs"
               element={
                 <PlaceholderPage
-                  title="API Documentation & Architecture"
-                  subtitle="Technical specifications for integrating external data pipelines."
+                  title="Documentation & Architecture"
+                  subtitle="API documentation and negative-space intelligence methodology."
                   icon={HelpCircle}
                 />
               }
