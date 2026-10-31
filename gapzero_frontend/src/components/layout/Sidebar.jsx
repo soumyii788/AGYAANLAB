@@ -10,8 +10,6 @@ import {
   FileCheck,
   ListChecks,
   FileText,
-  ExternalLink,
-  ShieldCheck,
   X
 } from 'lucide-react';
 import clsx from 'clsx';
@@ -113,21 +111,6 @@ export const Sidebar = ({ isOpen = false, onClose = () => {} }) => {
               </NavLink>
             );
           })}
-        </div>
-
-        {/* Bottom Footer Link */}
-        <div className="p-3 border-t border-gray-100 bg-[#F8F9FA]/80">
-          <NavLink
-            to="/landing"
-            onClick={onClose}
-            className="flex items-center justify-between px-3.5 py-2 rounded-full text-xs font-medium text-gray-600 hover:text-black hover:bg-white transition-colors border border-transparent hover:border-gray-200"
-          >
-            <span className="flex items-center gap-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#20BEFF]" />
-              Kaggle-Style Showcase
-            </span>
-            <ExternalLink className="w-3 h-3 text-gray-400" />
-          </NavLink>
         </div>
       </aside>
     </div>

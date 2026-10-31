@@ -21,7 +21,8 @@ export const Button = ({
     outline: 'bg-transparent text-[#202124] border border-gray-300 hover:bg-gray-50',
     ghost: 'bg-transparent text-gray-700 hover:text-black hover:bg-gray-100',
     danger: 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100',
-    kaggle: 'bg-[#20BEFF] text-[#202124] hover:bg-[#18A5E0] font-semibold',
+    showcase: 'bg-[#20BEFF] text-[#202124] hover:bg-[#18A5E0] font-semibold',
+    accent: 'bg-[#20BEFF] text-[#202124] hover:bg-[#18A5E0] font-semibold',
   };
 
   const sizes = {

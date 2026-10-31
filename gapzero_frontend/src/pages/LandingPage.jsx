@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import {
   ArrowRight,
   Search,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 
 export const LandingPage = () => {
+  const { isAuthenticated, user } = useAuth();
   const [activeBenchmarkTab, setActiveBenchmarkTab] = useState('trending');
 
   const benchmarks = [
@@ -27,7 +29,7 @@ export const LandingPage = () => {
       title: 'Game Arena',
       description: 'Measuring the frontier of model capabilities through dynamic game-theoretic evaluation.',
       author: 'AGYAAN LAB',
-      authorIcon: 'K',
+      authorIcon: 'A',
       authorColor: 'bg-[#20BEFF] text-white',
       leaderboard: [
         { rank: '#1', model: 'Gemini 4 Argon', score: '535', highlight: true, color: 'bg-[#F9AB00]' },
@@ -162,7 +164,7 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-white text-[#202124] selection:bg-[#20BEFF]/30">
-      {/* ─── KAGGLE NAVBAR ──────────────────────────────────────── */}
+      {/* ─── SHOWCASE NAVBAR ──────────────────────────────────────── */}
       <header className="h-16 border-b border-gray-200/90 bg-white sticky top-0 z-50 px-6 md:px-12 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-1.5 select-none">
@@ -185,18 +187,35 @@ export const LandingPage = () => {
           <button className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
             <Search className="w-4 h-4" />
           </button>
-          <Link
-            to="/login"
-            className="text-sm font-medium text-gray-700 hover:text-black px-3.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="rounded-full bg-[#202124] text-white px-5 py-2 text-sm font-medium hover:bg-black transition-all shadow-xs"
-          >
-            Sign Up
-          </Link>
+          {isAuthenticated ? (
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-semibold text-gray-700 hidden sm:inline">
+                {user?.first_name || user?.username || 'Researcher'}
+              </span>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#202124] text-white px-4 py-2 text-xs font-bold hover:bg-black transition-all shadow-xs"
+              >
+                <span>Enter Workspace</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link
+                to="/login"
+                className="text-sm font-medium text-gray-700 hover:text-black px-3.5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/login?mode=register"
+                className="rounded-full bg-[#202124] text-white px-5 py-2 text-sm font-medium hover:bg-black transition-all shadow-xs"
+              >
+                Create Account
+              </Link>
+            </div>
+          )}
         </div>
       </header>
 
@@ -241,7 +260,7 @@ export const LandingPage = () => {
             <circle cx="680" cy="360" r="3" fill="#FFFFFF" />
           </svg>
 
-          {/* Floating Kaggle Glassmorphic Card (Right) */}
+          {/* Floating Glassmorphic Showcase Card (Right) */}
           <div className="absolute right-6 sm:right-12 bottom-12 bg-white/95 backdrop-blur-md border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-lg max-w-xs text-left z-10 transition-all hover:-translate-y-1">
             <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
               <span className="flex items-center gap-1.5 font-medium text-amber-700">
@@ -583,7 +602,7 @@ export const LandingPage = () => {
             <a href="#" className="hover:text-black">Privacy</a>
             <a href="#" className="hover:text-black">Terms</a>
             <a href="#" className="hover:text-black">Documentation</a>
-            <a href="#" className="hover:text-black">Kaggle Guidelines</a>
+            <a href="#" className="hover:text-black">Community Guidelines</a>
           </div>
         </div>
       </footer>

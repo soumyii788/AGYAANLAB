@@ -18,7 +18,8 @@ export const Badge = ({
     success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     warning: 'bg-neutral-800 text-white border-neutral-700',
     danger: 'bg-rose-50 text-rose-700 border-rose-200',
-    kaggle: 'bg-[#EBF7FF] text-[#0083B0] border-[#BCE4FA]',
+    showcase: 'bg-[#EBF7FF] text-[#0083B0] border-[#BCE4FA]',
+    accent: 'bg-[#EBF7FF] text-[#0083B0] border-[#BCE4FA]',
   };
 
   const sizes = {
@@ -36,7 +37,8 @@ export const Badge = ({
     success: 'bg-emerald-600',
     warning: 'bg-neutral-400',
     danger: 'bg-rose-600',
-    kaggle: 'bg-[#20BEFF]',
+    showcase: 'bg-[#20BEFF]',
+    accent: 'bg-[#20BEFF]',
   };
 
   return (

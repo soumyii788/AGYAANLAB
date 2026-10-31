@@ -11,7 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Kaggle clean minimal scrollbars */
+/* Minimal clean scrollbars */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -30,27 +30,27 @@ body {
   background: #BDC1C6;
 }
 
-/* Kaggle Pill Utilities */
-.kaggle-pill-black {
+/* Showcase Pill Utilities */
+.showcase-pill-black {
   @apply inline-flex items-center justify-center rounded-full bg-[#202124] text-white px-5 py-2 text-sm font-medium hover:bg-black transition-all shadow-xs active:scale-[0.98];
 }
 
-.kaggle-pill-outline {
+.showcase-pill-outline {
   @apply inline-flex items-center justify-center rounded-full border border-gray-300 text-[#202124] px-5 py-2 text-sm font-medium hover:bg-gray-50 transition-all active:scale-[0.98];
 }
 
-.kaggle-pill-tab {
+.showcase-pill-tab {
   @apply px-4 py-1.5 rounded-full text-sm font-medium transition-all;
 }
 
-.kaggle-pill-tab-active {
+.showcase-pill-tab-active {
   @apply bg-[#202124] text-white shadow-xs;
 }
 
-.kaggle-pill-tab-inactive {
+.showcase-pill-tab-inactive {
   @apply text-gray-600 hover:text-black hover:bg-gray-100;
 }
 
-.kaggle-card {
+.showcase-card {
   @apply bg-white border border-gray-200/90 rounded-2xl p-5 transition-all hover:border-gray-300 hover:shadow-xs;
 }
