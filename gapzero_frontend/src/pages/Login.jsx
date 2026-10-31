@@ -15,30 +15,8 @@ import {
   ShieldCheck,
   Eye,
   EyeOff,
-  UserCheck,
-  X
+  UserCheck
 } from 'lucide-react';
-
-const GoogleIcon = ({ className = 'w-4 h-4' }) => (
-  <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      fill="#4285F4"
-      d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"
-    />
-    <path
-      fill="#34A853"
-      d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"
-    />
-    <path
-      fill="#FBBC05"
-      d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"
-    />
-    <path
-      fill="#EA4335"
-      d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
-    />
-  </svg>
-);
 
 export const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,13 +39,8 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [showConfigModal, setShowConfigModal] = useState(false);
-  const [clientIdInput, setClientIdInput] = useState(
-    localStorage.getItem('agyaan_google_client_id') || import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
-  );
 
-  const { login, register, googleLogin } = useAuth();
+  const { login, register } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -246,101 +219,6 @@ export const Login = () => {
     }
   };
 
-  // Real Google OAuth2 Trigger using Google Identity Services (GIS)
-  const triggerGoogleOAuth = (activeClientId) => {
-    if (!window.google?.accounts?.oauth2) {
-      setError('Google Identity Services SDK is loading. Please click again in 2 seconds.');
-      return;
-    }
-
-    setGoogleLoading(true);
-    setError('');
-
-    try {
-      const client = window.google.accounts.oauth2.initTokenClient({
-        client_id: activeClientId,
-        scope: 'email profile openid',
-        callback: async (tokenResponse) => {
-          if (tokenResponse.error) {
-            console.error('Google OAuth error:', tokenResponse);
-            setGoogleLoading(false);
-            if (tokenResponse.error !== 'popup_closed_by_user') {
-              setError(`Google authentication: ${tokenResponse.error_description || tokenResponse.error}`);
-            }
-            return;
-          }
-
-          try {
-            // Retrieve authenticated Google profile directly from Google
-            const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-              headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-            });
-            const profile = await userInfoRes.json();
-
-            if (!profile.email) {
-              throw new Error('Google did not return an email address.');
-            }
-
-            // Authenticate with backend and retrieve SimpleJWT session tokens
-            await googleLogin({
-              token: tokenResponse.access_token,
-              email: profile.email,
-              name: profile.name || '',
-              first_name: profile.given_name || '',
-              last_name: profile.family_name || '',
-              picture: profile.picture || '',
-              google_id: profile.sub || '',
-            });
-
-            setShowConfigModal(false);
-            navigate(from, { replace: true });
-          } catch (err) {
-            console.error('Backend Google login failed', err);
-            setError(
-              err.response?.data?.error ||
-              'Failed to complete Google sign-in. Please try again.'
-            );
-          } finally {
-            setGoogleLoading(false);
-          }
-        },
-      });
-
-      // Opens Google's authentic account selection popup
-      client.requestAccessToken({ prompt: 'select_account' });
-    } catch (err) {
-      console.error('Error starting Google OAuth', err);
-      setGoogleLoading(false);
-      setError('Could not initialize Google OAuth. Please check your Google Client ID.');
-    }
-  };
-
-  const handleGoogleSignIn = () => {
-    const activeClientId =
-      localStorage.getItem('agyaan_google_client_id') ||
-      import.meta.env.VITE_GOOGLE_CLIENT_ID ||
-      clientIdInput.trim();
-
-    if (!activeClientId) {
-      setShowConfigModal(true);
-      return;
-    }
-
-    triggerGoogleOAuth(activeClientId);
-  };
-
-  const handleSaveClientIdAndConnect = (e) => {
-    e.preventDefault();
-    const id = clientIdInput.trim();
-    if (!id) {
-      setError('Please provide a valid Google Client ID.');
-      return;
-    }
-    localStorage.setItem('agyaan_google_client_id', id);
-    setShowConfigModal(false);
-    triggerGoogleOAuth(id);
-  };
-
   return (
     <div>
       {/* ─── TAB SWITCHER (SIGN IN vs CREATE ACCOUNT) ────────────────────── */}
@@ -379,31 +257,6 @@ export const Login = () => {
             ? 'Access your research dossiers, negative-space gaps, and verification telemetry.'
             : 'Join the intelligence layer designed to find what science missed.'}
         </p>
-      </div>
-
-      {/* ─── GOOGLE AUTH BUTTON ────────────────────────────────────────── */}
-      <button
-        type="button"
-        onClick={() => handleGoogleSignIn()}
-        disabled={loading || googleLoading}
-        className="w-full py-2.5 px-4 rounded-xl border border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50 text-[#3C4043] text-xs font-semibold transition-all duration-150 flex items-center justify-center gap-3 cursor-pointer shadow-2xs hover:shadow-xs active:scale-[0.99] mb-4 group"
-      >
-        <GoogleIcon className="w-4 h-4 flex-shrink-0" />
-        <span className="text-gray-700 group-hover:text-black">
-          {googleLoading ? 'Connecting with Google...' : 'Continue with Google'}
-        </span>
-      </button>
-
-      {/* Divider */}
-      <div className="relative mb-5">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2.5 text-gray-400 font-semibold tracking-wider text-[10px]">
-            or continue with email
-          </span>
-        </div>
       </div>
 
       {/* Notification: Same Password Saved / Carried Over Badge */}
@@ -697,85 +550,6 @@ export const Login = () => {
         )}
       </div>
 
-      {/* ─── REAL GOOGLE OAUTH CONFIGURATION MODAL ───────────────────────── */}
-      {showConfigModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 animate-in zoom-in-95 duration-150">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-              <div className="flex items-center gap-2.5">
-                <GoogleIcon className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm font-bold text-gray-900">Connect Google OAuth 2.0</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowConfigModal(false)}
-                className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 hover:text-black hover:bg-gray-100 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <p className="text-xs text-gray-600 mt-3 leading-relaxed">
-              To authenticate directly with your real Google account on <span className="font-bold text-black">AGYAAN LAB</span>, please provide your Google OAuth 2.0 Web Client ID.
-            </p>
-
-            <form onSubmit={handleSaveClientIdAndConnect} className="mt-4 space-y-3.5">
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  Google Client ID
-                </label>
-                <Input
-                  type="text"
-                  placeholder="e.g. 1234567890-abcdefg.apps.googleusercontent.com"
-                  value={clientIdInput}
-                  onChange={(e) => setClientIdInput(e.target.value)}
-                  required
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl text-[11px] text-gray-600 space-y-1">
-                <p className="font-semibold text-black flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#0083B0]" />
-                  Where do I find this?
-                </p>
-                <p>
-                  Create or copy your Web Client ID from{' '}
-                  <a
-                    href="https://console.cloud.google.com/apis/credentials"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
-                  >
-                    Google Cloud Console Credentials ↗
-                  </a>
-                  . Ensure <code className="bg-gray-200 px-1 py-0.5 rounded text-[10px]">http://localhost:5173</code> is added to Authorized JavaScript origins.
-                </p>
-              </div>
-
-              <div className="flex items-center justify-end gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowConfigModal(false)}
-                  className="text-xs py-2 px-3.5 rounded-xl border-gray-300"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  className="text-xs py-2 px-4 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl"
-                  isLoading={googleLoading}
-                >
-                  Save & Launch Google Sign-In
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
