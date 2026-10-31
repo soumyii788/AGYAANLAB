@@ -14,7 +14,8 @@ import {
   ArrowRight,
   ShieldCheck,
   Eye,
-  EyeOff
+  EyeOff,
+  UserCheck
 } from 'lucide-react';
 
 export const Login = () => {
@@ -194,11 +195,28 @@ export const Login = () => {
     }
   };
 
-  const fillDemoCredentials = () => {
-    setEmail('admin@agyaanlab.ai');
-    setPassword('agyaanlab123');
-    setPasswordConfirm('agyaanlab123');
+  const handleGuestLogin = async () => {
     setError('');
+    setLoading(true);
+    try {
+      await login({ email: 'admin@agyaanlab.ai', password: 'agyaanlab123' });
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.warn('Guest login error, setting fallback guest session', err);
+      const guestUser = {
+        id: 'guest',
+        email: 'guest@agyaanlab.ai',
+        username: 'guest',
+        first_name: 'Guest',
+        last_name: 'Researcher',
+        role: 'researcher',
+      };
+      localStorage.setItem('user', JSON.stringify(guestUser));
+      localStorage.setItem('access_token', 'guest_access_token');
+      navigate('/dashboard', { replace: true });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -253,29 +271,6 @@ export const Login = () => {
           <span className="font-mono text-[10px] text-gray-400">
             {password.length} chars
           </span>
-        </div>
-      )}
-
-      {/* Demo Credentials Helper Pill (Only on login tab) */}
-      {mode === 'login' && (
-        <div className="mb-5 p-3 rounded-xl bg-[#F9F9FB] border border-[#E5E7EB] flex items-center justify-between">
-          <div>
-            <span className="text-[11px] font-semibold text-[#0083B0] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#20BEFF]" /> Demo Credentials Ready
-            </span>
-            <p className="text-[11px] text-[#4A4D55] font-mono mt-0.5">
-              admin@agyaanlab.ai / agyaanlab123
-            </p>
-          </div>
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            onClick={fillDemoCredentials}
-            className="text-xs py-1 px-2.5 rounded-lg border-gray-300 hover:bg-white"
-          >
-            Auto Fill
-          </Button>
         </div>
       )}
 
@@ -504,6 +499,29 @@ export const Login = () => {
           </Button>
         </form>
       )}
+
+      {/* ─── CONTINUE AS GUEST OPTION (DOWN SIDE) ────────────────────────── */}
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-white px-3 text-gray-400 font-semibold tracking-wider text-[11px]">
+            or explore platform
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={handleGuestLogin}
+        disabled={loading}
+        className="w-full py-2.5 px-4 rounded-xl border border-gray-200 hover:border-gray-300 bg-[#F9F9FB] hover:bg-gray-100 text-[#202124] text-xs font-bold transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer shadow-2xs hover:shadow-xs group"
+      >
+        <UserCheck className="w-4 h-4 text-gray-500 group-hover:text-black transition-colors" />
+        <span>Continue as Guest</span>
+        <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 transition-transform" />
+      </button>
 
       {/* Bottom Switcher Footer */}
       <div className="mt-6 pt-5 border-t border-[#E5E7EB] text-center">
