@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../context/ThemeContext';
 import {
@@ -116,9 +116,22 @@ export const ProfilePage = () => {
     last_name: user?.last_name || '',
     phone: user?.phone || '',
     organization: user?.organization || '',
-    role: user?.role || '',
+    role: user?.role || 'researcher',
     bio: user?.bio || '',
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        phone: user.phone || '',
+        organization: user.organization || '',
+        role: user.role || 'researcher',
+        bio: user.bio || '',
+      });
+    }
+  }, [user]);
 
   /* Notification preferences */
   const [emailNotifs, setEmailNotifs] = useState(true);
@@ -139,7 +152,14 @@ export const ProfilePage = () => {
       setTimeout(() => setSaveMsg(''), 3000);
     } catch (err) {
       console.error(err);
-      setSaveError('Failed to save. Please try again.');
+      const errors = err.response?.data;
+      if (errors && typeof errors === 'object') {
+        const firstKey = Object.keys(errors)[0];
+        const msg = Array.isArray(errors[firstKey]) ? errors[firstKey][0] : errors[firstKey];
+        setSaveError(`${firstKey}: ${msg}`);
+      } else {
+        setSaveError('Failed to save profile. Please try again.');
+      }
     } finally {
       setSaving(false);
     }
@@ -306,13 +326,20 @@ export const ProfilePage = () => {
                   onChange={(e) => handleFieldChange('organization', e.target.value)}
                   leftIcon={<Building2 className="w-4 h-4 text-gray-400" />}
                 />
-                <Input
-                  label="Role"
-                  placeholder="Senior Researcher"
-                  value={formData.role}
-                  onChange={(e) => handleFieldChange('role', e.target.value)}
-                  leftIcon={<Briefcase className="w-4 h-4 text-gray-400" />}
-                />
+                <div>
+                  <label className="block text-xs font-semibold text-[#202124] dark:text-gray-300 mb-1.5">
+                    Role
+                  </label>
+                  <select
+                    value={formData.role}
+                    onChange={(e) => handleFieldChange('role', e.target.value)}
+                    className="w-full bg-white dark:bg-gray-800 text-[#202124] dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#202124]/10 focus:border-[#202124]"
+                  >
+                    <option value="researcher">Researcher</option>
+                    <option value="analyst">Analyst</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5">

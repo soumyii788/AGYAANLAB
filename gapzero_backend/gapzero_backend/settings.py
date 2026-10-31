@@ -1,17 +1,21 @@
 """
 AGYAAN LAB Django Settings
 """
-import dj_database_url
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
+
 import os
 from pathlib import Path
 from datetime import timedelta
-from decouple import config,Csv
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
+SECRET_KEY = config("SECRET_KEY", default="django-insecure-agyaanlab-dev-secret-key-change-in-production-2024")
+DEBUG = config("DEBUG", default=True, cast=bool)
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*,localhost,127.0.0.1,0.0.0.0", cast=Csv())
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -71,12 +75,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gapzero_backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_URL = config('DATABASE_URL', default=None)
+if dj_database_url and DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
