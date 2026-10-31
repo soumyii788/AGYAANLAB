@@ -5,13 +5,13 @@ import { Button } from '../components/ui/Button';
 
 export const NotFound = () => {
   return (
-    <div className="min-h-screen bg-[#0B1120] flex flex-col items-center justify-center p-6 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-[#172235] border border-[#1E293B] flex items-center justify-center text-rose-400 mb-6 shadow-xl">
-        <AlertOctagon className="w-8 h-8" />
+    <div className="min-h-screen bg-[#F9F9FB] flex flex-col items-center justify-center p-6 text-center">
+      <div className="w-14 h-14 rounded-2xl bg-white border border-[#E5E7EB] flex items-center justify-center text-rose-500 mb-4 shadow-sm">
+        <AlertOctagon className="w-7 h-7" />
       </div>
-      <h1 className="text-4xl font-black text-[#F8FAFC]">404</h1>
-      <p className="text-lg font-bold text-slate-300 mt-2">Uncharted Negative Space</p>
-      <p className="text-xs text-slate-400 max-w-md mt-1 mb-6">
+      <h1 className="text-3xl font-extrabold text-[#1E2022]">404</h1>
+      <p className="text-base font-semibold text-[#1E2022] mt-1">Page Not Found</p>
+      <p className="text-xs text-[#4A4D55] max-w-md mt-1 mb-6">
         The coordinates you requested do not exist in the GAPZERO research matrix.
       </p>
       <Link to="/dashboard">

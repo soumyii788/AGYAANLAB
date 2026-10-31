@@ -57,14 +57,14 @@ export const Register = () => {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-[#F8FAFC]">Create Researcher Account</h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <h2 className="text-lg font-bold text-[#1E2022]">Create Account</h2>
+        <p className="text-xs text-[#4A4D55] mt-1">
           Join the intelligence layer designed to find what science missed.
         </p>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-start gap-2.5 text-xs text-rose-400">
+        <div className="mb-4 p-3 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-xs text-rose-700">
           <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
@@ -114,7 +114,7 @@ export const Register = () => {
         <Input
           label="Institution / Organization"
           name="organization"
-          placeholder="Stanford AI Lab / DeepMind"
+          placeholder="Stanford AI Lab"
           value={formData.organization}
           onChange={handleChange}
           leftIcon={<Building2 className="w-4 h-4" />}
@@ -153,10 +153,10 @@ export const Register = () => {
         </Button>
       </form>
 
-      <div className="mt-6 pt-5 border-t border-[#1E293B] text-center">
-        <p className="text-xs text-slate-400">
+      <div className="mt-6 pt-5 border-t border-[#E5E7EB] text-center">
+        <p className="text-xs text-[#4A4D55]">
           Already have an account?{' '}
-          <Link to="/login" className="text-[#38BDF8] font-semibold hover:underline">
+          <Link to="/login" className="text-[#3B82F6] font-semibold hover:underline">
             Sign in
           </Link>
         </p>

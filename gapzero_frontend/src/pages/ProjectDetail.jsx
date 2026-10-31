@@ -153,7 +153,7 @@ export const ProjectDetail = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/projects"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-[#38BDF8] transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#4A4D55] hover:text-[#3B82F6] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Projects
         </Link>
@@ -171,10 +171,10 @@ export const ProjectDetail = () => {
       <Card className="p-6 md:p-8">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-[#38BDF8] capitalize">
+            <span className="text-xs font-semibold text-[#3B82F6] capitalize">
               {project.domain}
             </span>
-            <span className="text-slate-500">•</span>
+            <span className="text-[#4A4D55]">•</span>
             <Badge
               variant={project.status === 'active' ? 'success' : 'default'}
               size="sm"
@@ -185,40 +185,40 @@ export const ProjectDetail = () => {
             </Badge>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-[#F8FAFC]">
+          <h1 className="text-2xl md:text-3xl font-bold text-[#1E2022]">
             {project.title}
           </h1>
 
-          <p className="text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-[#4A4D55] leading-relaxed">
             {project.description}
           </p>
 
-          {/* Gap Highlight if present */}
+          {/* Gap Highlight */}
           {project.gap_summary && (
-            <div className="p-4 rounded-xl bg-[#0B1120] border border-[#1E293B] flex items-start gap-3 mt-4">
-              <Sparkles className="w-4 h-4 text-[#38BDF8] flex-shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl bg-[#EFF6FF] border border-[#DBEAFE] flex items-start gap-3 mt-4">
+              <Sparkles className="w-4 h-4 text-[#3B82F6] flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-semibold text-[#38BDF8]">
+                <p className="text-xs font-semibold text-[#3B82F6]">
                   Identified Research Gap
                 </p>
-                <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">
+                <p className="text-xs text-[#1E2022] mt-0.5 leading-relaxed">
                   {project.gap_summary}
                 </p>
               </div>
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-slate-400">
+          <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#4A4D55]">
             <span className="flex items-center gap-1.5">
-              <User className="w-3.5 h-3.5 text-[#38BDF8]" />
-              Lead: <strong className="text-slate-200">{project.owner_name}</strong>
+              <User className="w-3.5 h-3.5 text-[#3B82F6]" />
+              Lead: <strong className="text-[#1E2022]">{project.owner_name}</strong>
             </span>
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-slate-400" />
+              <Calendar className="w-3.5 h-3.5 text-[#4A4D55]" />
               Updated {new Date(project.updated_at).toLocaleDateString()}
             </span>
             {project.gap_score && (
-              <span className="text-[#38BDF8] font-semibold">
+              <span className="text-[#3B82F6] font-semibold">
                 Gap Deficit: {project.gap_score}%
               </span>
             )}
@@ -227,18 +227,18 @@ export const ProjectDetail = () => {
       </Card>
 
       {/* Clean Navigation Tabs */}
-      <div className="border-b border-[#1E293B]/60 flex items-center gap-6 text-sm">
+      <div className="border-b border-[#E5E7EB] flex items-center gap-6 text-sm">
         <button
           onClick={() => setActiveTab('overview')}
           className={`pb-3 font-medium transition-colors relative ${
             activeTab === 'overview'
-              ? 'text-[#38BDF8] font-semibold'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'text-[#3B82F6] font-semibold'
+              : 'text-[#4A4D55] hover:text-[#1E2022]'
           }`}
         >
           Overview
           {activeTab === 'overview' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#38BDF8]" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3B82F6]" />
           )}
         </button>
 
@@ -246,13 +246,13 @@ export const ProjectDetail = () => {
           onClick={() => setActiveTab('sources')}
           className={`pb-3 font-medium transition-colors relative flex items-center gap-1.5 ${
             activeTab === 'sources'
-              ? 'text-[#38BDF8] font-semibold'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'text-[#3B82F6] font-semibold'
+              : 'text-[#4A4D55] hover:text-[#1E2022]'
           }`}
         >
           Sources ({sources.length})
           {activeTab === 'sources' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#38BDF8]" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3B82F6]" />
           )}
         </button>
 
@@ -260,13 +260,13 @@ export const ProjectDetail = () => {
           onClick={() => setActiveTab('notes')}
           className={`pb-3 font-medium transition-colors relative flex items-center gap-1.5 ${
             activeTab === 'notes'
-              ? 'text-[#38BDF8] font-semibold'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'text-[#3B82F6] font-semibold'
+              : 'text-[#4A4D55] hover:text-[#1E2022]'
           }`}
         >
           Notes ({notes.length})
           {activeTab === 'notes' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#38BDF8]" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3B82F6]" />
           )}
         </button>
       </div>
@@ -275,20 +275,20 @@ export const ProjectDetail = () => {
       {activeTab === 'overview' && (
         <div className="space-y-4">
           <Card className="p-6">
-            <h3 className="text-sm font-semibold text-[#F8FAFC] mb-2">Keywords & Tags</h3>
+            <h3 className="text-sm font-semibold text-[#1E2022] mb-2">Keywords & Tags</h3>
             {project.keywords && project.keywords.length > 0 ? (
               <div className="flex flex-wrap gap-1.5">
                 {project.keywords.map((kw, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-md bg-[#0B1120] text-xs text-slate-300 border border-[#1E293B]"
+                    className="px-2.5 py-1 rounded-md bg-[#F9F9FB] text-xs text-[#4A4D55] border border-[#E5E7EB]"
                   >
                     #{kw}
                   </span>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-slate-400">No keywords specified.</p>
+              <p className="text-xs text-[#4A4D55]">No keywords specified.</p>
             )}
           </Card>
         </div>
@@ -298,7 +298,7 @@ export const ProjectDetail = () => {
       {activeTab === 'sources' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#4A4D55]">
               Literature, papers, and datasets attached to this investigation.
             </p>
             <Button
@@ -326,28 +326,28 @@ export const ProjectDetail = () => {
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                     <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[#38BDF8] uppercase tracking-wider">
+                        <span className="text-xs font-semibold text-[#3B82F6] uppercase tracking-wider">
                           {source.source_type}
                         </span>
                         {source.publication_year && (
-                          <span className="text-xs text-slate-400">
+                          <span className="text-xs text-[#4A4D55]">
                             • {source.publication_year}
                           </span>
                         )}
                       </div>
 
-                      <h4 className="text-sm font-semibold text-[#F8FAFC]">
+                      <h4 className="text-sm font-semibold text-[#1E2022]">
                         {source.title}
                       </h4>
 
                       {source.authors && source.authors.length > 0 && (
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-[#4A4D55]">
                           {source.authors.join(', ')}
                         </p>
                       )}
 
                       {source.abstract && (
-                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-[#4A4D55] line-clamp-2 leading-relaxed">
                           {source.abstract}
                         </p>
                       )}
@@ -358,7 +358,7 @@ export const ProjectDetail = () => {
                         href={`https://doi.org/${source.doi}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-[#38BDF8] hover:underline"
+                        className="inline-flex items-center gap-1 text-xs text-[#3B82F6] hover:underline"
                       >
                         DOI <ExternalLink className="w-3 h-3" />
                       </a>
@@ -375,7 +375,7 @@ export const ProjectDetail = () => {
       {activeTab === 'notes' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#4A4D55]">
               Observations and anomaly notes for this project.
             </p>
             <Button
@@ -400,15 +400,15 @@ export const ProjectDetail = () => {
               {notes.map((note) => (
                 <Card key={note.id} className="p-5">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-[#F8FAFC] flex items-center gap-1.5">
-                      {note.is_pinned && <Pin className="w-3.5 h-3.5 text-[#38BDF8] fill-[#38BDF8]" />}
+                    <h4 className="text-sm font-semibold text-[#1E2022] flex items-center gap-1.5">
+                      {note.is_pinned && <Pin className="w-3.5 h-3.5 text-[#3B82F6] fill-[#3B82F6]" />}
                       {note.title}
                     </h4>
-                    <span className="text-[10px] text-slate-500">
+                    <span className="text-[10px] text-[#4A4D55]">
                       {new Date(note.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">
+                  <p className="text-xs text-[#4A4D55] leading-relaxed whitespace-pre-line">
                     {note.content}
                   </p>
                 </Card>
@@ -453,7 +453,7 @@ export const ProjectDetail = () => {
               onChange={(e) => setNewSource({ ...newSource, doi: e.target.value })}
             />
           </div>
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#1E293B]">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
             <Button type="button" variant="ghost" onClick={() => setIsSourceModalOpen(false)}>
               Cancel
             </Button>
@@ -480,19 +480,19 @@ export const ProjectDetail = () => {
             required
           />
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
-              Content <span className="text-rose-400">*</span>
+            <label className="block text-xs font-semibold text-[#1E2022] mb-1.5">
+              Content <span className="text-rose-500">*</span>
             </label>
             <textarea
               rows={4}
-              className="w-full bg-[#0B1120] text-[#F8FAFC] border border-[#1E293B] rounded-lg p-3 text-xs focus:outline-none focus:border-[#38BDF8]"
+              className="w-full bg-white text-[#1E2022] border border-[#E5E7EB] rounded-lg p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6]"
               placeholder="Type your notes..."
               value={newNote.content}
               onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
               required
             />
           </div>
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#1E293B]">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
             <Button type="button" variant="ghost" onClick={() => setIsNoteModalOpen(false)}>
               Cancel
             </Button>

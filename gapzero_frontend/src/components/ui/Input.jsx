@@ -15,38 +15,38 @@ export const Input = forwardRef(({
   return (
     <div className={clsx('w-full', containerClassName)}>
       {label && (
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-          {label} {required && <span className="text-rose-400">*</span>}
+        <label className="block text-xs font-semibold text-[#1E2022] mb-1.5">
+          {label} {required && <span className="text-rose-500">*</span>}
         </label>
       )}
       <div className="relative rounded-lg shadow-sm">
         {leftIcon && (
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#4A4D55]">
             {leftIcon}
           </div>
         )}
         <input
           ref={ref}
           className={clsx(
-            'w-full bg-[#0B1120] text-[#F8FAFC] border rounded-lg px-3.5 py-2.5 text-sm transition-all duration-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38BDF8]/40 focus:border-[#38BDF8]',
-            leftIcon && 'pl-10',
-            rightIcon && 'pr-10',
-            error ? 'border-rose-500/80 focus:ring-rose-500/40 focus:border-rose-500' : 'border-[#1E293B] hover:border-slate-700',
+            'w-full bg-white text-[#1E2022] border rounded-lg px-3 py-2 text-xs transition-all duration-150 placeholder:text-[#4A4D55]/60 focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6]',
+            leftIcon && 'pl-9',
+            rightIcon && 'pr-9',
+            error ? 'border-rose-400 focus:ring-rose-200 focus:border-rose-500' : 'border-[#E5E7EB] hover:border-slate-300',
             className
           )}
           {...props}
         />
         {rightIcon && (
-          <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#4A4D55]">
             {rightIcon}
           </div>
         )}
       </div>
       {error && (
-        <p className="mt-1.5 text-xs text-rose-400 font-medium">{error}</p>
+        <p className="mt-1 text-xs text-rose-500 font-medium">{error}</p>
       )}
       {!error && helperText && (
-        <p className="mt-1.5 text-xs text-slate-400">{helperText}</p>
+        <p className="mt-1 text-xs text-[#4A4D55]">{helperText}</p>
       )}
     </div>
   );

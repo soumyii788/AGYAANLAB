@@ -10,33 +10,31 @@ export const Badge = ({
   ...props
 }) => {
   const variants = {
-    default: 'bg-slate-800 text-slate-300 border-slate-700',
-    primary: 'bg-[#38BDF8]/10 text-[#38BDF8] border-[#38BDF8]/30',
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    danger: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    default: 'bg-slate-100 text-[#4A4D55] border-slate-200',
+    primary: 'bg-[#EFF6FF] text-[#3B82F6] border-[#DBEAFE]',
+    success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    warning: 'bg-amber-50 text-amber-700 border-amber-200',
+    danger: 'bg-rose-50 text-rose-700 border-rose-200',
   };
 
   const sizes = {
-    sm: 'text-[11px] px-2 py-0.5 gap-1',
-    md: 'text-xs px-2.5 py-1 gap-1.5',
-    lg: 'text-sm px-3 py-1.5 gap-2',
+    sm: 'text-[11px] px-2 py-0.5 gap-1 font-medium',
+    md: 'text-xs px-2.5 py-0.5 gap-1.5 font-medium',
+    lg: 'text-sm px-3 py-1 gap-2 font-medium',
   };
 
   const dotColors = {
-    default: 'bg-slate-400',
-    primary: 'bg-[#38BDF8]',
-    success: 'bg-emerald-400',
-    warning: 'bg-amber-400',
-    danger: 'bg-rose-400',
-    purple: 'bg-purple-400',
+    default: 'bg-[#4A4D55]',
+    primary: 'bg-[#3B82F6]',
+    success: 'bg-emerald-500',
+    warning: 'bg-amber-500',
+    danger: 'bg-rose-500',
   };
 
   return (
     <span
       className={clsx(
-        'inline-flex items-center font-medium rounded-full border',
+        'inline-flex items-center rounded-full border',
         variants[variant],
         sizes[size],
         className

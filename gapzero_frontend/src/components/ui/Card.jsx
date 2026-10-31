@@ -5,15 +5,13 @@ export const Card = ({
   children,
   className = '',
   hoverEffect = false,
-  glass = false,
   ...props
 }) => {
   return (
     <div
       className={clsx(
-        'rounded-xl border border-[#1E293B]/80 transition-all duration-200',
-        glass ? 'glass-panel' : 'bg-[#172235]',
-        hoverEffect && 'hover:border-[#38BDF8]/40 hover:shadow-lg hover:shadow-[#38BDF8]/5 hover:-translate-y-0.5',
+        'rounded-xl border border-[#E5E7EB] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-150',
+        hoverEffect && 'hover:border-[#3B82F6]/50 hover:shadow-md hover:-translate-y-0.5',
         className
       )}
       {...props}
@@ -24,19 +22,19 @@ export const Card = ({
 };
 
 export const CardHeader = ({ children, className = '', ...props }) => (
-  <div className={clsx('p-5 border-b border-[#1E293B]/80', className)} {...props}>
+  <div className={clsx('p-5 border-b border-[#E5E7EB]', className)} {...props}>
     {children}
   </div>
 );
 
 export const CardTitle = ({ children, className = '', ...props }) => (
-  <h3 className={clsx('text-lg font-semibold text-[#F8FAFC] tracking-tight', className)} {...props}>
+  <h3 className={clsx('text-base font-semibold text-[#1E2022] tracking-tight', className)} {...props}>
     {children}
   </h3>
 );
 
 export const CardDescription = ({ children, className = '', ...props }) => (
-  <p className={clsx('text-xs text-slate-400 mt-1', className)} {...props}>
+  <p className={clsx('text-xs text-[#4A4D55] mt-1 leading-relaxed', className)} {...props}>
     {children}
   </p>
 );

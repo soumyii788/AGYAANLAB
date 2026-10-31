@@ -5,20 +5,20 @@ import { Loader2 } from 'lucide-react';
 export const LoadingSpinner = ({ size = 'md', message = '', fullScreen = false }) => {
   const sizes = {
     sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
+    md: 'w-7 h-7',
+    lg: 'w-10 h-10',
   };
 
   const content = (
-    <div className="flex flex-col items-center justify-center gap-3">
-      <Loader2 className={clsx('animate-spin text-[#38BDF8]', sizes[size])} />
-      {message && <p className="text-sm text-slate-400 font-medium">{message}</p>}
+    <div className="flex flex-col items-center justify-center gap-2.5">
+      <Loader2 className={clsx('animate-spin text-[#3B82F6]', sizes[size])} />
+      {message && <p className="text-xs text-[#4A4D55] font-medium">{message}</p>}
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="min-h-screen w-full bg-[#0B1120] flex items-center justify-center">
+      <div className="min-h-screen w-full bg-[#F9F9FB] flex items-center justify-center">
         {content}
       </div>
     );

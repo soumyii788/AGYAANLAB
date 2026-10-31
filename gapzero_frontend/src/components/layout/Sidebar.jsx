@@ -5,8 +5,7 @@ import {
   FolderGit2,
   Layers,
   Sparkles,
-  FileText,
-  Plus
+  FileText
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -20,17 +19,17 @@ export const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-60 bg-[#101827] border-r border-[#1E293B]/60 flex flex-col flex-shrink-0 min-h-screen">
+    <aside className="w-60 bg-white border-r border-[#E5E7EB] flex flex-col flex-shrink-0 min-h-screen">
       {/* Brand Header */}
-      <div className="h-16 px-6 flex items-center gap-3 border-b border-[#1E293B]/40">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#38BDF8] to-blue-600 flex items-center justify-center text-[#0B1120] font-black text-sm shadow-md shadow-[#38BDF8]/10">
+      <div className="h-16 px-6 flex items-center gap-3 border-b border-[#E5E7EB]">
+        <div className="w-8 h-8 rounded-lg bg-[#3B82F6] flex items-center justify-center text-white font-black text-xs shadow-sm">
           G0
         </div>
         <div className="flex flex-col">
-          <span className="text-sm font-bold tracking-wider text-[#F8FAFC]">
-            GAP<span className="text-[#38BDF8]">ZERO</span>
+          <span className="text-sm font-bold tracking-tight text-[#1E2022]">
+            GAP<span className="text-[#3B82F6]">ZERO</span>
           </span>
-          <span className="text-[10px] text-slate-400 font-medium tracking-tight">
+          <span className="text-[10px] text-[#4A4D55] font-medium tracking-tight">
             Research Intelligence
           </span>
         </div>
@@ -38,6 +37,9 @@ export const Sidebar = () => {
 
       {/* Navigation */}
       <div className="flex-1 px-3 py-6 space-y-1">
+        <p className="px-3 text-[10px] font-bold text-[#4A4D55] uppercase tracking-wider mb-2">
+          Workspace
+        </p>
         {navigation.map((item) => {
           const Icon = item.icon;
           return (
@@ -48,8 +50,8 @@ export const Sidebar = () => {
                 clsx(
                   'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all duration-150',
                   isActive
-                    ? 'bg-[#172235] text-[#38BDF8] font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#172235]/40'
+                    ? 'bg-[#EFF6FF] text-[#3B82F6] font-semibold'
+                    : 'text-[#4A4D55] hover:text-[#1E2022] hover:bg-[#F9F9FB]'
                 )
               }
             >
@@ -61,13 +63,13 @@ export const Sidebar = () => {
       </div>
 
       {/* Clean Bottom Workspace Indicator */}
-      <div className="p-4 border-t border-[#1E293B]/40">
-        <div className="px-3 py-2.5 rounded-lg bg-[#0B1120]/60 border border-[#1E293B]/40 flex items-center justify-between">
+      <div className="p-4 border-t border-[#E5E7EB]">
+        <div className="px-3 py-2.5 rounded-lg bg-[#F9F9FB] border border-[#E5E7EB] flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span className="text-xs text-slate-300 font-medium">Core Engine</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="text-xs text-[#1E2022] font-medium">Core Engine</span>
           </div>
-          <span className="text-[10px] font-mono text-slate-500">v1.0</span>
+          <span className="text-[10px] font-mono text-[#4A4D55]">v1.0</span>
         </div>
       </div>
     </aside>

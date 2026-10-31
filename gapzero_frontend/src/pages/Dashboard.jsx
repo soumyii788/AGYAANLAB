@@ -5,9 +5,7 @@ import {
   ArrowRight,
   FolderGit2,
   Layers,
-  Sparkles,
-  ExternalLink,
-  BookOpen
+  Sparkles
 } from 'lucide-react';
 import {
   AreaChart,
@@ -113,14 +111,14 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Friendly, uncluttered Hero Header */}
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
-          <h1 className="text-2xl font-bold text-[#F8FAFC]">
-            Welcome, {user?.first_name || user?.username || 'Researcher'}
+          <h1 className="text-2xl font-bold text-[#1E2022]">
+            Welcome back, {user?.first_name || user?.username || 'Researcher'}
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Discover unexplored gaps and unaddressed hypotheses across your projects.
+          <p className="text-xs text-[#4A4D55] mt-1">
+            Discover unexplored gaps and unaddressed hypotheses across your research domains.
           </p>
         </div>
         <Button
@@ -132,61 +130,61 @@ export const Dashboard = () => {
         </Button>
       </div>
 
-      {/* 3 Clean, spacious metric cards */}
+      {/* 3 Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <Card className="p-6">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Research Projects</span>
-            <FolderGit2 className="w-4 h-4 text-[#38BDF8]" />
+          <div className="flex items-center justify-between text-[#4A4D55] mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider">Research Projects</span>
+            <FolderGit2 className="w-4 h-4 text-[#3B82F6]" />
           </div>
-          <div className="text-3xl font-extrabold text-[#F8FAFC]">
+          <div className="text-3xl font-extrabold text-[#1E2022]">
             {stats?.projects?.total ?? projects.length}
           </div>
-          <p className="text-xs text-slate-400 mt-1.5">
+          <p className="text-xs text-[#4A4D55] mt-1">
             {stats?.projects?.active ?? 0} actively tracked
           </p>
         </Card>
 
         <Card className="p-6">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Indexed Sources</span>
-            <Layers className="w-4 h-4 text-indigo-400" />
+          <div className="flex items-center justify-between text-[#4A4D55] mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider">Indexed Sources</span>
+            <Layers className="w-4 h-4 text-[#3B82F6]" />
           </div>
-          <div className="text-3xl font-extrabold text-[#F8FAFC]">
+          <div className="text-3xl font-extrabold text-[#1E2022]">
             {stats?.sources ?? 0}
           </div>
-          <p className="text-xs text-slate-400 mt-1.5">Papers, preprints & datasets</p>
+          <p className="text-xs text-[#4A4D55] mt-1">Papers, preprints & datasets</p>
         </Card>
 
         <Card className="p-6">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Negative Space Scans</span>
-            <Sparkles className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center justify-between text-[#4A4D55] mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider">Negative Space Scans</span>
+            <Sparkles className="w-4 h-4 text-emerald-600" />
           </div>
-          <div className="text-3xl font-extrabold text-[#F8FAFC]">
+          <div className="text-3xl font-extrabold text-[#1E2022]">
             {stats?.analyses ?? 0}
           </div>
-          <p className="text-xs text-slate-400 mt-1.5">Hypotheses mapped</p>
+          <p className="text-xs text-[#4A4D55] mt-1">Deficit hypotheses mapped</p>
         </Card>
       </div>
 
-      {/* Clean Single Analytics Chart */}
+      {/* Analytics Chart */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-base font-semibold text-[#F8FAFC]">Literature Growth vs. Unaddressed Gaps</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h3 className="text-sm font-bold text-[#1E2022]">Literature Growth vs. Unaddressed Gaps</h3>
+            <p className="text-xs text-[#4A4D55] mt-0.5">
               Comparison of published literature papers vs undetected gap findings over time
             </p>
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-4 text-xs font-medium">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#38BDF8]" />
-              <span className="text-slate-300">Published Papers</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#3B82F6]" />
+              <span className="text-[#1E2022]">Published Papers</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#818CF8]" />
-              <span className="text-slate-300">Identified Gaps</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#64748B]" />
+              <span className="text-[#4A4D55]">Identified Gaps</span>
             </div>
           </div>
         </div>
@@ -196,30 +194,31 @@ export const Dashboard = () => {
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="gradPublished" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#38BDF8" stopOpacity={0.25}/>
-                  <stop offset="95%" stopColor="#38BDF8" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.2}/>
+                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="gradGaps" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#818CF8" stopOpacity={0.25}/>
-                  <stop offset="95%" stopColor="#818CF8" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#64748B" stopOpacity={0.2}/>
+                  <stop offset="95%" stopColor="#64748B" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
-              <XAxis dataKey="month" stroke="#64748B" fontSize={12} tickLine={false} />
-              <YAxis stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+              <XAxis dataKey="month" stroke="#94A3B8" fontSize={11} tickLine={false} />
+              <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={false} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#172235',
-                  border: '1px solid #1E293B',
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid #E5E7EB',
                   borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                   fontSize: '12px',
-                  color: '#F8FAFC'
+                  color: '#1E2022'
                 }}
               />
               <Area
                 type="monotone"
                 dataKey="published"
-                stroke="#38BDF8"
+                stroke="#3B82F6"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#gradPublished)"
@@ -228,7 +227,7 @@ export const Dashboard = () => {
               <Area
                 type="monotone"
                 dataKey="gaps"
-                stroke="#818CF8"
+                stroke="#64748B"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#gradGaps)"
@@ -239,16 +238,16 @@ export const Dashboard = () => {
         </div>
       </Card>
 
-      {/* Projects List with friendly spacing */}
+      {/* Projects List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[#F8FAFC]">Recent Projects</h2>
-            <p className="text-xs text-slate-400">Your ongoing research investigations</p>
+            <h2 className="text-base font-bold text-[#1E2022]">Recent Projects</h2>
+            <p className="text-xs text-[#4A4D55]">Your active investigations</p>
           </div>
           <Link
             to="/projects"
-            className="text-xs font-semibold text-[#38BDF8] hover:text-[#0EA5E9] flex items-center gap-1"
+            className="text-xs font-semibold text-[#3B82F6] hover:text-[#2563EB] flex items-center gap-1"
           >
             All projects <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -266,8 +265,8 @@ export const Dashboard = () => {
             {projects.slice(0, 4).map((project) => (
               <Card key={project.id} hoverEffect className="p-5 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="text-xs font-medium text-[#38BDF8] capitalize">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-xs font-semibold text-[#3B82F6] capitalize">
                       {project.domain}
                     </span>
                     <Badge
@@ -281,27 +280,27 @@ export const Dashboard = () => {
                   </div>
 
                   <Link to={`/projects/${project.id}`}>
-                    <h3 className="text-base font-semibold text-[#F8FAFC] hover:text-[#38BDF8] transition-colors line-clamp-1 mb-2">
+                    <h3 className="text-sm font-semibold text-[#1E2022] hover:text-[#3B82F6] transition-colors line-clamp-1 mb-1.5">
                       {project.title}
                     </h3>
                   </Link>
 
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-xs text-[#4A4D55] line-clamp-2 leading-relaxed mb-4">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-[#1E293B]/60 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-3 text-slate-400">
+                <div className="pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-3 text-[#4A4D55]">
                     <span>{project.sources_count || 0} sources</span>
                     <span>•</span>
-                    <span className="text-[#38BDF8] font-semibold">
+                    <span className="text-[#3B82F6] font-semibold">
                       {project.gap_score ? `${project.gap_score}% gap` : 'Unscored'}
                     </span>
                   </div>
                   <Link
                     to={`/projects/${project.id}`}
-                    className="text-[#38BDF8] hover:underline font-semibold flex items-center gap-1"
+                    className="text-[#3B82F6] hover:underline font-semibold flex items-center gap-1"
                   >
                     Open <ArrowRight className="w-3 h-3" />
                   </Link>
@@ -317,7 +316,7 @@ export const Dashboard = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Start Research Project"
-        description="Define the topic and questions you want to investigate."
+        description="Define the topic and research questions to investigate."
       >
         <form onSubmit={handleCreateProject} className="space-y-4">
           <Input
@@ -329,13 +328,13 @@ export const Dashboard = () => {
           />
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
-              Objective & Description <span className="text-rose-400">*</span>
+            <label className="block text-xs font-semibold text-[#1E2022] mb-1.5">
+              Objective & Description <span className="text-rose-500">*</span>
             </label>
             <textarea
               rows={3}
-              className="w-full bg-[#0B1120] text-[#F8FAFC] border border-[#1E293B] rounded-lg p-3 text-xs focus:outline-none focus:border-[#38BDF8] placeholder:text-slate-500"
-              placeholder="What are you researching, and what answers or gaps are you searching for?"
+              className="w-full bg-white text-[#1E2022] border border-[#E5E7EB] rounded-lg p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] placeholder:text-[#4A4D55]/60"
+              placeholder="What questions or hypotheses are you looking to evaluate?"
               value={newProject.description}
               onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
               required
@@ -344,11 +343,11 @@ export const Dashboard = () => {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[#1E2022] mb-1.5">
                 Domain
               </label>
               <select
-                className="w-full bg-[#0B1120] text-[#F8FAFC] border border-[#1E293B] rounded-lg p-2.5 text-xs focus:outline-none focus:border-[#38BDF8]"
+                className="w-full bg-white text-[#1E2022] border border-[#E5E7EB] rounded-lg p-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6]"
                 value={newProject.domain}
                 onChange={(e) => setNewProject({ ...newProject, domain: e.target.value })}
               >
@@ -369,7 +368,7 @@ export const Dashboard = () => {
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#1E293B]">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
             <Button
               type="button"
               variant="ghost"

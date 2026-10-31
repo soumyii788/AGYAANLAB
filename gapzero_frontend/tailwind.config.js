@@ -4,28 +4,21 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        dark: {
-          bg: '#0B1120',
-          sidebar: '#101827',
-          card: '#172235',
-          border: '#1E293B',
-          hover: '#1F2E45',
-          muted: '#94A3B8',
-        },
-        accent: {
-          DEFAULT: '#38BDF8',
-          hover: '#0EA5E9',
-          light: '#BAE6FD',
-          dark: '#0369A1',
-        },
-        slate: {
-          text: '#F8FAFC',
-          secondary: '#CBD5E1',
-          subtle: '#64748B',
+        brand: {
+          bg: '#F9F9FB',        // Soft, low-contrast off-white (60%)
+          surface: '#FFFFFF',   // Pure white for cards, containers
+          ink: '#1E2022',       // Ink Black primary text
+          muted: '#4A4D55',     // Charcoal Gray for secondary text & labels
+          border: '#E5E7EB',    // Subtle panel borders
+          cobalt: {             // Intentional Accent (10%)
+            DEFAULT: '#3B82F6',
+            hover: '#2563EB',
+            light: '#EFF6FF',
+            dark: '#1D4ED8',
+          }
         }
       },
       fontFamily: {

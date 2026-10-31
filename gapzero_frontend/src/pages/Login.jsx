@@ -43,19 +43,19 @@ export const Login = () => {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-[#F8FAFC]">Sign In to GAPZERO</h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <h2 className="text-lg font-bold text-[#1E2022]">Sign In to GAPZERO</h2>
+        <p className="text-xs text-[#4A4D55] mt-1">
           Access your research projects and negative space intelligence.
         </p>
       </div>
 
       {/* Demo Credentials Helper Pill */}
-      <div className="mb-5 p-3 rounded-xl bg-[#0B1120] border border-[#1E293B] flex items-center justify-between">
+      <div className="mb-5 p-3 rounded-lg bg-[#F9F9FB] border border-[#E5E7EB] flex items-center justify-between">
         <div>
-          <span className="text-[11px] font-bold text-[#38BDF8] flex items-center gap-1.5">
+          <span className="text-[11px] font-semibold text-[#3B82F6] flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" /> Demo Account Ready
           </span>
-          <p className="text-[10px] text-slate-400 font-mono mt-0.5">admin@gapzero.ai / gapzero123</p>
+          <p className="text-[11px] text-[#4A4D55] font-mono mt-0.5">admin@gapzero.ai / gapzero123</p>
         </div>
         <Button
           type="button"
@@ -69,7 +69,7 @@ export const Login = () => {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-start gap-2.5 text-xs text-rose-400">
+        <div className="mb-4 p-3 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-xs text-rose-700">
           <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
@@ -106,10 +106,10 @@ export const Login = () => {
         </Button>
       </form>
 
-      <div className="mt-6 pt-5 border-t border-[#1E293B] text-center">
-        <p className="text-xs text-slate-400">
+      <div className="mt-6 pt-5 border-t border-[#E5E7EB] text-center">
+        <p className="text-xs text-[#4A4D55]">
           New to GAPZERO?{' '}
-          <Link to="/register" className="text-[#38BDF8] font-semibold hover:underline">
+          <Link to="/register" className="text-[#3B82F6] font-semibold hover:underline">
             Create an account
           </Link>
         </p>
