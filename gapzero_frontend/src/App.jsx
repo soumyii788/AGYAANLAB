@@ -51,12 +51,21 @@ const PublicOnlyRoute = ({ children }) => {
   return children;
 };
 
+const RootRoute = () => {
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) {
+    return <LoadingSpinner fullScreen message="Loading AGYAAN LAB..." />;
+  }
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />;
+};
+
 export const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public Landing Page */}
+          {/* Root & Public Landing Page */}
+          <Route path="/" element={<RootRoute />} />
           <Route path="/landing" element={<LandingPage />} />
 
           {/* Public Auth Routes */}
@@ -87,8 +96,6 @@ export const App = () => {
               </ProtectedRoute>
             }
           >
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            
             {/* 9 Core Research Intelligence Pages */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/new-research" element={<NewResearchPage />} />
