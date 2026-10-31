@@ -16,13 +16,19 @@ export const AuthProvider = ({ children }) => {
       if (hasToken && storedUser) {
         setUser(storedUser);
         setIsAuthenticated(true);
-        // Refresh profile in background
+        // Refresh profile in background to validate token is still good
         try {
           const profile = await authService.getProfile();
           setUser(profile);
           localStorage.setItem('user', JSON.stringify(profile));
         } catch (err) {
-          console.warn('Failed to revalidate profile token', err);
+          // Token is stale, expired, or from a different database — clear everything silently
+          console.warn('Stale/invalid token detected, clearing session:', err?.response?.data?.detail || err.message);
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          localStorage.removeItem('user');
+          setUser(null);
+          setIsAuthenticated(false);
         }
       }
       setLoading(false);

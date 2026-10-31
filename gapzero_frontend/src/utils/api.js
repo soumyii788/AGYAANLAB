@@ -9,12 +9,18 @@ const api = axios.create({
   },
 });
 
+// Auth endpoints that must never carry a token (they don't need one and a stale token causes 401)
+const AUTH_ONLY_ENDPOINTS = ['/auth/login/', '/auth/register/', '/auth/token/refresh/'];
+
 // Request interceptor to attach JWT token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const isAuthEndpoint = AUTH_ONLY_ENDPOINTS.some((path) => config.url?.includes(path));
+    if (!isAuthEndpoint) {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
