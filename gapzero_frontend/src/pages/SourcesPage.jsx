@@ -348,7 +348,7 @@ export const SourcesPage = () => {
               placeholder="Filter by title, URL, SHA-256 hash, or text snippet..."
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200/90 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3B82F6] focus:bg-white transition-colors"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200/90 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#3B82F6] focus:bg-white transition-colors"
             />
           </div>
 
@@ -357,7 +357,7 @@ export const SourcesPage = () => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-gray-900 focus:outline-none focus:border-[#3B82F6]"
             >
               <option value="all">All Types</option>
               <option value="url">Web URL</option>

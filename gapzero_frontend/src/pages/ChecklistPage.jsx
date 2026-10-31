@@ -407,8 +407,8 @@ export const ChecklistPage = () => {
                           </div>
 
                           {item.rationale && (
-                            <p className="text-xs text-gray-500 leading-relaxed">
-                              <strong className="text-[#CBD5E1]">Rationale:</strong> {item.rationale}
+                            <p className="text-xs text-gray-700 leading-relaxed">
+                              <strong className="text-gray-900 font-semibold">Rationale:</strong> {item.rationale}
                             </p>
                           )}
 

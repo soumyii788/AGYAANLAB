@@ -284,8 +284,8 @@ export const ReportsPage = () => {
                       className={clsx(
                         'px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors',
                         activeSection === sec.id
-                          ? 'bg-[#1E2C4A] text-white font-semibold'
-                          : 'text-gray-500 hover:text-white hover:bg-gray-100'
+                          ? 'bg-black text-white font-semibold'
+                          : 'text-gray-600 hover:text-black hover:bg-gray-100'
                       )}
                     >
                       {sec.title}
@@ -294,15 +294,15 @@ export const ReportsPage = () => {
                 </div>
 
                 {/* Methodology Transparency Notice */}
-                <div className="bg-gray-100/50 border border-gray-200/90 rounded-xl p-3.5 flex items-start gap-3">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-3.5 flex items-start gap-3">
                   <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-xs text-gray-500 leading-relaxed">
-                    <strong className="text-white">Scientific Methodology Notice:</strong> This synthesis incorporates empirical atomic claims verified against ingested literature. In accordance with epistemic rigor rules, an absence of documented evidence is never represented as proof of absence, and competing claims are preserved symmetrically.
+                  <div className="text-xs text-gray-700 leading-relaxed">
+                    <strong className="text-gray-900 font-bold">Scientific Methodology Notice:</strong> This synthesis incorporates empirical atomic claims verified against ingested literature. In accordance with epistemic rigor rules, an absence of documented evidence is never represented as proof of absence, and competing claims are preserved symmetrically.
                   </div>
                 </div>
 
                 {/* Report Content Body */}
-                <div className="bg-gray-50 rounded-xl p-6 border border-gray-200/90 text-xs text-[#CBD5E1] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto max-h-[700px] overflow-y-auto selection:bg-[#2563EB] selection:text-white">
+                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700 text-sm font-mono text-gray-900 dark:text-gray-100 font-medium leading-relaxed whitespace-pre-wrap overflow-x-auto max-h-[700px] overflow-y-auto shadow-xs">
                   {selectedReport.content}
                 </div>
               </Card>

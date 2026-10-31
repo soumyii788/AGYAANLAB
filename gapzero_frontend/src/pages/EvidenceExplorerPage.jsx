@@ -348,18 +348,18 @@ export const EvidenceExplorerPage = () => {
                 {/* Header Row: Subject / Attribute / Value Badges */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-gray-200/90">
                   <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                    <span className="font-semibold text-white bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200/90">
-                      <strong className="text-gray-400 font-normal mr-1">Subject:</strong>
+                    <span className="font-semibold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200">
+                      <strong className="text-gray-500 font-normal mr-1">Subject:</strong>
                       {claim.subject}
                     </span>
                     <span className="text-gray-400">•</span>
-                    <span className="font-semibold text-white bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200/90">
-                      <strong className="text-gray-400 font-normal mr-1">Attribute:</strong>
+                    <span className="font-semibold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200">
+                      <strong className="text-gray-500 font-normal mr-1">Attribute:</strong>
                       {claim.attribute}
                     </span>
                     <span className="text-gray-400">•</span>
                     <span className="font-bold text-blue-600 bg-gray-100 px-2.5 py-1 rounded-md border border-[#3B82F6]/30">
-                      <strong className="text-gray-400 font-normal mr-1">Value:</strong>
+                      <strong className="text-gray-500 font-normal mr-1">Value:</strong>
                       {claim.value}
                     </span>
                   </div>
@@ -425,14 +425,14 @@ export const EvidenceExplorerPage = () => {
                         key={eIdx}
                         className="p-3.5 rounded-xl bg-gray-50 border border-gray-200/90 space-y-2"
                       >
-                        <blockquote className="font-mono text-xs text-[#CBD5E1] leading-relaxed italic border-l-2 border-[#3B82F6] pl-3">
+                        <blockquote className="font-mono text-xs text-gray-900 leading-relaxed italic border-l-2 border-[#3B82F6] pl-3">
                           "{evidence.passage}"
                         </blockquote>
 
-                        <div className="flex items-center justify-between pt-1 text-[11px] text-gray-400">
+                        <div className="flex items-center justify-between pt-1 text-[11px] text-gray-500">
                           <div className="flex items-center gap-2">
                             {evidence.page_number && (
-                              <span className="font-bold text-white bg-gray-100 px-2 py-0.5 rounded border border-gray-200/90">
+                              <span className="font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">
                                 Page {evidence.page_number}
                               </span>
                             )}

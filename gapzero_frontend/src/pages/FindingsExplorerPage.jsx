@@ -562,7 +562,7 @@ export const FindingsExplorerPage = () => {
                       </div>
 
                       {/* Verbatim Supporting Passage */}
-                      <blockquote className="text-xs text-[#CBD5E1] bg-white p-3 rounded-lg border-l-2 border-[#3B82F6] italic leading-relaxed">
+                      <blockquote className="text-xs text-gray-900 bg-white p-3 rounded-lg border-l-2 border-[#3B82F6] italic leading-relaxed border border-gray-200">
                         "{link.passage}"
                       </blockquote>
 
