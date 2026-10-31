@@ -125,8 +125,8 @@ export const Projects = () => {
               onClick={() => setSelectedDomain(d.value)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 selectedDomain === d.value
-                  ? 'bg-[#0083B0] text-white border border-[#0083B0] shadow-2xs font-semibold'
-                  : 'text-[#006080] hover:text-[#004d66] bg-[#EBF7FF] border border-[#BCE4FA]'
+                  ? 'bg-black text-white border border-black shadow-2xs font-semibold'
+                  : 'text-gray-800 hover:text-black bg-[#F8F9FA] border border-[#E5E7EB]'
               }`}
             >
               {d.label}
@@ -135,13 +135,13 @@ export const Projects = () => {
         </div>
 
         <form onSubmit={handleSearch} className="relative w-full sm:w-72">
-          <Search className="w-3.5 h-3.5 text-[#0083B0] absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-3.5 h-3.5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search projects..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white text-xs text-[#1E2022] placeholder:text-[#4A4D55]/60 rounded-lg pl-8 pr-3 py-2 border border-[#E5E7EB] focus:outline-none focus:border-[#0083B0]"
+            className="w-full bg-white text-xs text-[#1E2022] placeholder:text-[#4A4D55]/60 rounded-lg pl-8 pr-3 py-2 border border-[#E5E7EB] focus:outline-none focus:border-black"
           />
         </form>
       </div>
@@ -159,14 +159,14 @@ export const Projects = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project) => (
-            <Card key={project.id} hoverEffect className="p-5 flex flex-col justify-between hover:border-[#0083B0] transition-all">
+            <Card key={project.id} hoverEffect className="p-5 flex flex-col justify-between hover:border-black transition-all">
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[10px] font-mono font-bold tracking-wider text-[#0083B0] uppercase bg-[#EBF7FF] px-2.5 py-0.5 rounded-full border border-[#BCE4FA]">
+                  <span className="text-[10px] font-mono font-bold tracking-wider text-black uppercase bg-[#F3F4F6] px-2.5 py-0.5 rounded-full border border-gray-200">
                     {project.domain}
                   </span>
                   <Badge
-                    variant={project.status === 'active' ? 'kaggle' : 'default'}
+                    variant={project.status === 'active' ? 'dark' : 'default'}
                     size="sm"
                     dot
                     className="capitalize font-mono"
@@ -176,7 +176,7 @@ export const Projects = () => {
                 </div>
 
                 <Link to={`/projects/${project.id}`}>
-                  <h3 className="text-sm font-bold text-[#1E2022] hover:text-[#0083B0] transition-colors line-clamp-2 mb-2">
+                  <h3 className="text-sm font-bold text-[#1E2022] hover:text-black transition-colors line-clamp-2 mb-2">
                     {project.title}
                   </h3>
                 </Link>
@@ -187,12 +187,12 @@ export const Projects = () => {
               </div>
 
               <div className="pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-[#4A4D55]">
-                <span className="font-mono font-bold text-[#0083B0] bg-[#EBF7FF] px-2.5 py-0.5 rounded-md border border-[#BCE4FA]">
+                <span className="font-mono font-bold text-black bg-[#F3F4F6] px-2.5 py-0.5 rounded-md border border-gray-200">
                   {project.gap_score ? `${project.gap_score}% Deficit` : 'Pending'}
                 </span>
                 <Link
                   to={`/projects/${project.id}`}
-                  className="text-[#0083B0] hover:text-[#006080] font-bold flex items-center gap-1"
+                  className="text-black hover:underline font-bold flex items-center gap-1"
                 >
                   View Details <ArrowRight className="w-3 h-3" />
                 </Link>

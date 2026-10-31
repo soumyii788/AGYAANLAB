@@ -362,21 +362,21 @@ export const Dashboard = () => {
             </div>
           </section>
 
-          {/* ─── RECENT RESEARCH PROJECTS (LIGHT & PASTEL BLUE THEMED DOSSIERS) ─────── */}
+          {/* ─── RECENT RESEARCH PROJECTS (MINIMALIST VERY LIGHT GREY & BLACK DOSSIERS - NO BLUE) ─────── */}
           <section className="space-y-6 pt-4 border-t border-gray-200/80">
             {/* Header & Subtitle */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#38BDF8] animate-pulse" />
-                  <h2 className="text-xl sm:text-2xl font-black text-[#1E293B] tracking-tight">
+                  <span className="w-2.5 h-2.5 rounded-full bg-black animate-pulse" />
+                  <h2 className="text-xl sm:text-2xl font-black text-black tracking-tight">
                     Recent Research Projects ({recentProjects.length})
                   </h2>
-                  <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#E0F2FE] text-[#0284C7] border border-[#BAE6FD]">
+                  <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#F3F4F6] text-black border border-gray-300">
                     LIVE DOSSIERS
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">
                   Ongoing investigations under empirical surveillance and negative-space gap modeling.
                 </p>
               </div>
@@ -384,22 +384,22 @@ export const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <Link
                   to="/new-research"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold transition-all shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-xs"
                 >
-                  <Plus className="w-3.5 h-3.5 text-[#BAE6FD]" />
+                  <Plus className="w-3.5 h-3.5 text-white" />
                   <span>New Investigation</span>
                 </Link>
                 <Link
                   to="/projects"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#BAE6FD] bg-[#F0F9FF] text-xs font-bold text-[#0284C7] hover:bg-white hover:border-[#0284C7] transition-all shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-300 bg-[#F8F9FA] text-xs font-bold text-black hover:bg-white hover:border-black transition-all shadow-2xs"
                 >
                   <span>View All Projects</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 text-black" />
                 </Link>
               </div>
             </div>
 
-            {/* Pastel Blue Interactive Filter Pills */}
+            {/* Light Grey Minimalist Interactive Filter Pills */}
             <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
               {[
                 { id: 'all', label: `All Projects (${recentProjects.length})` },
@@ -412,8 +412,8 @@ export const Dashboard = () => {
                   onClick={() => setProjectFilter(tab.id)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer ${
                     projectFilter === tab.id
-                      ? 'bg-[#0284C7] text-white shadow-xs'
-                      : 'bg-[#F0F9FF] text-[#0369A1] hover:bg-[#E0F2FE] hover:text-[#0284C7] border border-[#BAE6FD]/70'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'bg-[#F3F4F6] text-gray-800 hover:bg-gray-200 hover:text-black border border-gray-200'
                   }`}
                 >
                   {tab.label}
@@ -422,11 +422,11 @@ export const Dashboard = () => {
             </div>
 
             {filteredRecentProjects.length === 0 ? (
-              <div className="p-8 text-center bg-[#F0F9FF] rounded-2xl border border-dashed border-[#BAE6FD]">
-                <p className="text-xs text-slate-500">No projects match the selected filter.</p>
+              <div className="p-8 text-center bg-[#F8F9FA] rounded-2xl border border-dashed border-gray-300">
+                <p className="text-xs text-gray-500">No projects match the selected filter.</p>
                 <button
                   onClick={() => setProjectFilter('all')}
-                  className="mt-2 text-xs font-bold text-[#0284C7] underline cursor-pointer"
+                  className="mt-2 text-xs font-bold text-black underline cursor-pointer"
                 >
                   Show all projects
                 </button>
@@ -441,28 +441,28 @@ export const Dashboard = () => {
                   // Domain Icon selector
                   const renderDomainIcon = () => {
                     const d = (p.domain || '').toLowerCase();
-                    if (d.includes('tech') || d.includes('ai') || d.includes('computer')) return <Cpu className="w-3 h-3 text-[#0284C7]" />;
-                    if (d.includes('health') || d.includes('bio') || d.includes('medicine')) return <Dna className="w-3 h-3 text-[#0284C7]" />;
-                    if (d.includes('science') || d.includes('physic') || d.includes('quantum') || d.includes('material')) return <Atom className="w-3 h-3 text-[#0284C7]" />;
-                    return <Compass className="w-3 h-3 text-[#0284C7]" />;
+                    if (d.includes('tech') || d.includes('ai') || d.includes('computer')) return <Cpu className="w-3 h-3 text-black" />;
+                    if (d.includes('health') || d.includes('bio') || d.includes('medicine')) return <Dna className="w-3 h-3 text-black" />;
+                    if (d.includes('science') || d.includes('physic') || d.includes('quantum') || d.includes('material')) return <Atom className="w-3 h-3 text-black" />;
+                    return <Compass className="w-3 h-3 text-black" />;
                   };
 
                   return (
                     <div
                       key={p.id}
                       onClick={() => navigate(`/projects/${p.id}`)}
-                      className="group bg-white border border-[#BAE6FD]/80 rounded-2xl shadow-xs hover:border-[#38BDF8] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
+                      className="group bg-white border border-gray-200/90 rounded-2xl shadow-xs hover:border-black hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between cursor-pointer overflow-hidden"
                     >
-                      {/* 1. PASTEL & NORMAL LIGHT BLUE DOSSIER HEADER */}
-                      <div className="relative bg-gradient-to-r from-[#E0F2FE] via-[#BAE6FD] to-[#E0F2FE] p-4 border-b border-[#BAE6FD] overflow-hidden">
-                        {/* High-tech Constellation Grid SVG Background in soft cyan/blue */}
-                        <div className="absolute inset-0 opacity-40 pointer-events-none">
+                      {/* 1. MINIMALIST VERY LIGHT GREY DOSSIER HEADER (MATCHING SWATCH - NO BLUE) */}
+                      <div className="relative bg-gradient-to-r from-[#F9FAFB] via-[#F3F4F6] to-[#F9FAFB] p-4 border-b border-gray-200/90 overflow-hidden">
+                        {/* Faint Geometric Grid SVG Background */}
+                        <div className="absolute inset-0 opacity-15 pointer-events-none">
                           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                               <pattern id={`grid-${p.id}`} width="24" height="24" patternUnits="userSpaceOnUse">
-                                <circle cx="2" cy="2" r="0.9" fill="#0284C7" />
-                                <line x1="2" y1="2" x2="22" y2="2" stroke="#0284C7" strokeWidth="0.4" strokeDasharray="2 2" />
-                                <line x1="2" y1="2" x2="22" y2="2" stroke="#0284C7" strokeWidth="0.4" strokeDasharray="2 2" />
+                                <circle cx="2" cy="2" r="0.75" fill="#18181B" />
+                                <line x1="2" y1="2" x2="22" y2="2" stroke="#18181B" strokeWidth="0.3" strokeDasharray="2 2" />
+                                <line x1="2" y1="2" x2="22" y2="2" stroke="#18181B" strokeWidth="0.3" strokeDasharray="2 2" />
                               </pattern>
                             </defs>
                             <rect width="100%" height="100%" fill={`url(#grid-${p.id})`} />
@@ -470,68 +470,68 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="relative z-10 flex items-center justify-between gap-2">
-                          {/* Domain Pill (Crisp White/Pastel Blue Glass) */}
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-[#BAE6FD] text-[10px] font-mono font-bold tracking-widest text-[#0284C7] uppercase shadow-2xs">
+                          {/* Domain Pill (Crisp White & Black) */}
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-300 text-[10px] font-mono font-bold tracking-widest text-black uppercase shadow-2xs">
                             {renderDomainIcon()}
                             <span>{domainLabel}</span>
                           </div>
 
-                          {/* Deficit Meter (Pastel Blue Instrumentation) */}
-                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-[#BAE6FD] text-[#0369A1] font-mono text-xs font-bold shadow-2xs">
+                          {/* Deficit Meter (Solid Black & Light Grey Instrumentation) */}
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-300 text-black font-mono text-xs font-bold shadow-2xs">
                             {/* Segmented 5-tick Level Bar */}
                             <div className="flex items-center gap-1" title={`${deficit}% Deficit`}>
                               {[1, 2, 3, 4, 5].map((seg) => (
                                 <span
                                   key={seg}
                                   className={`w-1.5 h-2.5 rounded-xs transition-all ${
-                                    seg <= filledSegments ? 'bg-[#0284C7] shadow-2xs' : 'bg-[#E0F2FE]'
+                                    seg <= filledSegments ? 'bg-black' : 'bg-gray-200'
                                   }`}
                                 />
                               ))}
                             </div>
-                            <span className="tracking-tight text-[#0369A1] font-mono">
+                            <span className="tracking-tight text-black font-mono font-bold">
                               {deficit}% DEFICIT
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      {/* 2. CARD CONTENT AREA */}
+                      {/* 2. CARD CONTENT AREA (BLACK FONT & LIGHT GREY ACCENTS) */}
                       <div className="p-5 sm:p-6 space-y-4">
                         <div className="space-y-2">
-                          <h3 className="text-base sm:text-lg font-black text-[#1E293B] group-hover:text-[#0284C7] line-clamp-2 leading-snug tracking-tight transition-colors">
+                          <h3 className="text-base sm:text-lg font-black text-black group-hover:text-black line-clamp-2 leading-snug tracking-tight transition-colors">
                             {p.title}
                           </h3>
 
-                          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
                             {p.description || 'Systematic investigation of unaddressed hypotheses, empirical claims, and cross-source literature tensions.'}
                           </p>
                         </div>
 
-                        {/* Telemetry Chips (Soft Pastel Blue Style) */}
+                        {/* Telemetry Chips (Very Light Grey Chips with Black Font) */}
                         <div className="flex flex-wrap items-center gap-2 pt-1">
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F0F9FF] border border-[#BAE6FD]/60 text-[11px] font-medium text-[#0369A1]">
-                            <Layers className="w-3.5 h-3.5 text-[#0284C7]" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F8F9FA] border border-gray-200/90 text-[11px] font-semibold text-black">
+                            <Layers className="w-3.5 h-3.5 text-gray-700" />
                             <span>{p.sources_count || 0} Sources</span>
                           </div>
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F0F9FF] border border-[#BAE6FD]/60 text-[11px] font-medium text-[#0369A1]">
-                            <FileCheck className="w-3.5 h-3.5 text-[#0284C7]" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F8F9FA] border border-gray-200/90 text-[11px] font-semibold text-black">
+                            <FileCheck className="w-3.5 h-3.5 text-gray-700" />
                             <span>{p.claims_count || 0} Claims</span>
                           </div>
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8FAFC] border border-slate-200 text-[11px] font-mono text-slate-500">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F3F4F6] border border-gray-200 text-[11px] font-mono text-gray-600">
                             <span>ID: #{p.id}</span>
                           </div>
                         </div>
 
-                        {/* Deficit Micro-Track (Light Pastel & Normal Blue Gradient) */}
+                        {/* Deficit Micro-Track (Monochrome) */}
                         <div className="space-y-1.5 pt-1">
-                          <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+                          <div className="flex items-center justify-between text-[10px] font-mono text-gray-500 uppercase tracking-wider">
                             <span>Negative-Space Deficit Density</span>
-                            <span className="font-bold text-[#0284C7]">{deficit}%</span>
+                            <span className="font-bold text-black">{deficit}%</span>
                           </div>
-                          <div className="w-full h-1.5 bg-[#E0F2FE] rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-[#F3F4F6] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-gradient-to-r from-[#7DD3FC] via-[#38BDF8] to-[#0284C7] rounded-full transition-all duration-500"
+                              className="h-full bg-black rounded-full transition-all duration-500"
                               style={{ width: `${deficit}%` }}
                             />
                           </div>
@@ -539,13 +539,13 @@ export const Dashboard = () => {
                       </div>
 
                       {/* 3. CARD ACTION FOOTER */}
-                      <div className="px-5 sm:px-6 py-4 bg-[#F8FAFC] border-t border-[#F1F5F9] flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-[11px] font-mono text-[#0369A1]">
-                          <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-                          <span className="uppercase tracking-wider font-semibold">SURVEILLANCE ACTIVE</span>
+                      <div className="px-5 sm:px-6 py-4 bg-[#F8F9FA] border-t border-gray-100 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-[11px] font-mono text-black">
+                          <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+                          <span className="uppercase tracking-wider font-bold">SURVEILLANCE ACTIVE</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#0284C7] to-[#38BDF8] hover:from-[#0369A1] hover:to-[#0284C7] text-white text-xs font-bold transition-all shadow-xs group-hover:shadow-md">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-xs hover:shadow-md">
                           <span>Inspect Dossier</span>
                           <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-1 transition-transform" />
                         </div>
