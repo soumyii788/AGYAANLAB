@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import {
   FileText,
@@ -39,18 +39,157 @@ export const ReportsPage = () => {
   const [generating, setGenerating] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const [activeSection, setActiveSection] = useState('all');
+  const [highlightedSection, setHighlightedSection] = useState(null);
+
+  const contentContainerRef = useRef(null);
+  const sectionRefs = useRef({});
 
   const canonicalSections = [
-    { id: 'all', title: 'Full Intelligence Brief' },
-    { id: 'executive', title: '1. Executive Summary' },
-    { id: 'sources', title: '2. Sources Reviewed' },
-    { id: 'claims', title: '3. Key Claims' },
-    { id: 'gaps', title: '4. Potential Gaps' },
-    { id: 'contradictions', title: '5. Possible Contradictions' },
-    { id: 'freshness', title: '6. Freshness Warnings' },
-    { id: 'checklist', title: '7. Verification Checklist' },
-    { id: 'methodology', title: '8. Methodology & Limitations' }
+    { id: 'all', title: 'Full Intelligence Brief', num: 0 },
+    { id: 'executive', title: '1. Executive Summary', num: 1, keys: ['executive', 'abstract', 'summary'] },
+    { id: 'sources', title: '2. Sources Reviewed', num: 2, keys: ['source', 'literature', 'reviewed'] },
+    { id: 'claims', title: '3. Key Claims', num: 3, keys: ['claim', 'atomic', 'finding'] },
+    { id: 'gaps', title: '4. Potential Gaps', num: 4, keys: ['gap', 'hypotheses', 'void'] },
+    { id: 'contradictions', title: '5. Possible Contradictions', num: 5, keys: ['contradiction', 'tension', 'deficit', 'discrepancy'] },
+    { id: 'freshness', title: '6. Freshness Warnings', num: 6, keys: ['freshness', 'warning', 'frontier', 'obsolescence'] },
+    { id: 'checklist', title: '7. Verification Checklist', num: 7, keys: ['checklist', 'verification', 'actionable'] },
+    { id: 'methodology', title: '8. Methodology & Limitations', num: 8, keys: ['methodology', 'limitation', 'conclusion'] }
   ];
+
+  const parseReportSections = (content) => {
+    if (!content) return [];
+    const lines = content.split('\n');
+    const sections = [];
+    let current = {
+      id: 'preamble',
+      title: 'Full Intelligence Brief',
+      num: 0,
+      lines: []
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const match = line.match(/^##\s+(?:(\d+)\.\s*)?(.*)/i);
+      if (match) {
+        if (current.lines.length > 0 || current.id !== 'preamble') {
+          sections.push({
+            ...current,
+            body: current.lines.join('\n').trim()
+          });
+        }
+        const num = match[1] ? parseInt(match[1], 10) : null;
+        const rawTitle = match[2]?.trim() || '';
+
+        let matched = canonicalSections.find((c) => c.num === num);
+        if (!matched && rawTitle) {
+          matched = canonicalSections.find(
+            (c) => c.keys && c.keys.some((k) => rawTitle.toLowerCase().includes(k))
+          );
+        }
+
+        const id = matched ? matched.id : `section-${num || sections.length + 1}`;
+        const title = line.replace(/^##\s*/, '').trim();
+        current = {
+          id,
+          title,
+          num: matched?.num || num || null,
+          lines: []
+        };
+      } else {
+        current.lines.push(line);
+      }
+    }
+
+    if (current.lines.length > 0 || current.id !== 'preamble') {
+      sections.push({
+        ...current,
+        body: current.lines.join('\n').trim()
+      });
+    }
+
+    return sections;
+  };
+
+  const parsedSections = useMemo(() => {
+    return parseReportSections(selectedReport?.content);
+  }, [selectedReport?.content]);
+
+  useEffect(() => {
+    setActiveSection('all');
+    setHighlightedSection(null);
+    sectionRefs.current = {};
+    if (contentContainerRef.current) {
+      contentContainerRef.current.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [selectedReport?.id]);
+
+  const handleScrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
+
+    const container = contentContainerRef.current;
+    if (!container) return;
+
+    if (sectionId === 'all') {
+      container.scrollTo({ top: 0, behavior: 'smooth' });
+      setHighlightedSection(null);
+      return;
+    }
+
+    const targetEl = sectionRefs.current[sectionId] || document.getElementById(`report-sec-${sectionId}`);
+    if (targetEl) {
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = targetEl.getBoundingClientRect();
+      const scrollTarget = container.scrollTop + (targetRect.top - containerRect.top) - 16;
+
+      container.scrollTo({
+        top: Math.max(0, scrollTarget),
+        behavior: 'smooth'
+      });
+
+      // Also ensure container itself is comfortably in view
+      if (containerRect.top < 60 || containerRect.top > window.innerHeight - 120) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      setHighlightedSection(sectionId);
+      setTimeout(() => {
+        setHighlightedSection((prev) => (prev === sectionId ? null : prev));
+      }, 2000);
+    }
+  };
+
+  const handleContentScroll = () => {
+    const container = contentContainerRef.current;
+    if (!container) return;
+
+    if (container.scrollTop < 50) {
+      if (activeSection !== 'all') setActiveSection('all');
+      return;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    let currentId = null;
+    let minDistance = Infinity;
+
+    for (const sec of canonicalSections) {
+      if (sec.id === 'all') continue;
+      const el = sectionRefs.current[sec.id] || document.getElementById(`report-sec-${sec.id}`);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const dist = rect.top - containerRect.top;
+        if (dist <= 100 && dist > -rect.height + 30) {
+          if (Math.abs(dist) < minDistance) {
+            minDistance = Math.abs(dist);
+            currentId = sec.id;
+          }
+        }
+      }
+    }
+
+    if (currentId && currentId !== activeSection) {
+      setActiveSection(currentId);
+    }
+  };
 
   useEffect(() => {
     loadProjects();
@@ -275,22 +414,28 @@ export const ReportsPage = () => {
                 </div>
 
                 {/* 8-Section Quick Navigation Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 rounded-xl border border-gray-200/90">
-                  <span className="text-[10px] font-bold uppercase text-gray-400 px-2">Sections:</span>
-                  {canonicalSections.map((sec) => (
-                    <button
-                      key={sec.id}
-                      onClick={() => setActiveSection(sec.id)}
-                      className={clsx(
-                        'px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors',
-                        activeSection === sec.id
-                          ? 'bg-black text-white font-semibold'
-                          : 'text-gray-600 hover:text-black hover:bg-gray-100'
-                      )}
-                    >
-                      {sec.title}
-                    </button>
-                  ))}
+                <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1.5 p-2 bg-gray-50/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-xl border border-gray-200/90 dark:border-gray-700 shadow-2xs">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-2">
+                    Sections:
+                  </span>
+                  {canonicalSections.map((sec) => {
+                    const isActive = activeSection === sec.id;
+                    return (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => handleScrollToSection(sec.id)}
+                        className={clsx(
+                          'px-2.5 py-1 rounded-md text-[11px] font-medium transition-all duration-150 cursor-pointer',
+                          isActive
+                            ? 'bg-[#202124] text-white font-semibold dark:bg-white dark:text-[#202124] shadow-xs'
+                            : 'text-gray-700 hover:text-black hover:bg-gray-200/80 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700'
+                        )}
+                      >
+                        {sec.title}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Methodology Transparency Notice */}
@@ -301,9 +446,50 @@ export const ReportsPage = () => {
                   </div>
                 </div>
 
-                {/* Report Content Body */}
-                <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700 text-sm font-mono text-gray-900 dark:text-gray-100 font-medium leading-relaxed whitespace-pre-wrap overflow-x-auto max-h-[700px] overflow-y-auto shadow-xs">
-                  {selectedReport.content}
+                {/* Report Content Body - Paper Notes */}
+                <div
+                  ref={contentContainerRef}
+                  onScroll={handleContentScroll}
+                  className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700 max-h-[720px] overflow-y-auto scroll-smooth shadow-xs space-y-6"
+                >
+                  {parsedSections.map((sec) => {
+                    const isPreamble = sec.id === 'preamble';
+                    const isHighlighted = highlightedSection === sec.id;
+
+                    return (
+                      <section
+                        key={sec.id}
+                        id={`report-sec-${sec.id}`}
+                        ref={(el) => {
+                          if (el) sectionRefs.current[sec.id] = el;
+                        }}
+                        className={clsx(
+                          'transition-all duration-300 rounded-xl',
+                          isHighlighted && 'ring-2 ring-blue-500/50 bg-blue-50/70 dark:bg-blue-950/30 p-3 -m-3',
+                          !isPreamble && 'border-t border-gray-100 dark:border-gray-800 pt-5'
+                        )}
+                      >
+                        {!isPreamble && (
+                          <div className="flex items-center gap-2 pb-2 mb-3 border-b border-gray-200/80 dark:border-gray-800">
+                            {sec.num ? (
+                              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white text-[11px] font-bold shadow-2xs">
+                                {sec.num}
+                              </span>
+                            ) : (
+                              <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                            )}
+                            <h3 className="text-base font-extrabold text-[#202124] dark:text-white tracking-tight">
+                              {sec.title}
+                            </h3>
+                          </div>
+                        )}
+
+                        <div className="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-wrap">
+                          {sec.body}
+                        </div>
+                      </section>
+                    );
+                  })}
                 </div>
               </Card>
             )}
