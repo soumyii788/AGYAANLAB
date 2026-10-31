@@ -5,13 +5,12 @@ export const AuthLayout = () => {
   return (
     <div className="min-h-screen bg-[#F9F9FB] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link to="/" className="inline-flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-[#3B82F6] flex items-center justify-center text-white font-black text-xs shadow-sm">
-            AL
-          </div>
-          <span className="text-xl font-black tracking-tight text-[#1E2022]">
-            AGYAAN<span className="text-[#3B82F6]"> LAB</span>
-          </span>
+        <Link to="/" className="inline-flex items-center justify-center">
+          <img
+            src="/agyaan-logo.png"
+            alt="AGYAAN LAB"
+            className="h-12 w-auto object-contain"
+          />
         </Link>
         <p className="mt-1.5 text-xs text-[#4A4D55]">
           Don't just find answers. <span className="text-[#1E2022] font-medium">Discover what's missing.</span>

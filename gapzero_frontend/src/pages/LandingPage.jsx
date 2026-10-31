@@ -167,10 +167,12 @@ export const LandingPage = () => {
       {/* ─── SHOWCASE NAVBAR ──────────────────────────────────────── */}
       <header className="h-16 border-b border-gray-200/90 bg-white sticky top-0 z-50 px-6 md:px-12 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-1.5 select-none">
-            <span className="text-2xl font-black tracking-tight text-[#202124]">
-              agyaan<span className="text-[#20BEFF]">lab</span>
-            </span>
+          <Link to="/" className="flex items-center select-none">
+            <img
+              src="/agyaan-logo.png"
+              alt="AGYAAN LAB"
+              className="h-9 w-auto object-contain"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-700">
@@ -587,9 +589,11 @@ export const LandingPage = () => {
       {/* ─── ABOUT AGYAAN LAB (IMAGE 5 FOOTER) ────────────────────── */}
       <footer className="py-16 px-6 md:px-12 max-w-7xl mx-auto text-xs text-gray-500 space-y-6">
         <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-gray-400 mb-2">
-            About AGYAAN LAB
-          </p>
+          <img
+            src="/agyaan-logo.png"
+            alt="AGYAAN LAB"
+            className="h-10 w-auto object-contain mb-4 opacity-90"
+          />
           <p className="text-sm text-gray-700 max-w-3xl leading-relaxed">
             AGYAAN LAB is the leading platform for independent, crowdsourced AI evaluation and negative-space research intelligence.
             Our benchmarks, empirical claim extraction engine, and verification checklists empower researchers to expose unaddressed scientific voids and contradictory claims across global literature.

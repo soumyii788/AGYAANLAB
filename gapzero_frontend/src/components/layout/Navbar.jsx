@@ -33,14 +33,12 @@ export const Navbar = ({ onToggleSidebar }) => {
           </button>
         )}
 
-        <Link to={isAuthenticated ? '/dashboard' : '/landing'} className="flex items-center gap-1.5 group select-none">
-          <span
-            className={`text-2xl font-black tracking-tight transition-colors ${
-              darkMode ? 'text-white' : 'text-[#202124]'
-            }`}
-          >
-            agyaan<span className="text-[#20BEFF]">lab</span>
-          </span>
+        <Link to={isAuthenticated ? '/dashboard' : '/landing'} className="flex items-center select-none group">
+          <img
+            src="/agyaan-logo.png"
+            alt="AGYAAN LAB"
+            className={`h-9 w-auto object-contain transition-opacity group-hover:opacity-90 ${darkMode ? 'brightness-[1.15]' : ''}`}
+          />
         </Link>
       </div>
 

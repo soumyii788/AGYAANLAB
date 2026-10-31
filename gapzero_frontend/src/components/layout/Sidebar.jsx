@@ -66,12 +66,11 @@ export const Sidebar = ({ isOpen = false, onClose = () => {} }) => {
         {/* Brand Header + Close button */}
         <div className="h-16 px-6 flex items-center justify-between border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-black tracking-tight text-[#202124]">
-              agyaan<span className="text-[#20BEFF]">lab</span>
-            </span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#0083B0] border border-blue-100">
-              PRO
-            </span>
+            <img
+              src="/agyaan-logo.png"
+              alt="AGYAAN LAB"
+              className="h-8 w-auto object-contain"
+            />
           </div>
 
           <button
