@@ -147,33 +147,33 @@ export const FindingsExplorerPage = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1E2C4A] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200/90 pb-6">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-white">
               Findings Explorer
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#141F36] text-[#60A5FA] border border-[#1E2C4A]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-blue-600 border border-gray-200/90">
               {findings.length} Discovered
             </span>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-xs text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
             Multi-source intelligence audit displaying identified information gaps, empirical contradictions, and publication freshness warnings. Every finding is verifiable against atomic source passages.
           </p>
         </div>
 
         {/* Global Project Selector */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#0E1626] border border-[#1E2C4A] rounded-lg px-3 py-1.5">
-            <FolderGit2 className="w-4 h-4 text-[#60A5FA]" />
+          <div className="flex items-center gap-2 bg-white border border-gray-200/90 rounded-lg px-3 py-1.5">
+            <FolderGit2 className="w-4 h-4 text-blue-600" />
             <select
               value={selectedProjectId}
               onChange={(e) => setSelectedProjectId(e.target.value)}
               className="bg-transparent text-xs text-white border-none focus:outline-none focus:ring-0 cursor-pointer pr-4"
             >
-              <option value="" className="bg-[#0E1626] text-white">All Projects</option>
+              <option value="" className="bg-white text-white">All Projects</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#0E1626] text-white">
+                <option key={p.id} value={p.id} className="bg-white text-white">
                   {p.title}
                 </option>
               ))}
@@ -192,7 +192,7 @@ export const FindingsExplorerPage = () => {
       </div>
 
       {/* Tabs & Filters Bar */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-[#0E1626] p-3 rounded-xl border border-[#1E2C4A]">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-3 rounded-xl border border-gray-200/90">
         {/* Type Filter Tabs */}
         <div className="flex flex-wrap items-center gap-1.5">
           <button
@@ -204,12 +204,12 @@ export const FindingsExplorerPage = () => {
               'px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-2',
               activeTab === 'all'
                 ? 'bg-[#1E2C4A] text-white shadow-sm'
-                : 'text-[#94A3B8] hover:text-white hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-white hover:bg-gray-100'
             )}
           >
             <Layers className="w-3.5 h-3.5" />
             <span>All Findings</span>
-            <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#141F36] text-[#94A3B8]">
+            <span className="px-1.5 py-0.2 rounded text-[10px] bg-gray-100 text-gray-500">
               {countByType.all}
             </span>
           </button>
@@ -223,12 +223,12 @@ export const FindingsExplorerPage = () => {
               'px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-2',
               activeTab === 'gap'
                 ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
-                : 'text-[#94A3B8] hover:text-amber-400 hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-amber-400 hover:bg-gray-100'
             )}
           >
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Information Gaps</span>
-            <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#141F36] text-amber-400/80">
+            <span className="px-1.5 py-0.2 rounded text-[10px] bg-gray-100 text-amber-400/80">
               {countByType.gap}
             </span>
           </button>
@@ -242,12 +242,12 @@ export const FindingsExplorerPage = () => {
               'px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-2',
               activeTab === 'contradiction'
                 ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
-                : 'text-[#94A3B8] hover:text-rose-400 hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-rose-400 hover:bg-gray-100'
             )}
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Possible Contradictions</span>
-            <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#141F36] text-rose-400/80">
+            <span className="px-1.5 py-0.2 rounded text-[10px] bg-gray-100 text-rose-400/80">
               {countByType.contradiction}
             </span>
           </button>
@@ -261,12 +261,12 @@ export const FindingsExplorerPage = () => {
               'px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-2',
               activeTab === 'freshness'
                 ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30'
-                : 'text-[#94A3B8] hover:text-cyan-400 hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-cyan-400 hover:bg-gray-100'
             )}
           >
             <Clock className="w-3.5 h-3.5" />
             <span>Freshness Warnings</span>
-            <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#141F36] text-cyan-400/80">
+            <span className="px-1.5 py-0.2 rounded text-[10px] bg-gray-100 text-cyan-400/80">
               {countByType.freshness}
             </span>
           </button>
@@ -275,40 +275,40 @@ export const FindingsExplorerPage = () => {
         {/* Severity & Search Controls */}
         <div className="flex items-center gap-2.5">
           {/* Severity Dropdown */}
-          <div className="flex items-center gap-1.5 bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5">
-            <Filter className="w-3.5 h-3.5 text-[#64748B]" />
+          <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5">
+            <Filter className="w-3.5 h-3.5 text-gray-400" />
             <select
               value={severityFilter}
               onChange={(e) => setSeverityFilter(e.target.value)}
-              className="bg-transparent text-xs text-[#94A3B8] border-none focus:outline-none focus:ring-0 cursor-pointer"
+              className="bg-transparent text-xs text-gray-500 border-none focus:outline-none focus:ring-0 cursor-pointer"
             >
-              <option value="all" className="bg-[#0E1626]">All Severities</option>
-              <option value="critical" className="bg-[#0E1626]">Critical</option>
-              <option value="high" className="bg-[#0E1626]">High</option>
-              <option value="medium" className="bg-[#0E1626]">Medium</option>
-              <option value="low" className="bg-[#0E1626]">Low</option>
+              <option value="all" className="bg-white">All Severities</option>
+              <option value="critical" className="bg-white">Critical</option>
+              <option value="high" className="bg-white">High</option>
+              <option value="medium" className="bg-white">Medium</option>
+              <option value="low" className="bg-white">Low</option>
             </select>
           </div>
 
           {/* Search Input */}
           <div className="relative min-w-[200px]">
-            <Search className="w-3.5 h-3.5 text-[#64748B] absolute left-2.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Filter findings..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#080C15] border border-[#1E2C4A] text-xs text-white placeholder-[#64748B] rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-[#3B82F6]"
+              className="w-full bg-gray-50 border border-gray-200/90 text-xs text-white placeholder-gray-400 rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-[#3B82F6]"
             />
           </div>
         </div>
       </div>
 
       {/* Epistemic Transparency Banner */}
-      <div className="bg-[#141F36]/60 border border-[#1E2C4A] rounded-xl p-3.5 flex items-start gap-3">
-        <Info className="w-4 h-4 text-[#60A5FA] flex-shrink-0 mt-0.5" />
-        <div className="text-xs text-[#94A3B8] leading-relaxed">
-          <strong className="text-white">Epistemic Rigor Guarantee:</strong> Findings labeled as <span className="text-amber-400 font-semibold">AI Research Suggestion</span> represent hypothesis-level intelligence gaps derived by subquestion decomposition. <span className="text-[#F8FAFC]">An absence of evidence is never represented as proof of absence.</span> Contradiction findings preserve competing passages neutrally without automated adjudication.
+      <div className="bg-gray-100/60 border border-gray-200/90 rounded-xl p-3.5 flex items-start gap-3">
+        <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+        <div className="text-xs text-gray-500 leading-relaxed">
+          <strong className="text-white">Epistemic Rigor Guarantee:</strong> Findings labeled as <span className="text-amber-400 font-semibold">AI Research Suggestion</span> represent hypothesis-level intelligence gaps derived by subquestion decomposition. <span className="text-[#202124]">An absence of evidence is never represented as proof of absence.</span> Contradiction findings preserve competing passages neutrally without automated adjudication.
         </div>
       </div>
 
@@ -340,18 +340,18 @@ export const FindingsExplorerPage = () => {
           {filteredFindings.map((finding) => (
             <Card
               key={finding.id}
-              className="p-5 border-[#1E2C4A] bg-[#0E1626] hover:border-[#3B82F6]/50 transition-all duration-200"
+              className="p-5 border-gray-200/90 bg-white hover:border-[#3B82F6]/50 transition-all duration-200"
             >
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                 {/* Finding Header & Body */}
                 <div className="space-y-2.5 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-[#141F36] border border-[#1E2C4A]">
+                    <div className="p-1.5 rounded-lg bg-gray-100 border border-gray-200/90">
                       {getTypeIcon(finding.finding_type)}
                     </div>
                     {getSeverityBadge(finding.severity)}
 
-                    <span className="text-xs uppercase tracking-wider font-bold text-[#64748B]">
+                    <span className="text-xs uppercase tracking-wider font-bold text-gray-400">
                       {finding.finding_type.replace('_', ' ')}
                     </span>
 
@@ -362,8 +362,8 @@ export const FindingsExplorerPage = () => {
                       </span>
                     )}
 
-                    <span className="text-xs text-[#64748B] ml-auto">
-                      Project: <strong className="text-[#94A3B8]">{finding.project_title || 'General'}</strong>
+                    <span className="text-xs text-gray-400 ml-auto">
+                      Project: <strong className="text-gray-500">{finding.project_title || 'General'}</strong>
                     </span>
                   </div>
 
@@ -371,7 +371,7 @@ export const FindingsExplorerPage = () => {
                     {finding.title}
                   </h3>
 
-                  <p className="text-xs text-[#94A3B8] leading-relaxed">
+                  <p className="text-xs text-gray-500 leading-relaxed">
                     {finding.description}
                   </p>
 
@@ -379,28 +379,28 @@ export const FindingsExplorerPage = () => {
                   
                   {/* 1. Contradiction finding metadata */}
                   {finding.finding_type === 'contradiction' && finding.metadata && (
-                    <div className="mt-3 p-3.5 bg-[#080C15] rounded-lg border border-rose-500/20 space-y-2.5">
+                    <div className="mt-3 p-3.5 bg-gray-50 rounded-lg border border-rose-500/20 space-y-2.5">
                       <div className="flex items-center justify-between text-[11px] font-bold text-rose-400">
                         <span>COMPETING CLAIMS DETECTED</span>
-                        <span className="text-[10px] text-[#64748B] uppercase">Neutral Comparison • No Auto-Adjudication</span>
+                        <span className="text-[10px] text-gray-400 uppercase">Neutral Comparison • No Auto-Adjudication</span>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="p-2.5 rounded bg-[#0E1626] border border-[#1E2C4A]">
-                          <span className="text-[10px] font-bold uppercase text-[#60A5FA]">Claim A (Source 1)</span>
+                        <div className="p-2.5 rounded bg-white border border-gray-200/90">
+                          <span className="text-[10px] font-bold uppercase text-blue-600">Claim A (Source 1)</span>
                           <p className="text-xs text-white mt-1 font-medium">"{finding.metadata.claim_a?.value || finding.metadata.claim_a_text || 'See evidence links'}"</p>
                           {finding.metadata.claim_a?.source_title && (
-                            <span className="text-[10px] text-[#64748B] block mt-1 truncate">
+                            <span className="text-[10px] text-gray-400 block mt-1 truncate">
                               Ref: {finding.metadata.claim_a.source_title}
                             </span>
                           )}
                         </div>
 
-                        <div className="p-2.5 rounded bg-[#0E1626] border border-[#1E2C4A]">
+                        <div className="p-2.5 rounded bg-white border border-gray-200/90">
                           <span className="text-[10px] font-bold uppercase text-amber-400">Claim B (Source 2)</span>
                           <p className="text-xs text-white mt-1 font-medium">"{finding.metadata.claim_b?.value || finding.metadata.claim_b_text || 'See evidence links'}"</p>
                           {finding.metadata.claim_b?.source_title && (
-                            <span className="text-[10px] text-[#64748B] block mt-1 truncate">
+                            <span className="text-[10px] text-gray-400 block mt-1 truncate">
                               Ref: {finding.metadata.claim_b.source_title}
                             </span>
                           )}
@@ -408,7 +408,7 @@ export const FindingsExplorerPage = () => {
                       </div>
 
                       {finding.metadata.divergence_rationale && (
-                        <p className="text-[11px] text-[#94A3B8] italic pt-1 border-t border-[#1E2C4A]">
+                        <p className="text-[11px] text-gray-500 italic pt-1 border-t border-gray-200/90">
                           <strong className="text-white not-italic">Divergence Analysis:</strong> {finding.metadata.divergence_rationale}
                         </p>
                       )}
@@ -417,32 +417,32 @@ export const FindingsExplorerPage = () => {
 
                   {/* 2. Freshness finding metadata */}
                   {finding.finding_type === 'freshness' && finding.metadata && (
-                    <div className="mt-3 p-3.5 bg-[#080C15] rounded-lg border border-cyan-500/20 space-y-2">
+                    <div className="mt-3 p-3.5 bg-gray-50 rounded-lg border border-cyan-500/20 space-y-2">
                       <div className="flex flex-wrap items-center gap-3 text-xs">
-                        <span className="text-[#64748B]">
+                        <span className="text-gray-400">
                           Publication / Reporting Year: <strong className="text-white">{finding.metadata.publication_year || finding.metadata.explicit_year || 'Undated'}</strong>
                         </span>
-                        <span className="text-[#64748B]">•</span>
-                        <span className="text-[#64748B]">
+                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-400">
                           Age: <strong className="text-white">{finding.metadata.age_years ? `${finding.metadata.age_years} years` : 'Unknown'}</strong>
                         </span>
-                        <span className="text-[#64748B]">•</span>
+                        <span className="text-gray-400">•</span>
                         <span className="text-cyan-400 font-semibold uppercase text-[10px]">
                           Policy Threshold: {finding.metadata.policy_threshold_years || 3} Years
                         </span>
                       </div>
 
-                      <p className="text-[11px] text-[#64748B] italic">
-                        <strong className="text-[#94A3B8] not-italic">Non-Falsification Policy:</strong> Older information is flagged for recency validation; it is not marked false.
+                      <p className="text-[11px] text-gray-400 italic">
+                        <strong className="text-gray-500 not-italic">Non-Falsification Policy:</strong> Older information is flagged for recency validation; it is not marked false.
                       </p>
                     </div>
                   )}
 
                   {/* 3. Gap finding subquestion context */}
                   {finding.finding_type === 'gap' && finding.question_text && (
-                    <div className="mt-2 text-xs p-2.5 rounded bg-[#141F36]/40 border border-[#1E2C4A] flex items-center gap-2">
+                    <div className="mt-2 text-xs p-2.5 rounded bg-gray-100/40 border border-gray-200/90 flex items-center gap-2">
                       <HelpCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
-                      <span className="text-[#94A3B8]">
+                      <span className="text-gray-500">
                         Originating Subquestion: <strong className="text-white font-medium">{finding.question_text}</strong>
                       </span>
                     </div>
@@ -466,7 +466,7 @@ export const FindingsExplorerPage = () => {
                       variant="ghost"
                       size="sm"
                       rightIcon={<ChevronRight className="w-3.5 h-3.5" />}
-                      className="w-full justify-center text-xs text-[#94A3B8] hover:text-white"
+                      className="w-full justify-center text-xs text-gray-500 hover:text-white"
                     >
                       Audit Checklist
                     </Button>
@@ -485,10 +485,10 @@ export const FindingsExplorerPage = () => {
         title={
           selectedFinding ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#60A5FA]">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
                 {selectedFinding.finding_type} Evidence
               </span>
-              <span className="text-xs text-[#64748B]">•</span>
+              <span className="text-xs text-gray-400">•</span>
               <span className="truncate max-w-md text-sm font-semibold text-white">
                 {selectedFinding.title}
               </span>
@@ -499,11 +499,11 @@ export const FindingsExplorerPage = () => {
       >
         {selectedFinding && (
           <div className="space-y-4">
-            <div className="p-3.5 bg-[#080C15] rounded-xl border border-[#1E2C4A] space-y-1">
-              <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider">
+            <div className="p-3.5 bg-gray-50 rounded-xl border border-gray-200/90 space-y-1">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                 Finding Detail
               </span>
-              <p className="text-xs text-[#94A3B8] leading-relaxed">
+              <p className="text-xs text-gray-500 leading-relaxed">
                 {selectedFinding.explanation || selectedFinding.description}
               </p>
             </div>
@@ -513,16 +513,16 @@ export const FindingsExplorerPage = () => {
                 <h4 className="text-xs font-bold uppercase tracking-wider text-white">
                   Atomic Evidence Citations ({selectedFinding.evidence_links?.length || 0})
                 </h4>
-                <span className="text-[10px] text-[#64748B]">
+                <span className="text-[10px] text-gray-400">
                   Exact Verbatim Extraction
                 </span>
               </div>
 
               {(!selectedFinding.evidence_links || selectedFinding.evidence_links.length === 0) ? (
-                <div className="p-6 text-center bg-[#080C15] rounded-xl border border-[#1E2C4A]">
+                <div className="p-6 text-center bg-gray-50 rounded-xl border border-gray-200/90">
                   <HelpCircle className="w-8 h-8 text-amber-400 mx-auto mb-2 opacity-60" />
                   <p className="text-xs text-white font-medium">No direct empirical citations found</p>
-                  <p className="text-[11px] text-[#64748B] mt-1 max-w-md mx-auto">
+                  <p className="text-[11px] text-gray-400 mt-1 max-w-md mx-auto">
                     This finding represents an identified gap where the ingested literature provided zero atomic claims.
                   </p>
                 </div>
@@ -531,15 +531,15 @@ export const FindingsExplorerPage = () => {
                   {selectedFinding.evidence_links.map((link, idx) => (
                     <div
                       key={link.id || idx}
-                      className="p-3.5 bg-[#080C15] rounded-xl border border-[#1E2C4A] space-y-2 hover:border-[#3B82F6]/40 transition-colors"
+                      className="p-3.5 bg-gray-50 rounded-xl border border-gray-200/90 space-y-2 hover:border-[#3B82F6]/40 transition-colors"
                     >
-                      <div className="flex items-center justify-between gap-2 border-b border-[#1E2C4A] pb-2">
+                      <div className="flex items-center justify-between gap-2 border-b border-gray-200/90 pb-2">
                         <div className="flex items-center gap-2">
                           <span className={clsx(
                             'text-[9px] font-bold uppercase px-2 py-0.5 rounded',
                             link.role === 'opposes' ? 'bg-rose-500/20 text-rose-400' :
                             link.role === 'supports' ? 'bg-emerald-500/20 text-emerald-400' :
-                            'bg-[#141F36] text-[#60A5FA]'
+                            'bg-gray-100 text-blue-600'
                           )}>
                             {link.role || 'Supporting Evidence'}
                           </span>
@@ -562,18 +562,18 @@ export const FindingsExplorerPage = () => {
                       </div>
 
                       {/* Verbatim Supporting Passage */}
-                      <blockquote className="text-xs text-[#CBD5E1] bg-[#0E1626] p-3 rounded-lg border-l-2 border-[#3B82F6] italic leading-relaxed">
+                      <blockquote className="text-xs text-[#CBD5E1] bg-white p-3 rounded-lg border-l-2 border-[#3B82F6] italic leading-relaxed">
                         "{link.passage}"
                       </blockquote>
 
                       {/* Subject / Value / Claim Metadata */}
                       {(link.claim_subject || link.claim_value) && (
-                        <div className="flex items-center gap-3 text-[11px] text-[#64748B] pt-1">
+                        <div className="flex items-center gap-3 text-[11px] text-gray-400 pt-1">
                           {link.claim_subject && (
-                            <span>Subject: <strong className="text-[#94A3B8]">{link.claim_subject}</strong></span>
+                            <span>Subject: <strong className="text-gray-500">{link.claim_subject}</strong></span>
                           )}
                           {link.claim_value && (
-                            <span>Value: <strong className="text-[#94A3B8]">{link.claim_value}</strong></span>
+                            <span>Value: <strong className="text-gray-500">{link.claim_value}</strong></span>
                           )}
                         </div>
                       )}
@@ -583,7 +583,7 @@ export const FindingsExplorerPage = () => {
               )}
             </div>
 
-            <div className="flex justify-end pt-3 border-t border-[#1E2C4A]">
+            <div className="flex justify-end pt-3 border-t border-gray-200/90">
               <Button variant="secondary" size="sm" onClick={() => setIsEvidenceModalOpen(false)}>
                 Close
               </Button>

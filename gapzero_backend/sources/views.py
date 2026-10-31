@@ -150,15 +150,8 @@ class IngestURLView(APIView):
             serializer = SourceSerializer(source)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        except SSRFProtectionError as e:
-            # SSRF / security policy rejection: return 400, do NOT write to database
-            return Response(
-                {'error': str(e), 'code': 'SSRF_BLOCKED'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        except (RobotsDisallowedError, SizeLimitExceededError, IngestionError) as e:
-            # Non-SSRF ingestion errors: record the failure so it is visible in Source Manager
+        except (SSRFProtectionError, RobotsDisallowedError, SizeLimitExceededError, IngestionError) as e:
+            # Record the ingestion failure so it is visible in Source Manager
             error_msg = str(e)
             failed_source = Source.objects.create(
                 project=project,

@@ -282,15 +282,15 @@ export const SourcesPage = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#1E2C4A]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-gray-200/90">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-white tracking-tight">Source Ingestion & Literature</h1>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#141F36] text-[#3B82F6] border border-[#1E2C4A]">
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-[#3B82F6] border border-gray-200/90">
               AGYAAN LAB
             </span>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-1">
+          <p className="text-xs text-gray-500 mt-1">
             Ingest public web pages (SSRF-protected), extract multi-page PDFs via PyMuPDF, paste raw research notes, or import peer-reviewed papers.
           </p>
         </div>
@@ -320,35 +320,35 @@ export const SourcesPage = () => {
 
       {/* Metric Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-3.5 shadow-xs">
-          <p className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider">Total Sources</p>
+        <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
+          <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">Total Sources</p>
           <p className="text-2xl font-bold text-white mt-1">{sources.length}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-3.5 shadow-xs">
+        <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
           <p className="text-[11px] font-medium text-emerald-700 uppercase tracking-wider">Completed / Extracted</p>
           <p className="text-2xl font-bold text-emerald-600 mt-1">{completedCount}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-3.5 shadow-xs">
+        <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
           <p className="text-[11px] font-medium text-amber-700 uppercase tracking-wider">Scanned / OCR Needed</p>
           <p className="text-2xl font-bold text-amber-600 mt-1">{ocrNeededCount}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-3.5 shadow-xs">
+        <div className="bg-white border border-gray-200/90 rounded-xl p-3.5 shadow-xs">
           <p className="text-[11px] font-medium text-rose-700 uppercase tracking-wider">Extraction Failed</p>
           <p className="text-2xl font-bold text-rose-600 mt-1">{failedCount}</p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <Card className="p-4 bg-[#0E1626] border border-[#1E2C4A]">
+      <Card className="p-4 bg-white border border-gray-200/90">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-[#94A3B8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               placeholder="Filter by title, URL, SHA-256 hash, or text snippet..."
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg text-white placeholder-[#64748B] focus:outline-none focus:border-[#3B82F6] focus:bg-[#0E1626] transition-colors"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200/90 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3B82F6] focus:bg-white transition-colors"
             />
           </div>
 
@@ -357,7 +357,7 @@ export const SourcesPage = () => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
             >
               <option value="all">All Types</option>
               <option value="url">Web URL</option>
@@ -370,7 +370,7 @@ export const SourcesPage = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
             >
               <option value="all">All Statuses</option>
               <option value="completed">Completed</option>
@@ -384,7 +384,7 @@ export const SourcesPage = () => {
               <select
                 value={projectFilter}
                 onChange={(e) => setProjectFilter(e.target.value)}
-                className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6] max-w-[160px] truncate"
+                className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6] max-w-[160px] truncate"
               >
                 <option value="all">All Projects</option>
                 {projects.map((p) => (
@@ -405,7 +405,7 @@ export const SourcesPage = () => {
                   setStatusFilter('all');
                   setProjectFilter('all');
                 }}
-                className="text-xs text-[#94A3B8] hover:text-white"
+                className="text-xs text-gray-500 hover:text-white"
               >
                 Reset
               </Button>
@@ -449,14 +449,14 @@ export const SourcesPage = () => {
             return (
               <div
                 key={source.id}
-                className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-4 sm:p-5 shadow-xs hover:border-[#3B82F6]/50 transition-all"
+                className="bg-white border border-gray-200/90 rounded-xl p-4 sm:p-5 shadow-xs hover:border-[#3B82F6]/50 transition-all"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div className="space-y-1.5 flex-1 min-w-0">
                     {/* Top Row: Type & Status Badges */}
                     <div className="flex flex-wrap items-center gap-2">
                       {/* Type Badge */}
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#141F36] text-[#3B82F6] border border-[#1E2C4A]">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-gray-100 text-[#3B82F6] border border-gray-200/90">
                         {source.source_type === 'url' && <Globe className="w-3 h-3" />}
                         {source.source_type === 'pdf' && <FileText className="w-3 h-3" />}
                         {source.source_type === 'text' && <FileEdit className="w-3 h-3" />}
@@ -489,7 +489,7 @@ export const SourcesPage = () => {
                       {/* Content Hash Pill */}
                       {source.content_hash && (
                         <span
-                          className="font-mono text-[10px] text-[#94A3B8] bg-[#080C15] px-2 py-0.5 rounded border border-[#1E2C4A] flex items-center gap-1 cursor-pointer hover:border-[#3B82F6]"
+                          className="font-mono text-[10px] text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-200/90 flex items-center gap-1 cursor-pointer hover:border-[#3B82F6]"
                           title="SHA-256 Content Hash (Click to copy)"
                           onClick={() => {
                             navigator.clipboard.writeText(source.content_hash);
@@ -503,14 +503,14 @@ export const SourcesPage = () => {
 
                       {/* Page Count */}
                       {source.page_count && source.page_count > 1 && (
-                        <span className="text-[11px] text-[#94A3B8] bg-[#080C15] px-2 py-0.5 rounded border border-[#1E2C4A]">
+                        <span className="text-[11px] text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-200/90">
                           {source.page_count} pages
                         </span>
                       )}
 
                       {/* File Size */}
                       {source.file_size && (
-                        <span className="text-[11px] text-[#94A3B8]">
+                        <span className="text-[11px] text-gray-500">
                           {(source.file_size / 1024).toFixed(1)} KB
                         </span>
                       )}
@@ -526,7 +526,7 @@ export const SourcesPage = () => {
 
                     {/* URL Links */}
                     {(source.original_url || source.url || source.canonical_url) && (
-                      <div className="flex items-center gap-3 text-xs text-[#94A3B8]">
+                      <div className="flex items-center gap-3 text-xs text-gray-500">
                         <span className="truncate max-w-md">
                           <span className="font-medium text-white">URL:</span>{' '}
                           <a
@@ -543,7 +543,7 @@ export const SourcesPage = () => {
                     )}
 
                     {/* Publication & Ingestion Dates */}
-                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#94A3B8]">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
                       {source.publication_date && (
                         <span>
                           <strong className="text-white">Published:</strong> {source.publication_date}
@@ -603,7 +603,7 @@ export const SourcesPage = () => {
 
                     {/* Extracted Text Preview (Never fabricate content) */}
                     {source.extracted_text_preview && (
-                      <p className="text-xs text-[#94A3B8] line-clamp-2 mt-2 font-mono bg-[#080C15] p-2 rounded border border-[#1E2C4A]">
+                      <p className="text-xs text-gray-500 line-clamp-2 mt-2 font-mono bg-gray-50 p-2 rounded border border-gray-200/90">
                         {source.extracted_text_preview}
                       </p>
                     )}
@@ -663,7 +663,7 @@ export const SourcesPage = () => {
             <select
               value={targetProjectId}
               onChange={(e) => setTargetProjectId(e.target.value)}
-              className="w-full text-xs bg-[#0E1626] border border-[#1E2C4A] rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="w-full text-xs bg-white border border-gray-200/90 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
             >
               {projects.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -674,7 +674,7 @@ export const SourcesPage = () => {
           </div>
 
           {/* Ingestion Tabs */}
-          <div className="flex border-b border-[#1E2C4A]">
+          <div className="flex border-b border-gray-200/90">
             <button
               onClick={() => {
                 setIngestTab('url');
@@ -683,7 +683,7 @@ export const SourcesPage = () => {
               className={`pb-2.5 px-4 text-xs font-semibold flex items-center gap-1.5 transition-colors border-b-2 ${
                 ingestTab === 'url'
                   ? 'border-[#3B82F6] text-[#3B82F6]'
-                  : 'border-transparent text-[#94A3B8] hover:text-white'
+                  : 'border-transparent text-gray-500 hover:text-white'
               }`}
             >
               <Globe className="w-3.5 h-3.5" />
@@ -697,7 +697,7 @@ export const SourcesPage = () => {
               className={`pb-2.5 px-4 text-xs font-semibold flex items-center gap-1.5 transition-colors border-b-2 ${
                 ingestTab === 'pdf'
                   ? 'border-[#3B82F6] text-[#3B82F6]'
-                  : 'border-transparent text-[#94A3B8] hover:text-white'
+                  : 'border-transparent text-gray-500 hover:text-white'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -711,7 +711,7 @@ export const SourcesPage = () => {
               className={`pb-2.5 px-4 text-xs font-semibold flex items-center gap-1.5 transition-colors border-b-2 ${
                 ingestTab === 'text'
                   ? 'border-[#3B82F6] text-[#3B82F6]'
-                  : 'border-transparent text-[#94A3B8] hover:text-white'
+                  : 'border-transparent text-gray-500 hover:text-white'
               }`}
             >
               <FileEdit className="w-3.5 h-3.5" />
@@ -743,7 +743,7 @@ export const SourcesPage = () => {
                 />
               </div>
 
-              <div className="p-3 rounded-lg bg-[#080C15] border border-[#1E2C4A] text-[11px] text-[#94A3B8] space-y-1">
+              <div className="p-3 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500 space-y-1">
                 <p className="font-semibold text-white">Security & Extraction Protocols:</p>
                 <ul className="list-disc list-inside space-y-0.5">
                   <li>SSRF Protection: Rejects localhost, loopback, private RFC 1918 IPs, and AWS/cloud metadata.</li>
@@ -753,7 +753,7 @@ export const SourcesPage = () => {
                 </ul>
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-[#1E2C4A]">
+              <div className="flex justify-end gap-2 pt-2 border-t border-gray-200/90">
                 <Button type="button" variant="secondary" onClick={() => setIsIngestModalOpen(false)}>
                   Cancel
                 </Button>
@@ -778,7 +778,7 @@ export const SourcesPage = () => {
 
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-white">PDF File (Max 15 MB)</label>
-                <div className="border-2 border-dashed border-[#1E2C4A] hover:border-[#3B82F6] rounded-xl p-6 text-center cursor-pointer transition-colors bg-[#080C15]">
+                <div className="border-2 border-dashed border-gray-200/90 hover:border-[#3B82F6] rounded-xl p-6 text-center cursor-pointer transition-colors bg-gray-50">
                   <input
                     type="file"
                     accept=".pdf,application/pdf"
@@ -791,7 +791,7 @@ export const SourcesPage = () => {
                     {pdfFile ? (
                       <div>
                         <p className="text-xs font-bold text-white">{pdfFile.name}</p>
-                        <p className="text-[11px] text-[#94A3B8]">
+                        <p className="text-[11px] text-gray-500">
                           {(pdfFile.size / 1024 / 1024).toFixed(2)} MB • Ready for PyMuPDF extraction
                         </p>
                       </div>
@@ -800,7 +800,7 @@ export const SourcesPage = () => {
                         <p className="text-xs font-medium text-white">
                           Click to select a PDF or drag and drop
                         </p>
-                        <p className="text-[11px] text-[#94A3B8]">
+                        <p className="text-[11px] text-gray-500">
                           PDF files up to 15 MB with text layer
                         </p>
                       </div>
@@ -809,7 +809,7 @@ export const SourcesPage = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#080C15] border border-[#1E2C4A] text-[11px] text-[#94A3B8] space-y-1">
+              <div className="p-3 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500 space-y-1">
                 <p className="font-semibold text-white">PyMuPDF Extraction Engine:</p>
                 <ul className="list-disc list-inside space-y-0.5">
                   <li>Preserves exact page numbering and structure per page.</li>
@@ -818,7 +818,7 @@ export const SourcesPage = () => {
                 </ul>
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-[#1E2C4A]">
+              <div className="flex justify-end gap-2 pt-2 border-t border-gray-200/90">
                 <Button type="button" variant="secondary" onClick={() => setIsIngestModalOpen(false)}>
                   Cancel
                 </Button>
@@ -844,7 +844,7 @@ export const SourcesPage = () => {
               <div className="space-y-1">
                 <div className="flex justify-between items-center">
                   <label className="text-xs font-semibold text-white">Pasted Research Content</label>
-                  <span className="text-[10px] text-[#94A3B8]">
+                  <span className="text-[10px] text-gray-500">
                     {textContent.length} characters • {textContent.trim().split(/\s+/).filter(Boolean).length} words
                   </span>
                 </div>
@@ -853,16 +853,16 @@ export const SourcesPage = () => {
                   placeholder="Paste research excerpts, protocol notes, lab findings, or raw article text here..."
                   value={textContent}
                   onChange={(e) => setTextContent(e.target.value)}
-                  className="w-full text-xs font-mono p-3 bg-[#0E1626] border border-[#1E2C4A] rounded-lg text-white placeholder-[#64748B] focus:outline-none focus:border-[#3B82F6]"
+                  className="w-full text-xs font-mono p-3 bg-white border border-gray-200/90 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3B82F6]"
                   required
                 />
               </div>
 
-              <div className="p-3 rounded-lg bg-[#080C15] border border-[#1E2C4A] text-[11px] text-[#94A3B8]">
+              <div className="p-3 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500">
                 Content is stored faithfully without fabrication and indexed with a SHA-256 hash to prevent identical submissions.
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-[#1E2C4A]">
+              <div className="flex justify-end gap-2 pt-2 border-t border-gray-200/90">
                 <Button type="button" variant="secondary" onClick={() => setIsIngestModalOpen(false)}>
                   Cancel
                 </Button>
@@ -888,23 +888,23 @@ export const SourcesPage = () => {
         >
           <div className="space-y-4">
             {/* Metadata Bar */}
-            <div className="bg-[#080C15] p-3 rounded-lg border border-[#1E2C4A] grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/90 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
               <div>
-                <span className="text-[#94A3B8] block text-[10px] uppercase font-semibold">Source Type</span>
+                <span className="text-gray-500 block text-[10px] uppercase font-semibold">Source Type</span>
                 <span className="font-semibold text-white">{previewSource.source_type}</span>
               </div>
               <div>
-                <span className="text-[#94A3B8] block text-[10px] uppercase font-semibold">Processing Status</span>
+                <span className="text-gray-500 block text-[10px] uppercase font-semibold">Processing Status</span>
                 <span className="font-semibold text-white capitalize">{previewSource.processing_status}</span>
               </div>
               <div>
-                <span className="text-[#94A3B8] block text-[10px] uppercase font-semibold">Pages / Size</span>
+                <span className="text-gray-500 block text-[10px] uppercase font-semibold">Pages / Size</span>
                 <span className="font-semibold text-white">
                   {previewSource.page_count || 1} page(s) • {(previewSource.file_size / 1024).toFixed(1)} KB
                 </span>
               </div>
               <div>
-                <span className="text-[#94A3B8] block text-[10px] uppercase font-semibold">Published / Date</span>
+                <span className="text-gray-500 block text-[10px] uppercase font-semibold">Published / Date</span>
                 <span className="font-semibold text-white">
                   {previewSource.publication_date || previewSource.publication_year || 'N/A'}
                 </span>
@@ -913,10 +913,10 @@ export const SourcesPage = () => {
 
             {/* SHA-256 Hash with Copy */}
             {previewSource.content_hash && (
-              <div className="flex items-center justify-between p-2.5 bg-[#080C15] rounded-lg border border-[#1E2C4A] text-xs">
+              <div className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-200/90 text-xs">
                 <div className="flex items-center gap-2 overflow-hidden">
                   <span className="font-semibold text-white flex-shrink-0">SHA-256 Fingerprint:</span>
-                  <code className="text-[11px] font-mono text-[#94A3B8] truncate">
+                  <code className="text-[11px] font-mono text-gray-500 truncate">
                     {previewSource.content_hash}
                   </code>
                 </div>
@@ -960,11 +960,11 @@ export const SourcesPage = () => {
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-white">Extracted Pages ({previewSource.extracted_pages.length}):</span>
-                  <span className="text-[#94A3B8] text-[11px]">
+                  <span className="text-gray-500 text-[11px]">
                     Showing Page {previewSource.extracted_pages[selectedPreviewPage]?.page} of {previewSource.extracted_pages.length}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-[#080C15] rounded-lg border border-[#1E2C4A]">
+                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-gray-50 rounded-lg border border-gray-200/90">
                   {previewSource.extracted_pages.map((p, idx) => (
                     <button
                       key={idx}
@@ -972,7 +972,7 @@ export const SourcesPage = () => {
                       className={`text-xs px-2.5 py-1 rounded font-medium transition-colors ${
                         selectedPreviewPage === idx
                           ? 'bg-[#3B82F6] text-white shadow-xs'
-                          : 'bg-[#0E1626] text-[#94A3B8] border border-[#1E2C4A] hover:bg-[#080C15]'
+                          : 'bg-white text-gray-500 border border-gray-200/90 hover:bg-gray-50'
                       }`}
                     >
                       Page {p.page} ({p.char_count || p.text?.length || 0} ch)
@@ -1009,14 +1009,14 @@ export const SourcesPage = () => {
                 </Button>
               </div>
 
-              <div className="max-h-[380px] overflow-y-auto p-4 rounded-lg bg-[#080C15] border border-[#1E2C4A] font-mono text-xs text-white whitespace-pre-wrap leading-relaxed select-text">
+              <div className="max-h-[380px] overflow-y-auto p-4 rounded-lg bg-gray-50 border border-gray-200/90 font-mono text-xs text-white whitespace-pre-wrap leading-relaxed select-text">
                 {previewSource.extracted_pages && previewSource.extracted_pages.length > 1
                   ? previewSource.extracted_pages[selectedPreviewPage]?.text || 'No text extracted on this page.'
                   : previewSource.extracted_text || previewSource.abstract || 'No extracted text content available.'}
               </div>
             </div>
 
-            <div className="flex justify-end pt-3 border-t border-[#1E2C4A]">
+            <div className="flex justify-end pt-3 border-t border-gray-200/90">
               <Button variant="primary" onClick={() => setPreviewSource(null)}>
                 Close Preview
               </Button>
@@ -1050,11 +1050,11 @@ export const SourcesPage = () => {
 
           {projects.length > 0 && (
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-[#94A3B8] font-semibold">Target Project:</span>
+              <span className="text-gray-500 font-semibold">Target Project:</span>
               <select
                 value={targetProjectId}
                 onChange={(e) => setTargetProjectId(e.target.value)}
-                className="bg-[#0E1626] border border-[#1E2C4A] rounded-md px-2.5 py-1 text-xs text-white focus:outline-none focus:border-[#3B82F6]"
+                className="bg-white border border-gray-200/90 rounded-md px-2.5 py-1 text-xs text-white focus:outline-none focus:border-[#3B82F6]"
               >
                 {projects.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -1068,7 +1068,7 @@ export const SourcesPage = () => {
           {searching ? (
             <LoadingSpinner size="md" message="Scanning open literature..." />
           ) : searchResults.length === 0 ? (
-            <p className="text-xs text-[#94A3B8] text-center py-6">
+            <p className="text-xs text-gray-500 text-center py-6">
               Enter any research query to discover verified academic papers.
             </p>
           ) : (
@@ -1076,23 +1076,23 @@ export const SourcesPage = () => {
               {searchResults.map((paper, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-lg border border-[#1E2C4A] bg-[#080C15] flex flex-col justify-between gap-2"
+                  className="p-3.5 rounded-lg border border-gray-200/90 bg-gray-50 flex flex-col justify-between gap-2"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 text-[11px] mb-1">
                       <span className="font-semibold text-[#3B82F6]">
                         {paper.journal || 'Academic Paper'}
                       </span>
-                      <span className="text-[#94A3B8]">
+                      <span className="text-gray-500">
                         {paper.publication_year} • {paper.cited_by_count} citations
                       </span>
                     </div>
                     <h5 className="text-xs font-bold text-white">{paper.title}</h5>
                     {paper.authors && (
-                      <p className="text-[11px] text-[#94A3B8] mt-0.5">{paper.authors.join(', ')}</p>
+                      <p className="text-[11px] text-gray-500 mt-0.5">{paper.authors.join(', ')}</p>
                     )}
                   </div>
-                  <div className="flex items-center justify-end pt-2 border-t border-[#1E2C4A]">
+                  <div className="flex items-center justify-end pt-2 border-t border-gray-200/90">
                     <Button
                       size="sm"
                       variant="primary"

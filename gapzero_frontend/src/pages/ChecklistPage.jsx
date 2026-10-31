@@ -146,7 +146,7 @@ export const ChecklistPage = () => {
         );
       case 'low':
         return (
-          <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-[#141F36] text-[#94A3B8] border border-[#1E2C4A]">
+          <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-gray-100 text-gray-500 border border-gray-200/90">
             Low
           </span>
         );
@@ -158,33 +158,33 @@ export const ChecklistPage = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1E2C4A] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200/90 pb-6">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-white">
               Verification Checklist
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#141F36] text-[#60A5FA] border border-[#1E2C4A]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-blue-600 border border-gray-200/90">
               {completedTasks}/{totalTasks} Resolved ({percentComplete}%)
             </span>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-xs text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
             Prioritized actionable research tasks derived from identified literature gaps, competing contradictions, and freshness thresholds. Resolve empirical deficits before finalizing decisions.
           </p>
         </div>
 
         {/* Project Selector & Actions */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#0E1626] border border-[#1E2C4A] rounded-lg px-3 py-1.5">
-            <FolderGit2 className="w-4 h-4 text-[#60A5FA]" />
+          <div className="flex items-center gap-2 bg-white border border-gray-200/90 rounded-lg px-3 py-1.5">
+            <FolderGit2 className="w-4 h-4 text-blue-600" />
             <select
               value={selectedProjectId}
               onChange={(e) => setSelectedProjectId(e.target.value)}
               className="bg-transparent text-xs text-white border-none focus:outline-none focus:ring-0 cursor-pointer pr-4"
             >
-              <option value="" className="bg-[#0E1626] text-white">All Projects</option>
+              <option value="" className="bg-white text-white">All Projects</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#0E1626] text-white">
+                <option key={p.id} value={p.id} className="bg-white text-white">
                   {p.title}
                 </option>
               ))}
@@ -203,15 +203,15 @@ export const ChecklistPage = () => {
       </div>
 
       {/* Progress & Summary Bar */}
-      <Card className="p-5 bg-[#0E1626] border-[#1E2C4A]">
+      <Card className="p-5 bg-white border-gray-200/90">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#60A5FA]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">
               Empirical Deficit Resolution Progress
             </span>
             <div className="flex items-center gap-3">
               <span className="text-2xl font-black text-white">{percentComplete}%</span>
-              <span className="text-xs text-[#94A3B8]">
+              <span className="text-xs text-gray-500">
                 {completedTasks} completed out of {totalTasks} verification actions
               </span>
             </div>
@@ -220,7 +220,7 @@ export const ChecklistPage = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-xs">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-              <span className="text-[#94A3B8]">
+              <span className="text-gray-500">
                 Critical:{' '}
                 <strong className="text-white">
                   {checklistItems.filter((i) => i.priority === 'critical' && !i.is_completed).length}
@@ -230,7 +230,7 @@ export const ChecklistPage = () => {
 
             <div className="flex items-center gap-2 text-xs">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              <span className="text-[#94A3B8]">
+              <span className="text-gray-500">
                 High:{' '}
                 <strong className="text-white">
                   {checklistItems.filter((i) => i.priority === 'high' && !i.is_completed).length}
@@ -240,7 +240,7 @@ export const ChecklistPage = () => {
 
             <div className="flex items-center gap-2 text-xs">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              <span className="text-[#94A3B8]">
+              <span className="text-gray-500">
                 Resolved: <strong className="text-emerald-400">{completedTasks}</strong>
               </span>
             </div>
@@ -248,7 +248,7 @@ export const ChecklistPage = () => {
         </div>
 
         {/* Progress Bar Track */}
-        <div className="w-full h-2.5 bg-[#080C15] rounded-full overflow-hidden mt-4 border border-[#1E2C4A]">
+        <div className="w-full h-2.5 bg-gray-50 rounded-full overflow-hidden mt-4 border border-gray-200/90">
           <div
             className="h-full bg-gradient-to-r from-[#2563EB] to-emerald-500 transition-all duration-500 rounded-full"
             style={{ width: `${percentComplete}%` }}
@@ -257,7 +257,7 @@ export const ChecklistPage = () => {
       </Card>
 
       {/* Filter Controls Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#0E1626] p-3 rounded-xl border border-[#1E2C4A]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-gray-200/90">
         {/* Status Filters */}
         <div className="flex items-center gap-1.5">
           <button
@@ -266,7 +266,7 @@ export const ChecklistPage = () => {
               'px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors',
               statusFilter === 'all'
                 ? 'bg-[#1E2C4A] text-white'
-                : 'text-[#94A3B8] hover:text-white hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-white hover:bg-gray-100'
             )}
           >
             All Tasks ({checklistItems.length})
@@ -277,7 +277,7 @@ export const ChecklistPage = () => {
               'px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors',
               statusFilter === 'active'
                 ? 'bg-[#1E2C4A] text-white'
-                : 'text-[#94A3B8] hover:text-white hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-white hover:bg-gray-100'
             )}
           >
             Pending ({checklistItems.filter((i) => !i.is_completed).length})
@@ -288,7 +288,7 @@ export const ChecklistPage = () => {
               'px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors',
               statusFilter === 'completed'
                 ? 'bg-[#1E2C4A] text-white'
-                : 'text-[#94A3B8] hover:text-white hover:bg-[#141F36]'
+                : 'text-gray-500 hover:text-white hover:bg-gray-100'
             )}
           >
             Completed ({completedTasks})
@@ -297,29 +297,29 @@ export const ChecklistPage = () => {
 
         {/* Priority Filter & Search */}
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5 bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5">
-            <Filter className="w-3.5 h-3.5 text-[#64748B]" />
+          <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5">
+            <Filter className="w-3.5 h-3.5 text-gray-400" />
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
-              className="bg-transparent text-xs text-[#94A3B8] border-none focus:outline-none focus:ring-0 cursor-pointer"
+              className="bg-transparent text-xs text-gray-500 border-none focus:outline-none focus:ring-0 cursor-pointer"
             >
-              <option value="all" className="bg-[#0E1626]">All Priorities</option>
-              <option value="critical" className="bg-[#0E1626]">Critical Only</option>
-              <option value="high" className="bg-[#0E1626]">High Only</option>
-              <option value="medium" className="bg-[#0E1626]">Medium Only</option>
-              <option value="low" className="bg-[#0E1626]">Low Only</option>
+              <option value="all" className="bg-white">All Priorities</option>
+              <option value="critical" className="bg-white">Critical Only</option>
+              <option value="high" className="bg-white">High Only</option>
+              <option value="medium" className="bg-white">Medium Only</option>
+              <option value="low" className="bg-white">Low Only</option>
             </select>
           </div>
 
           <div className="relative min-w-[200px]">
-            <Search className="w-3.5 h-3.5 text-[#64748B] absolute left-2.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search tasks..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#080C15] border border-[#1E2C4A] text-xs text-white placeholder-[#64748B] rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-[#3B82F6]"
+              className="w-full bg-gray-50 border border-gray-200/90 text-xs text-white placeholder-gray-400 rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-[#3B82F6]"
             />
           </div>
         </div>
@@ -357,10 +357,10 @@ export const ChecklistPage = () => {
             return (
               <div key={pGroup} className="space-y-3">
                 <div className="flex items-center gap-2 px-1">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">
                     {pGroup} Priority Verification
                   </h3>
-                  <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-[#141F36] text-[#60A5FA]">
+                  <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-gray-100 text-blue-600">
                     {itemsInGroup.length}
                   </span>
                 </div>
@@ -370,10 +370,10 @@ export const ChecklistPage = () => {
                     <Card
                       key={item.id}
                       className={clsx(
-                        'p-4 border-[#1E2C4A] transition-all duration-150',
+                        'p-4 border-gray-200/90 transition-all duration-150',
                         item.is_completed
-                          ? 'bg-[#0E1626]/50 opacity-70'
-                          : 'bg-[#0E1626] hover:border-[#3B82F6]/40'
+                          ? 'bg-white/50 opacity-70'
+                          : 'bg-white hover:border-[#3B82F6]/40'
                       )}
                     >
                       <div className="flex items-start gap-3.5">
@@ -385,7 +385,7 @@ export const ChecklistPage = () => {
                             'mt-0.5 w-5 h-5 rounded flex items-center justify-center transition-colors flex-shrink-0 border',
                             item.is_completed
                               ? 'bg-emerald-600 border-emerald-500 text-white'
-                              : 'bg-[#080C15] border-[#1E2C4A] text-transparent hover:border-[#3B82F6]'
+                              : 'bg-gray-50 border-gray-200/90 text-transparent hover:border-[#3B82F6]'
                           )}
                         >
                           <Check className={clsx('w-3.5 h-3.5 stroke-[3]', item.is_completed && 'text-white')} />
@@ -399,7 +399,7 @@ export const ChecklistPage = () => {
                             <span
                               className={clsx(
                                 'text-sm font-semibold tracking-tight transition-all',
-                                item.is_completed ? 'line-through text-[#64748B]' : 'text-white'
+                                item.is_completed ? 'line-through text-gray-400' : 'text-white'
                               )}
                             >
                               {item.task_text}
@@ -407,14 +407,14 @@ export const ChecklistPage = () => {
                           </div>
 
                           {item.rationale && (
-                            <p className="text-xs text-[#94A3B8] leading-relaxed">
+                            <p className="text-xs text-gray-500 leading-relaxed">
                               <strong className="text-[#CBD5E1]">Rationale:</strong> {item.rationale}
                             </p>
                           )}
 
                           {/* Originating Finding Link */}
                           {item.finding_title && (
-                            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-[#64748B]">
+                            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-gray-400">
                               <span>Linked finding:</span>
                               <Link
                                 to={`/findings?project=${item.project}`}

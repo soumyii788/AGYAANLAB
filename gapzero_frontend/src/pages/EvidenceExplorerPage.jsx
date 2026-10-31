@@ -173,15 +173,15 @@ export const EvidenceExplorerPage = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#1E2C4A]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200/90">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black text-white tracking-tight">Evidence Explorer</h1>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#141F36] text-[#60A5FA] border border-[#1E2C4A]">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-gray-100 text-blue-600 border border-gray-200/90">
               Grounded Epistemology
             </span>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-xs text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
             Convert extracted source documents into atomic, traceable claims backed by verbatim supporting passages. Reject ungrounded propositions.
           </p>
         </div>
@@ -203,13 +203,13 @@ export const EvidenceExplorerPage = () => {
       </div>
 
       {/* Epistemic Ground Truth Banner */}
-      <div className="bg-[#141F36]/60 border border-[#1E2C4A] rounded-xl p-3.5 text-xs text-[#94A3B8] flex items-start gap-3">
-        <ShieldCheck className="w-4 h-4 text-[#60A5FA] flex-shrink-0 mt-0.5" />
+      <div className="bg-gray-100/60 border border-gray-200/90 rounded-xl p-3.5 text-xs text-gray-500 flex items-start gap-3">
+        <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
         <div className="space-y-0.5 flex-1">
           <p className="font-bold text-white">
             Evidence Integrity Policy (Zero-Hallucination Barrier)
           </p>
-          <p className="text-[11px] text-[#94A3B8] leading-relaxed">
+          <p className="text-[11px] text-gray-500 leading-relaxed">
             All extracted claims are mathematically cross-checked against original document text. Claims lacking verbatim supporting passages are strictly rejected. Model confidence score denotes parsing clarity, not external scientific consensus.
           </p>
         </div>
@@ -217,20 +217,20 @@ export const EvidenceExplorerPage = () => {
 
       {/* Metric Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-4">
-          <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Atomic Claims</p>
+        <div className="bg-white border border-gray-200/90 rounded-xl p-4">
+          <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Atomic Claims</p>
           <p className="text-2xl font-black text-white mt-1">{stats.total_claims}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-4">
+        <div className="bg-white border border-gray-200/90 rounded-xl p-4">
           <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Verbatim Passages</p>
           <p className="text-2xl font-black text-emerald-400 mt-1">{stats.total_evidence}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-4">
-          <p className="text-[11px] font-bold text-[#60A5FA] uppercase tracking-wider">Sources Analyzed</p>
-          <p className="text-2xl font-black text-[#60A5FA] mt-1">{stats.sources_analyzed}</p>
+        <div className="bg-white border border-gray-200/90 rounded-xl p-4">
+          <p className="text-[11px] font-bold text-blue-600 uppercase tracking-wider">Sources Analyzed</p>
+          <p className="text-2xl font-black text-blue-600 mt-1">{stats.sources_analyzed}</p>
         </div>
-        <div className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-4">
-          <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Mean Confidence</p>
+        <div className="bg-white border border-gray-200/90 rounded-xl p-4">
+          <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Mean Confidence</p>
           <p className="text-2xl font-black text-white mt-1">
             {stats.avg_confidence > 0 ? `${stats.avg_confidence}%` : '—'}
           </p>
@@ -238,15 +238,15 @@ export const EvidenceExplorerPage = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-3.5 bg-[#0E1626] border border-[#1E2C4A] rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="p-3.5 bg-white border border-gray-200/90 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         <div className="relative flex-1">
-          <Search className="w-3.5 h-3.5 text-[#64748B] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             placeholder="Search claims, subjects, attributes, values, or passage words..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg text-white placeholder-[#64748B] focus:outline-none focus:border-[#3B82F6]"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200/90 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3B82F6]"
           />
         </div>
 
@@ -256,11 +256,11 @@ export const EvidenceExplorerPage = () => {
             <select
               value={projectFilter}
               onChange={(e) => setProjectFilter(e.target.value)}
-              className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6] max-w-[150px] truncate"
+              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6] max-w-[150px] truncate"
             >
-              <option value="all" className="bg-[#0E1626]">All Projects</option>
+              <option value="all" className="bg-white">All Projects</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#0E1626]">
+                <option key={p.id} value={p.id} className="bg-white">
                   {p.title}
                 </option>
               ))}
@@ -271,27 +271,27 @@ export const EvidenceExplorerPage = () => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+            className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
           >
-            <option value="all" className="bg-[#0E1626]">All Claim Types</option>
-            <option value="empirical" className="bg-[#0E1626]">Empirical Finding</option>
-            <option value="methodological" className="bg-[#0E1626]">Methodological</option>
-            <option value="theoretical" className="bg-[#0E1626]">Theoretical</option>
-            <option value="statistical" className="bg-[#0E1626]">Statistical</option>
-            <option value="comparative" className="bg-[#0E1626]">Comparative</option>
-            <option value="definitional" className="bg-[#0E1626]">Definitional</option>
+            <option value="all" className="bg-white">All Claim Types</option>
+            <option value="empirical" className="bg-white">Empirical Finding</option>
+            <option value="methodological" className="bg-white">Methodological</option>
+            <option value="theoretical" className="bg-white">Theoretical</option>
+            <option value="statistical" className="bg-white">Statistical</option>
+            <option value="comparative" className="bg-white">Comparative</option>
+            <option value="definitional" className="bg-white">Definitional</option>
           </select>
 
           {/* Confidence Filter */}
           <select
             value={minConfidenceFilter}
             onChange={(e) => setMinConfidenceFilter(e.target.value)}
-            className="text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+            className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
           >
-            <option value="0" className="bg-[#0E1626]">All Confidence</option>
-            <option value="0.9" className="bg-[#0E1626]">≥ 90% Confidence</option>
-            <option value="0.8" className="bg-[#0E1626]">≥ 80% Confidence</option>
-            <option value="0.7" className="bg-[#0E1626]">≥ 70% Confidence</option>
+            <option value="0" className="bg-white">All Confidence</option>
+            <option value="0.9" className="bg-white">≥ 90% Confidence</option>
+            <option value="0.8" className="bg-white">≥ 80% Confidence</option>
+            <option value="0.7" className="bg-white">≥ 70% Confidence</option>
           </select>
 
           {(searchFilter || projectFilter !== 'all' || typeFilter !== 'all' || minConfidenceFilter !== '0') && (
@@ -304,7 +304,7 @@ export const EvidenceExplorerPage = () => {
                 setTypeFilter('all');
                 setMinConfidenceFilter('0');
               }}
-              className="text-xs text-[#94A3B8] hover:text-white"
+              className="text-xs text-gray-500 hover:text-white"
             >
               Reset
             </Button>
@@ -343,30 +343,30 @@ export const EvidenceExplorerPage = () => {
             return (
               <div
                 key={claim.id}
-                className="bg-[#0E1626] border border-[#1E2C4A] rounded-xl p-5 hover:border-[#3B82F6]/50 transition-all space-y-3.5"
+                className="bg-white border border-gray-200/90 rounded-xl p-5 hover:border-[#3B82F6]/50 transition-all space-y-3.5"
               >
                 {/* Header Row: Subject / Attribute / Value Badges */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#1E2C4A]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-gray-200/90">
                   <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                    <span className="font-semibold text-white bg-[#141F36] px-2.5 py-1 rounded-md border border-[#1E2C4A]">
-                      <strong className="text-[#64748B] font-normal mr-1">Subject:</strong>
+                    <span className="font-semibold text-white bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200/90">
+                      <strong className="text-gray-400 font-normal mr-1">Subject:</strong>
                       {claim.subject}
                     </span>
-                    <span className="text-[#64748B]">•</span>
-                    <span className="font-semibold text-white bg-[#141F36] px-2.5 py-1 rounded-md border border-[#1E2C4A]">
-                      <strong className="text-[#64748B] font-normal mr-1">Attribute:</strong>
+                    <span className="text-gray-400">•</span>
+                    <span className="font-semibold text-white bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200/90">
+                      <strong className="text-gray-400 font-normal mr-1">Attribute:</strong>
                       {claim.attribute}
                     </span>
-                    <span className="text-[#64748B]">•</span>
-                    <span className="font-bold text-[#60A5FA] bg-[#141F36] px-2.5 py-1 rounded-md border border-[#3B82F6]/30">
-                      <strong className="text-[#64748B] font-normal mr-1">Value:</strong>
+                    <span className="text-gray-400">•</span>
+                    <span className="font-bold text-blue-600 bg-gray-100 px-2.5 py-1 rounded-md border border-[#3B82F6]/30">
+                      <strong className="text-gray-400 font-normal mr-1">Value:</strong>
                       {claim.value}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {/* Claim Type Badge */}
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#141F36] text-[#94A3B8] border border-[#1E2C4A]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-gray-100 text-gray-500 border border-gray-200/90">
                       {claim.claim_type}
                     </span>
 
@@ -408,9 +408,9 @@ export const EvidenceExplorerPage = () => {
 
                 {/* Evidence Passages (Verbatim quotes from source) */}
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs text-[#94A3B8]">
+                  <div className="flex items-center justify-between text-xs text-gray-500">
                     <span className="font-bold text-white flex items-center gap-1.5">
-                      <Quote className="w-3.5 h-3.5 text-[#60A5FA]" />
+                      <Quote className="w-3.5 h-3.5 text-blue-600" />
                       Original Supporting Passage:
                     </span>
                     <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
@@ -423,21 +423,21 @@ export const EvidenceExplorerPage = () => {
                     claim.evidence_items.map((evidence, eIdx) => (
                       <div
                         key={eIdx}
-                        className="p-3.5 rounded-xl bg-[#080C15] border border-[#1E2C4A] space-y-2"
+                        className="p-3.5 rounded-xl bg-gray-50 border border-gray-200/90 space-y-2"
                       >
                         <blockquote className="font-mono text-xs text-[#CBD5E1] leading-relaxed italic border-l-2 border-[#3B82F6] pl-3">
                           "{evidence.passage}"
                         </blockquote>
 
-                        <div className="flex items-center justify-between pt-1 text-[11px] text-[#64748B]">
+                        <div className="flex items-center justify-between pt-1 text-[11px] text-gray-400">
                           <div className="flex items-center gap-2">
                             {evidence.page_number && (
-                              <span className="font-bold text-white bg-[#141F36] px-2 py-0.5 rounded border border-[#1E2C4A]">
+                              <span className="font-bold text-white bg-gray-100 px-2 py-0.5 rounded border border-gray-200/90">
                                 Page {evidence.page_number}
                               </span>
                             )}
                             {evidence.char_start !== null && evidence.char_end !== null && (
-                              <span className="text-[10px] text-[#64748B]">
+                              <span className="text-[10px] text-gray-400">
                                 Offset: {evidence.char_start}–{evidence.char_end}
                               </span>
                             )}
@@ -449,7 +449,7 @@ export const EvidenceExplorerPage = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-6 px-2 text-[11px] text-[#94A3B8] hover:text-white"
+                            className="h-6 px-2 text-[11px] text-gray-500 hover:text-white"
                             onClick={() => handleCopyPassage(evidence.passage, claim.id)}
                           >
                             {copiedId === claim.id ? (
@@ -463,20 +463,20 @@ export const EvidenceExplorerPage = () => {
                       </div>
                     ))
                   ) : (
-                    <p className="text-xs text-[#64748B] italic">
+                    <p className="text-xs text-gray-400 italic">
                       No linked passage available.
                     </p>
                   )}
                 </div>
 
                 {/* Source Provenance Footer */}
-                <div className="pt-2 border-t border-[#1E2C4A] flex flex-wrap items-center justify-between gap-2 text-xs text-[#64748B]">
+                <div className="pt-2 border-t border-gray-200/90 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-400">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-[#94A3B8]">Source:</span>
+                    <span className="font-medium text-gray-500">Source:</span>
                     <span className="font-semibold text-white truncate max-w-sm">
                       {claim.source_title || 'Untitled Source'}
                     </span>
-                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#141F36] text-[#60A5FA]">
+                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-gray-100 text-blue-600">
                       {claim.source_type}
                     </span>
                   </div>
@@ -518,10 +518,10 @@ export const EvidenceExplorerPage = () => {
                 setExtractProjectId(e.target.value);
                 setExtractSourceId('all');
               }}
-              className="w-full text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="w-full text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
             >
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#0E1626]">
+                <option key={p.id} value={p.id} className="bg-white">
                   {p.title}
                 </option>
               ))}
@@ -534,13 +534,13 @@ export const EvidenceExplorerPage = () => {
             <select
               value={extractSourceId}
               onChange={(e) => setExtractSourceId(e.target.value)}
-              className="w-full text-xs bg-[#080C15] border border-[#1E2C4A] rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="w-full text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
             >
-              <option value="all" className="bg-[#0E1626]">
+              <option value="all" className="bg-white">
                 All Completed Sources in this Project ({availableSourcesForProject.length} available)
               </option>
               {availableSourcesForProject.map((s) => (
-                <option key={s.id} value={s.id} className="bg-[#0E1626]">
+                <option key={s.id} value={s.id} className="bg-white">
                   [{s.source_type.toUpperCase()}] {s.title}
                 </option>
               ))}
@@ -569,7 +569,7 @@ export const EvidenceExplorerPage = () => {
           )}
 
           {/* Extraction Policy Notice */}
-          <div className="p-3.5 rounded-lg bg-[#080C15] border border-[#1E2C4A] text-[11px] text-[#94A3B8] space-y-1.5">
+          <div className="p-3.5 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500 space-y-1.5">
             <p className="font-bold text-white">Extraction & Verification Rules:</p>
             <ul className="list-disc list-inside space-y-1">
               <li>Atomic extraction: isolates subject, attribute, value, and proposition type.</li>
@@ -579,7 +579,7 @@ export const EvidenceExplorerPage = () => {
             </ul>
           </div>
 
-          <div className="flex justify-end gap-2 pt-2 border-t border-[#1E2C4A]">
+          <div className="flex justify-end gap-2 pt-2 border-t border-gray-200/90">
             <Button
               type="button"
               variant="secondary"

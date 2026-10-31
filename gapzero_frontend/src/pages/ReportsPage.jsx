@@ -126,33 +126,33 @@ export const ReportsPage = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1E2C4A] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200/90 pb-6">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-white">
               Research Intelligence Reports
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#141F36] text-[#60A5FA] border border-[#1E2C4A]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-blue-600 border border-gray-200/90">
               8 Canonical Sections
             </span>
           </div>
-          <p className="text-xs text-[#94A3B8] mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-xs text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
             Publication-grade negative-space intelligence briefs. Evaluates source coverage, atomic claims, empirical contradictions, freshness thresholds, and provides a prioritized verification checklist.
           </p>
         </div>
 
         {/* Project Selector & Generate CTA */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#0E1626] border border-[#1E2C4A] rounded-lg px-3 py-1.5">
-            <FolderGit2 className="w-4 h-4 text-[#60A5FA]" />
+          <div className="flex items-center gap-2 bg-white border border-gray-200/90 rounded-lg px-3 py-1.5">
+            <FolderGit2 className="w-4 h-4 text-blue-600" />
             <select
               value={selectedProjectId}
               onChange={(e) => setSelectedProjectId(e.target.value)}
               className="bg-transparent text-xs text-white border-none focus:outline-none focus:ring-0 cursor-pointer pr-4"
             >
-              <option value="" className="bg-[#0E1626] text-white">All Projects</option>
+              <option value="" className="bg-white text-white">All Projects</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#0E1626] text-white">
+                <option key={p.id} value={p.id} className="bg-white text-white">
                   {p.title}
                 </option>
               ))}
@@ -185,7 +185,7 @@ export const ReportsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left Column: Report List Sidebar */}
           <div className="lg:col-span-1 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] px-1">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 px-1">
               Generated Reports ({reports.length})
             </h3>
             
@@ -199,12 +199,12 @@ export const ReportsPage = () => {
                     className={clsx(
                       'w-full text-left p-3.5 rounded-xl border transition-all duration-150',
                       isSelected
-                        ? 'bg-[#141F36] border-[#3B82F6] shadow-sm'
-                        : 'bg-[#0E1626] border-[#1E2C4A] hover:border-[#3B82F6]/40'
+                        ? 'bg-gray-100 border-[#3B82F6] shadow-sm'
+                        : 'bg-white border-gray-200/90 hover:border-[#3B82F6]/40'
                     )}
                   >
-                    <div className="flex items-center justify-between text-[10px] text-[#64748B] mb-1">
-                      <span className="uppercase font-bold text-[#60A5FA]">
+                    <div className="flex items-center justify-between text-[10px] text-gray-400 mb-1">
+                      <span className="uppercase font-bold text-blue-600">
                         {rep.report_type || 'Full Brief'}
                       </span>
                       <span>{new Date(rep.created_at).toLocaleDateString()}</span>
@@ -214,7 +214,7 @@ export const ReportsPage = () => {
                       {rep.title}
                     </h4>
 
-                    <p className="text-[11px] text-[#94A3B8] truncate mt-0.5">
+                    <p className="text-[11px] text-gray-500 truncate mt-0.5">
                       Project: {rep.project_title || 'General'}
                     </p>
                   </button>
@@ -226,17 +226,17 @@ export const ReportsPage = () => {
           {/* Right Column: Active Report Viewer */}
           <div className="lg:col-span-3 space-y-4">
             {selectedReport && (
-              <Card className="p-6 bg-[#0E1626] border-[#1E2C4A] space-y-5">
+              <Card className="p-6 bg-white border-gray-200/90 space-y-5">
                 {/* Header with Title and Actions */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E2C4A]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200/90">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#60A5FA]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
                       Publication-Grade Research Intelligence Brief
                     </span>
                     <h2 className="text-lg font-black text-white tracking-tight mt-0.5">
                       {selectedReport.title}
                     </h2>
-                    <p className="text-xs text-[#94A3B8] mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       Project: <strong className="text-white">{selectedReport.project_title}</strong> • Generated on {new Date(selectedReport.created_at).toLocaleString()}
                     </p>
                   </div>
@@ -275,8 +275,8 @@ export const ReportsPage = () => {
                 </div>
 
                 {/* 8-Section Quick Navigation Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 p-2 bg-[#080C15] rounded-xl border border-[#1E2C4A]">
-                  <span className="text-[10px] font-bold uppercase text-[#64748B] px-2">Sections:</span>
+                <div className="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 rounded-xl border border-gray-200/90">
+                  <span className="text-[10px] font-bold uppercase text-gray-400 px-2">Sections:</span>
                   {canonicalSections.map((sec) => (
                     <button
                       key={sec.id}
@@ -285,7 +285,7 @@ export const ReportsPage = () => {
                         'px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors',
                         activeSection === sec.id
                           ? 'bg-[#1E2C4A] text-white font-semibold'
-                          : 'text-[#94A3B8] hover:text-white hover:bg-[#141F36]'
+                          : 'text-gray-500 hover:text-white hover:bg-gray-100'
                       )}
                     >
                       {sec.title}
@@ -294,15 +294,15 @@ export const ReportsPage = () => {
                 </div>
 
                 {/* Methodology Transparency Notice */}
-                <div className="bg-[#141F36]/50 border border-[#1E2C4A] rounded-xl p-3.5 flex items-start gap-3">
-                  <Info className="w-4 h-4 text-[#60A5FA] flex-shrink-0 mt-0.5" />
-                  <div className="text-xs text-[#94A3B8] leading-relaxed">
+                <div className="bg-gray-100/50 border border-gray-200/90 rounded-xl p-3.5 flex items-start gap-3">
+                  <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-xs text-gray-500 leading-relaxed">
                     <strong className="text-white">Scientific Methodology Notice:</strong> This synthesis incorporates empirical atomic claims verified against ingested literature. In accordance with epistemic rigor rules, an absence of documented evidence is never represented as proof of absence, and competing claims are preserved symmetrically.
                   </div>
                 </div>
 
                 {/* Report Content Body */}
-                <div className="bg-[#080C15] rounded-xl p-6 border border-[#1E2C4A] text-xs text-[#CBD5E1] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto max-h-[700px] overflow-y-auto selection:bg-[#2563EB] selection:text-white">
+                <div className="bg-gray-50 rounded-xl p-6 border border-gray-200/90 text-xs text-[#CBD5E1] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto max-h-[700px] overflow-y-auto selection:bg-[#2563EB] selection:text-white">
                   {selectedReport.content}
                 </div>
               </Card>

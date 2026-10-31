@@ -17,13 +17,13 @@ export const LoadingSpinner = ({
   const content = (
     <div className={`flex flex-col items-center justify-center p-6 gap-3 ${className}`}>
       <Loader2 className={`${sizeClasses[size]} animate-spin text-[#3B82F6]`} />
-      {message && <p className="text-xs text-[#94A3B8] font-medium">{message}</p>}
+      {message && <p className="text-xs text-gray-500 font-medium">{message}</p>}
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-[#080C15]/90 backdrop-blur-md flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-gray-50/90 backdrop-blur-md flex items-center justify-center z-50">
         {content}
       </div>
     );
