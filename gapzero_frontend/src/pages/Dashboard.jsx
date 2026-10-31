@@ -362,17 +362,17 @@ export const Dashboard = () => {
             </div>
           </section>
 
-          {/* ─── RECENT RESEARCH PROJECTS (CREATIVE BLACK & GREY HIGH-TECH DOSSIERS) ─────── */}
+          {/* ─── RECENT RESEARCH PROJECTS (SIGNATURE AGYAAN LAB SAPPHIRE & CYAN DOSSIERS) ─────── */}
           <section className="space-y-6 pt-4 border-t border-gray-200/80">
             {/* Header & Subtitle */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-black animate-pulse" />
-                  <h2 className="text-xl sm:text-2xl font-black text-[#111827] tracking-tight">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#0083B0] animate-pulse" />
+                  <h2 className="text-xl sm:text-2xl font-black text-[#202124] tracking-tight">
                     Recent Research Projects ({recentProjects.length})
                   </h2>
-                  <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-black text-white">
+                  <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#EBF7FF] text-[#0083B0] border border-[#BCE4FA]">
                     LIVE DOSSIERS
                   </span>
                 </div>
@@ -384,14 +384,14 @@ export const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <Link
                   to="/new-research"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-all shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0083B0] hover:bg-[#006080] text-white text-xs font-bold transition-all shadow-xs"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className="w-3.5 h-3.5 text-[#20BEFF]" />
                   <span>New Investigation</span>
                 </Link>
                 <Link
                   to="/projects"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-300 bg-white text-xs font-bold text-[#111827] hover:bg-gray-100 hover:border-black transition-all shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#BCE4FA] bg-[#EBF7FF] text-xs font-bold text-[#0083B0] hover:bg-white hover:border-[#0083B0] transition-all shadow-2xs"
                 >
                   <span>View All Projects</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -399,7 +399,7 @@ export const Dashboard = () => {
               </div>
             </div>
 
-            {/* Creative Monochrome Interactive Filter Pills */}
+            {/* Blue-Themed Interactive Filter Pills */}
             <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
               {[
                 { id: 'all', label: `All Projects (${recentProjects.length})` },
@@ -412,8 +412,8 @@ export const Dashboard = () => {
                   onClick={() => setProjectFilter(tab.id)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer ${
                     projectFilter === tab.id
-                      ? 'bg-black text-white shadow-xs'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-black border border-transparent'
+                      ? 'bg-[#0083B0] text-white shadow-xs'
+                      : 'bg-[#EBF7FF] text-[#006080] hover:bg-[#D5EFFF] hover:text-[#004d66] border border-[#BCE4FA]/60'
                   }`}
                 >
                   {tab.label}
@@ -441,26 +441,26 @@ export const Dashboard = () => {
                   // Domain Icon selector
                   const renderDomainIcon = () => {
                     const d = (p.domain || '').toLowerCase();
-                    if (d.includes('tech') || d.includes('ai') || d.includes('computer')) return <Cpu className="w-3 h-3 text-neutral-300" />;
-                    if (d.includes('health') || d.includes('bio') || d.includes('medicine')) return <Dna className="w-3 h-3 text-neutral-300" />;
-                    if (d.includes('science') || d.includes('physic') || d.includes('quantum') || d.includes('material')) return <Atom className="w-3 h-3 text-neutral-300" />;
-                    return <Compass className="w-3 h-3 text-neutral-300" />;
+                    if (d.includes('tech') || d.includes('ai') || d.includes('computer')) return <Cpu className="w-3 h-3 text-[#20BEFF]" />;
+                    if (d.includes('health') || d.includes('bio') || d.includes('medicine')) return <Dna className="w-3 h-3 text-[#20BEFF]" />;
+                    if (d.includes('science') || d.includes('physic') || d.includes('quantum') || d.includes('material')) return <Atom className="w-3 h-3 text-[#20BEFF]" />;
+                    return <Compass className="w-3 h-3 text-[#20BEFF]" />;
                   };
 
                   return (
                     <div
                       key={p.id}
                       onClick={() => navigate(`/projects/${p.id}`)}
-                      className="group bg-white border border-gray-200/90 rounded-2xl shadow-xs hover:border-black hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
+                      className="group bg-white border border-gray-200/90 rounded-2xl shadow-xs hover:border-[#0083B0] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
                     >
-                      {/* 1. CREATIVE BLACK & GREY HIGH-TECH DOSSIER HEADER */}
-                      <div className="relative bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-950 p-4 border-b border-neutral-800 overflow-hidden text-white">
+                      {/* 1. SIGNATURE SAPPHIRE & OCEAN BLUE DOSSIER HEADER */}
+                      <div className="relative bg-gradient-to-r from-[#0B2545] via-[#133C55] to-[#134074] p-4 border-b border-[#134074]/60 overflow-hidden text-white">
                         {/* High-tech Constellation Grid SVG Background */}
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                               <pattern id={`grid-${p.id}`} width="24" height="24" patternUnits="userSpaceOnUse">
-                                <circle cx="2" cy="2" r="0.75" fill="#FFFFFF" />
+                                <circle cx="2" cy="2" r="0.75" fill="#20BEFF" />
                                 <line x1="2" y1="2" x2="22" y2="2" stroke="#FFFFFF" strokeWidth="0.3" strokeDasharray="2 2" />
                                 <line x1="2" y1="2" x2="22" y2="2" stroke="#FFFFFF" strokeWidth="0.3" strokeDasharray="2 2" />
                               </pattern>
@@ -470,21 +470,21 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="relative z-10 flex items-center justify-between gap-2">
-                          {/* Domain Pill (Pure Black & Grey Glass) */}
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-neutral-700 text-[10px] font-mono font-bold tracking-widest text-neutral-200 uppercase">
+                          {/* Domain Pill (Website Cyan & Navy Glass) */}
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold tracking-widest text-[#20BEFF] uppercase">
                             {renderDomainIcon()}
                             <span>{domainLabel}</span>
                           </div>
 
-                          {/* Monochrome Deficit Meter (Zero yellow! Segmented instrumentation) */}
-                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-950/80 backdrop-blur-md border border-neutral-700/80 text-white font-mono text-xs font-bold shadow-xs">
+                          {/* Deficit Meter (Cyan & Navy Instrumentation) */}
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B2545]/90 backdrop-blur-md border border-[#20BEFF]/30 text-white font-mono text-xs font-bold shadow-xs">
                             {/* Segmented 5-tick Level Bar */}
                             <div className="flex items-center gap-1" title={`${deficit}% Deficit`}>
                               {[1, 2, 3, 4, 5].map((seg) => (
                                 <span
                                   key={seg}
                                   className={`w-1.5 h-2.5 rounded-xs transition-all ${
-                                    seg <= filledSegments ? 'bg-white shadow-[0_0_4px_rgba(255,255,255,0.7)]' : 'bg-neutral-700'
+                                    seg <= filledSegments ? 'bg-[#20BEFF] shadow-[0_0_6px_rgba(32,190,255,0.7)]' : 'bg-[#133C55]'
                                   }`}
                                 />
                               ))}
@@ -499,39 +499,39 @@ export const Dashboard = () => {
                       {/* 2. CARD CONTENT AREA */}
                       <div className="p-5 sm:p-6 space-y-4">
                         <div className="space-y-2">
-                          <h3 className="text-base sm:text-lg font-black text-[#111827] group-hover:text-black line-clamp-2 leading-snug tracking-tight transition-colors">
+                          <h3 className="text-base sm:text-lg font-black text-[#202124] group-hover:text-[#0083B0] line-clamp-2 leading-snug tracking-tight transition-colors">
                             {p.title}
                           </h3>
 
-                          <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
                             {p.description || 'Systematic investigation of unaddressed hypotheses, empirical claims, and cross-source literature tensions.'}
                           </p>
                         </div>
 
-                        {/* Telemetry Chips (Pure Monochrome Black & Grey) */}
+                        {/* Telemetry Chips (Website Soft Cyan / Blue Style) */}
                         <div className="flex flex-wrap items-center gap-2 pt-1">
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-neutral-100 border border-neutral-200 text-[11px] font-medium text-neutral-800">
-                            <Layers className="w-3.5 h-3.5 text-neutral-600" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F0F9FF] border border-[#BCE4FA] text-[11px] font-medium text-[#006080]">
+                            <Layers className="w-3.5 h-3.5 text-[#0083B0]" />
                             <span>{p.sources_count || 0} Sources</span>
                           </div>
-                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-neutral-100 border border-neutral-200 text-[11px] font-medium text-neutral-800">
-                            <FileCheck className="w-3.5 h-3.5 text-neutral-600" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F0F9FF] border border-[#BCE4FA] text-[11px] font-medium text-[#006080]">
+                            <FileCheck className="w-3.5 h-3.5 text-[#0083B0]" />
                             <span>{p.claims_count || 0} Claims</span>
                           </div>
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-neutral-50 border border-neutral-200 text-[11px] font-mono text-neutral-600">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8F9FA] border border-gray-200 text-[11px] font-mono text-gray-500">
                             <span>ID: #{p.id}</span>
                           </div>
                         </div>
 
-                        {/* Deficit Micro-Track */}
+                        {/* Deficit Micro-Track (Cyan & Blue Gradient) */}
                         <div className="space-y-1.5 pt-1">
-                          <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500 uppercase tracking-wider">
+                          <div className="flex items-center justify-between text-[10px] font-mono text-gray-500 uppercase tracking-wider">
                             <span>Negative-Space Deficit Density</span>
-                            <span className="font-bold text-neutral-800">{deficit}%</span>
+                            <span className="font-bold text-[#0083B0]">{deficit}%</span>
                           </div>
-                          <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-[#EBF7FF] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-neutral-900 rounded-full transition-all duration-500"
+                              className="h-full bg-gradient-to-r from-[#0083B0] to-[#20BEFF] rounded-full transition-all duration-500"
                               style={{ width: `${deficit}%` }}
                             />
                           </div>
@@ -539,15 +539,15 @@ export const Dashboard = () => {
                       </div>
 
                       {/* 3. CARD ACTION FOOTER */}
-                      <div className="px-5 sm:px-6 py-4 bg-neutral-50/70 border-t border-neutral-100 flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
-                          <span className="w-2 h-2 rounded-full bg-neutral-900" />
-                          <span className="uppercase tracking-wider">SURVEILLANCE ACTIVE</span>
+                      <div className="px-5 sm:px-6 py-4 bg-[#F8F9FA]/80 border-t border-gray-100 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-[11px] font-mono text-[#006080]">
+                          <span className="w-2 h-2 rounded-full bg-[#0083B0] animate-pulse" />
+                          <span className="uppercase tracking-wider font-medium">SURVEILLANCE ACTIVE</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-neutral-900 group-hover:bg-black text-white text-xs font-bold transition-all shadow-xs group-hover:shadow-md">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#0083B0] to-[#006080] hover:from-[#006080] hover:to-[#004d66] text-white text-xs font-bold transition-all shadow-xs group-hover:shadow-md">
                           <span>Inspect Dossier</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                          <ArrowRight className="w-3.5 h-3.5 text-[#20BEFF] group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </div>
