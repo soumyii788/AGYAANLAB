@@ -100,6 +100,52 @@ export const projectService = {
   async getAllReports(params = {}) {
     const response = await api.get('/reports/', { params });
     return response.data;
+  },
+
+  async getSource(id) {
+    const response = await api.get(`/sources/${id}/`);
+    return response.data;
+  },
+
+  async deleteSource(id) {
+    const response = await api.delete(`/sources/${id}/`);
+    return response.data;
+  },
+
+  async reprocessSource(id) {
+    const response = await api.post(`/sources/${id}/reprocess/`);
+    return response.data;
+  },
+
+  async ingestUrl(projectId, url) {
+    const response = await api.post('/sources/ingest-url/', {
+      project_id: projectId,
+      url: url
+    });
+    return response.data;
+  },
+
+  async ingestPdf(projectId, title, file) {
+    const formData = new FormData();
+    if (projectId) formData.append('project_id', projectId);
+    if (title) formData.append('title', title);
+    formData.append('pdf_file', file);
+
+    const response = await api.post('/sources/ingest-pdf/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  async ingestText(projectId, title, content) {
+    const response = await api.post('/sources/ingest-text/', {
+      project_id: projectId,
+      title: title,
+      content: content
+    });
+    return response.data;
   }
 };
 

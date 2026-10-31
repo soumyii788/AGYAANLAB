@@ -475,14 +475,15 @@ export const ProjectDetail = () => {
               >
                 Search Online Papers (OpenAlex)
               </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                leftIcon={<Plus className="w-3.5 h-3.5" />}
-                onClick={() => setIsSourceModalOpen(true)}
-              >
-                Custom Source
-              </Button>
+              <Link to="/sources">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<Plus className="w-3.5 h-3.5" />}
+                >
+                  Ingest URL / PDF / Text
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -512,6 +513,23 @@ export const ProjectDetail = () => {
                             • {source.publication_year}
                           </span>
                         )}
+                        {source.processing_status && (
+                          <Badge
+                            variant={
+                              source.processing_status === 'completed'
+                                ? 'success'
+                                : source.processing_status === 'ocr_needed'
+                                ? 'warning'
+                                : source.processing_status === 'failed'
+                                ? 'danger'
+                                : 'primary'
+                            }
+                            size="sm"
+                            dot
+                          >
+                            {source.processing_status === 'completed' ? 'Extracted' : source.processing_status}
+                          </Badge>
+                        )}
                         {source.relevance_score && (
                           <Badge variant="primary" size="sm">
                             {source.relevance_score}% Relevance
@@ -522,6 +540,12 @@ export const ProjectDetail = () => {
                       <h4 className="text-sm font-semibold text-[#1E2022]">
                         {source.title}
                       </h4>
+
+                      {source.error_message && (
+                        <div className="text-xs p-2 rounded bg-rose-50 border border-rose-200 text-rose-800">
+                          <strong>Extraction Error:</strong> {source.error_message}
+                        </div>
+                      )}
 
                       {source.authors && source.authors.length > 0 && (
                         <p className="text-xs text-[#4A4D55]">
