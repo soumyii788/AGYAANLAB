@@ -28,6 +28,7 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Modal } from '../components/ui/Modal';
 import { Input } from '../components/ui/Input';
+import { CleanMarkdown, renderCleanInline } from '../components/ui/CleanMarkdown';
 
 export const ProjectDetail = () => {
   const { id } = useParams();
@@ -758,7 +759,7 @@ export const ProjectDetail = () => {
                   <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
                     <div>
                       <h3 className="text-base font-bold text-[#1E2022]">
-                        {report.title}
+                        {renderCleanInline(report.title)}
                       </h3>
                       <p className="text-xs text-[#4A4D55] mt-0.5">
                         Generated on {new Date(report.created_at).toLocaleDateString()} by {report.generated_by_name}
@@ -773,8 +774,8 @@ export const ProjectDetail = () => {
                       {copied ? 'Copied' : 'Copy Markdown'}
                     </Button>
                   </div>
-                  <div className="prose prose-sm max-w-none text-xs text-[#1E2022] leading-relaxed whitespace-pre-line bg-[#F9F9FB] p-5 rounded-lg border border-[#E5E7EB] font-mono">
-                    {report.content}
+                  <div className="text-xs text-[#1E2022] bg-[#F9F9FB] p-5 rounded-lg border border-[#E5E7EB]">
+                    <CleanMarkdown content={report.content} />
                   </div>
                 </Card>
               ))}

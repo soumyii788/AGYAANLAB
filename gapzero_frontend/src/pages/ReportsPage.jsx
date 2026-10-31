@@ -25,6 +25,7 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
+import { CleanMarkdown, renderCleanInline } from '../components/ui/CleanMarkdown';
 import clsx from 'clsx';
 
 export const ReportsPage = () => {
@@ -350,7 +351,7 @@ export const ReportsPage = () => {
                     </div>
 
                     <h4 className="text-xs font-bold text-[#202124] dark:text-white truncate">
-                      {rep.title}
+                      {renderCleanInline(rep.title)}
                     </h4>
 
                     <p className="text-[11px] text-gray-500 truncate mt-0.5">
@@ -373,7 +374,7 @@ export const ReportsPage = () => {
                       Publication-Grade Research Intelligence Brief
                     </span>
                     <h2 className="text-lg font-black text-[#202124] dark:text-white tracking-tight mt-0.5">
-                      {selectedReport.title}
+                      {renderCleanInline(selectedReport.title)}
                     </h2>
                     <p className="text-xs text-gray-500 mt-1">
                       Project: <strong className="text-[#202124] dark:text-white">{selectedReport.project_title}</strong> • Generated on {new Date(selectedReport.created_at).toLocaleString()}
@@ -479,13 +480,13 @@ export const ReportsPage = () => {
                               <span className="w-2 h-2 rounded-full bg-blue-600"></span>
                             )}
                             <h3 className="text-base font-extrabold text-[#202124] dark:text-white tracking-tight">
-                              {sec.title}
+                              {renderCleanInline(sec.title.replace(/^#+\s*/, '').replace(/[*#]/g, '').trim())}
                             </h3>
                           </div>
                         )}
 
-                        <div className="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-wrap">
-                          {sec.body}
+                        <div className="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed">
+                          <CleanMarkdown content={sec.body} />
                         </div>
                       </section>
                     );
