@@ -15,7 +15,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-agyaanlab-dev-secret-key-change-in-production-2024")
 DEBUG = config("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*,localhost,127.0.0.1,0.0.0.0", cast=Csv())
+raw_allowed_hosts = config("ALLOWED_HOSTS", default="*", cast=Csv())
+ALLOWED_HOSTS = list(raw_allowed_hosts) if raw_allowed_hosts else ['*']
+if '*' not in ALLOWED_HOSTS and DEBUG:
+    ALLOWED_HOSTS.append('*')
+if 'testserver' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('testserver')
 
 DJANGO_APPS = [
     'django.contrib.admin',

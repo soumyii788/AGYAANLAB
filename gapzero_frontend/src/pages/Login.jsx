@@ -103,14 +103,16 @@ export const Login = () => {
     setSuccessMsg('');
     setLoading(true);
 
+    const cleanIdentifier = email.trim();
+
     try {
-      await login({ email, password });
+      await login({ email: cleanIdentifier, username: cleanIdentifier, password });
 
       // Save password if requested
       if (rememberPassword) {
         localStorage.setItem(
           'agyaan_saved_credentials',
-          JSON.stringify({ email, password })
+          JSON.stringify({ email: cleanIdentifier, password })
         );
       } else {
         localStorage.removeItem('agyaan_saved_credentials');
@@ -121,7 +123,12 @@ export const Login = () => {
       console.error(err);
       const detail =
         err.response?.data?.detail ||
-        'Invalid email or password. You can create an account using this password below.';
+        err.response?.data?.non_field_errors?.[0] ||
+        (err.response?.status === 401
+          ? 'Invalid email/username or password. You can create an account using this password below.'
+          : err.response?.status === 400
+          ? 'Invalid request format. Please check your email and password.'
+          : 'Unable to connect to authentication server. Please try again.');
       setError(detail);
     } finally {
       setLoading(false);
@@ -306,9 +313,9 @@ export const Login = () => {
       {mode === 'login' && (
         <form onSubmit={handleLoginSubmit} className="space-y-4">
           <Input
-            label="Email Address"
-            type="email"
-            placeholder="scientist@institute.edu"
+            label="Email or Username"
+            type="text"
+            placeholder="scientist@institute.edu or username"
             value={email}
             onChange={(e) => handleEmailChange(e.target.value)}
             leftIcon={<Mail className="w-4 h-4 text-gray-500" />}

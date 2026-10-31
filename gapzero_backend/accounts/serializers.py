@@ -3,6 +3,7 @@ Accounts app serializers
 """
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.db import models
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -50,7 +51,24 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Custom JWT token serializer that includes user data."""
+    """Custom JWT token serializer that accepts email or username, case-insensitive, and includes user data."""
+
+    def run_validation(self, data=serializers.empty):
+        if data is not serializers.empty:
+            data = data.copy() if hasattr(data, 'copy') else dict(data)
+            identifier = data.get('email') or data.get('username') or ''
+            identifier = str(identifier).strip()
+
+            user = User.objects.filter(
+                models.Q(email__iexact=identifier) | models.Q(username__iexact=identifier)
+            ).first()
+
+            if user:
+                data[self.username_field] = user.email
+            elif identifier:
+                data[self.username_field] = identifier
+
+        return super().run_validation(data)
 
     @classmethod
     def get_token(cls, user):
