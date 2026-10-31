@@ -129,10 +129,10 @@ export const ReportsPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200/90 pb-6">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-black tracking-tight text-white">
+            <h1 className="text-2xl font-black tracking-tight text-[#202124] dark:text-white">
               Research Intelligence Reports
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-blue-600 border border-gray-200/90">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-blue-600 border border-gray-200">
               8 Canonical Sections
             </span>
           </div>
@@ -143,16 +143,16 @@ export const ReportsPage = () => {
 
         {/* Project Selector & Generate CTA */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 bg-white border border-gray-200/90 rounded-lg px-3 py-1.5">
+          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1.5 shadow-2xs">
             <FolderGit2 className="w-4 h-4 text-blue-600" />
             <select
               value={selectedProjectId}
               onChange={(e) => setSelectedProjectId(e.target.value)}
-              className="bg-transparent text-xs text-white border-none focus:outline-none focus:ring-0 cursor-pointer pr-4"
+              className="bg-transparent text-xs text-[#202124] border-none focus:outline-none focus:ring-0 cursor-pointer pr-4 font-medium"
             >
-              <option value="" className="bg-white text-white">All Projects</option>
+              <option value="" className="bg-white text-gray-900">All Projects</option>
               {projects.map((p) => (
-                <option key={p.id} value={p.id} className="bg-white text-white">
+                <option key={p.id} value={p.id} className="bg-white text-gray-900">
                   {p.title}
                 </option>
               ))}
@@ -210,7 +210,7 @@ export const ReportsPage = () => {
                       <span>{new Date(rep.created_at).toLocaleDateString()}</span>
                     </div>
 
-                    <h4 className="text-xs font-bold text-white truncate">
+                    <h4 className="text-xs font-bold text-[#202124] dark:text-white truncate">
                       {rep.title}
                     </h4>
 
@@ -233,11 +233,11 @@ export const ReportsPage = () => {
                     <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
                       Publication-Grade Research Intelligence Brief
                     </span>
-                    <h2 className="text-lg font-black text-white tracking-tight mt-0.5">
+                    <h2 className="text-lg font-black text-[#202124] dark:text-white tracking-tight mt-0.5">
                       {selectedReport.title}
                     </h2>
                     <p className="text-xs text-gray-500 mt-1">
-                      Project: <strong className="text-white">{selectedReport.project_title}</strong> • Generated on {new Date(selectedReport.created_at).toLocaleString()}
+                      Project: <strong className="text-[#202124] dark:text-white">{selectedReport.project_title}</strong> • Generated on {new Date(selectedReport.created_at).toLocaleString()}
                     </p>
                   </div>
 

@@ -285,7 +285,7 @@ export const SourcesPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-gray-200/90">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-white tracking-tight">Source Ingestion & Literature</h1>
+            <h1 className="text-2xl font-bold text-[#202124] dark:text-white tracking-tight">Source Ingestion & Literature</h1>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-[#3B82F6] border border-gray-200/90">
               AGYAAN LAB
             </span>
@@ -370,7 +370,7 @@ export const SourcesPage = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-gray-900 focus:outline-none focus:border-[#3B82F6]"
             >
               <option value="all">All Statuses</option>
               <option value="completed">Completed</option>
@@ -384,7 +384,7 @@ export const SourcesPage = () => {
               <select
                 value={projectFilter}
                 onChange={(e) => setProjectFilter(e.target.value)}
-                className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-[#3B82F6] max-w-[160px] truncate"
+                className="text-xs bg-gray-50 border border-gray-200/90 rounded-lg px-2.5 py-1.5 text-gray-900 focus:outline-none focus:border-[#3B82F6] max-w-[160px] truncate"
               >
                 <option value="all">All Projects</option>
                 {projects.map((p) => (
@@ -496,7 +496,7 @@ export const SourcesPage = () => {
                             alert(`Copied SHA-256: ${source.content_hash}`);
                           }}
                         >
-                          <span className="font-semibold text-white">SHA:</span>
+                          <span className="font-semibold text-gray-700">SHA:</span>
                           {source.content_hash.slice(0, 8)}...{source.content_hash.slice(-6)}
                         </span>
                       )}
@@ -519,7 +519,7 @@ export const SourcesPage = () => {
                     {/* Title */}
                     <h3
                       onClick={() => handleOpenPreview(source)}
-                      className="text-sm font-bold text-white hover:text-[#3B82F6] cursor-pointer transition-colors leading-snug"
+                      className="text-sm font-bold text-gray-900 hover:text-[#3B82F6] cursor-pointer transition-colors leading-snug"
                     >
                       {source.title || 'Untitled Ingested Source'}
                     </h3>
@@ -528,7 +528,7 @@ export const SourcesPage = () => {
                     {(source.original_url || source.url || source.canonical_url) && (
                       <div className="flex items-center gap-3 text-xs text-gray-500">
                         <span className="truncate max-w-md">
-                          <span className="font-medium text-white">URL:</span>{' '}
+                          <span className="font-medium text-gray-700">URL:</span>{' '}
                           <a
                             href={source.canonical_url || source.original_url || source.url}
                             target="_blank"
@@ -546,18 +546,18 @@ export const SourcesPage = () => {
                     <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
                       {source.publication_date && (
                         <span>
-                          <strong className="text-white">Published:</strong> {source.publication_date}
+                          <strong className="text-gray-700">Published:</strong> {source.publication_date}
                         </span>
                       )}
                       {source.created_at && (
                         <span>
-                          <strong className="text-white">Ingested:</strong>{' '}
+                          <strong className="text-gray-700">Ingested:</strong>{' '}
                           {new Date(source.created_at).toLocaleDateString()}
                         </span>
                       )}
                       {source.project_title && (
                         <span>
-                          <strong className="text-white">Project:</strong> {source.project_title}
+                          <strong className="text-gray-700">Project:</strong> {source.project_title}
                         </span>
                       )}
                     </div>
@@ -659,11 +659,11 @@ export const SourcesPage = () => {
         <div className="space-y-4">
           {/* Target Project Selection */}
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-white">Target Research Project</label>
+            <label className="text-xs font-semibold text-gray-900">Target Research Project</label>
             <select
               value={targetProjectId}
               onChange={(e) => setTargetProjectId(e.target.value)}
-              className="w-full text-xs bg-white border border-gray-200/90 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+              className="w-full text-xs bg-white border border-gray-200/90 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:border-[#3B82F6]"
             >
               {projects.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -734,7 +734,7 @@ export const SourcesPage = () => {
           {ingestTab === 'url' && (
             <form onSubmit={handleIngestURL} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white">Public Website URL</label>
+                <label className="text-xs font-semibold text-gray-900">Public Website URL</label>
                 <Input
                   placeholder="https://nature.com/articles/... or https://arxiv.org/abs/..."
                   value={urlInput}
@@ -744,10 +744,10 @@ export const SourcesPage = () => {
               </div>
 
               <div className="p-3 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500 space-y-1">
-                <p className="font-semibold text-white">Security & Extraction Protocols:</p>
+                <p className="font-semibold text-gray-900">Security & Extraction Protocols:</p>
                 <ul className="list-disc list-inside space-y-0.5">
                   <li>SSRF Protection: Rejects localhost, loopback, private RFC 1918 IPs, and AWS/cloud metadata.</li>
-                  <li>Complies with website <code className="text-white">robots.txt</code> crawl policies.</li>
+                  <li>Complies with website <code className="text-gray-900">robots.txt</code> crawl policies.</li>
                   <li>Streaming response limit strictly enforced at 5 MB.</li>
                   <li>Extracts page title, publication date, canonical URL, and readable body paragraphs.</li>
                 </ul>
@@ -768,7 +768,7 @@ export const SourcesPage = () => {
           {ingestTab === 'pdf' && (
             <form onSubmit={handleIngestPDF} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white">Document Title (Optional)</label>
+                <label className="text-xs font-semibold text-gray-900">Document Title (Optional)</label>
                 <Input
                   placeholder="Leave empty to use PDF embedded title or filename"
                   value={pdfTitle}
@@ -777,7 +777,7 @@ export const SourcesPage = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white">PDF File (Max 15 MB)</label>
+                <label className="text-xs font-semibold text-gray-900">PDF File (Max 15 MB)</label>
                 <div className="border-2 border-dashed border-gray-200/90 hover:border-[#3B82F6] rounded-xl p-6 text-center cursor-pointer transition-colors bg-gray-50">
                   <input
                     type="file"
@@ -790,14 +790,14 @@ export const SourcesPage = () => {
                     <UploadCloud className="w-8 h-8 text-[#3B82F6] mx-auto" />
                     {pdfFile ? (
                       <div>
-                        <p className="text-xs font-bold text-white">{pdfFile.name}</p>
+                        <p className="text-xs font-bold text-gray-900">{pdfFile.name}</p>
                         <p className="text-[11px] text-gray-500">
                           {(pdfFile.size / 1024 / 1024).toFixed(2)} MB • Ready for PyMuPDF extraction
                         </p>
                       </div>
                     ) : (
                       <div>
-                        <p className="text-xs font-medium text-white">
+                        <p className="text-xs font-medium text-gray-900">
                           Click to select a PDF or drag and drop
                         </p>
                         <p className="text-[11px] text-gray-500">
@@ -810,7 +810,7 @@ export const SourcesPage = () => {
               </div>
 
               <div className="p-3 rounded-lg bg-gray-50 border border-gray-200/90 text-[11px] text-gray-500 space-y-1">
-                <p className="font-semibold text-white">PyMuPDF Extraction Engine:</p>
+                <p className="font-semibold text-gray-900">PyMuPDF Extraction Engine:</p>
                 <ul className="list-disc list-inside space-y-0.5">
                   <li>Preserves exact page numbering and structure per page.</li>
                   <li>Scanned PDFs without digital text layers are identified and tagged as <strong>OCR Needed</strong>.</li>
@@ -833,7 +833,7 @@ export const SourcesPage = () => {
           {ingestTab === 'text' && (
             <form onSubmit={handleIngestText} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white">Material Title</label>
+                <label className="text-xs font-semibold text-gray-900">Material Title</label>
                 <Input
                   placeholder="e.g. Lab Notes: Phase 2 Trial Observations"
                   value={textTitle}
@@ -843,7 +843,7 @@ export const SourcesPage = () => {
 
               <div className="space-y-1">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-semibold text-white">Pasted Research Content</label>
+                  <label className="text-xs font-semibold text-gray-900">Pasted Research Content</label>
                   <span className="text-[10px] text-gray-500">
                     {textContent.length} characters • {textContent.trim().split(/\s+/).filter(Boolean).length} words
                   </span>
@@ -853,7 +853,7 @@ export const SourcesPage = () => {
                   placeholder="Paste research excerpts, protocol notes, lab findings, or raw article text here..."
                   value={textContent}
                   onChange={(e) => setTextContent(e.target.value)}
-                  className="w-full text-xs font-mono p-3 bg-white border border-gray-200/90 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3B82F6]"
+                  className="w-full text-xs font-mono p-3 bg-white border border-gray-200/90 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#3B82F6]"
                   required
                 />
               </div>
@@ -891,21 +891,21 @@ export const SourcesPage = () => {
             <div className="bg-gray-50 p-3 rounded-lg border border-gray-200/90 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
               <div>
                 <span className="text-gray-500 block text-[10px] uppercase font-semibold">Source Type</span>
-                <span className="font-semibold text-white">{previewSource.source_type}</span>
+                <span className="font-semibold text-gray-900">{previewSource.source_type}</span>
               </div>
               <div>
                 <span className="text-gray-500 block text-[10px] uppercase font-semibold">Processing Status</span>
-                <span className="font-semibold text-white capitalize">{previewSource.processing_status}</span>
+                <span className="font-semibold text-gray-900 capitalize">{previewSource.processing_status}</span>
               </div>
               <div>
                 <span className="text-gray-500 block text-[10px] uppercase font-semibold">Pages / Size</span>
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-gray-900">
                   {previewSource.page_count || 1} page(s) • {(previewSource.file_size / 1024).toFixed(1)} KB
                 </span>
               </div>
               <div>
                 <span className="text-gray-500 block text-[10px] uppercase font-semibold">Published / Date</span>
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-gray-900">
                   {previewSource.publication_date || previewSource.publication_year || 'N/A'}
                 </span>
               </div>
@@ -915,7 +915,7 @@ export const SourcesPage = () => {
             {previewSource.content_hash && (
               <div className="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-200/90 text-xs">
                 <div className="flex items-center gap-2 overflow-hidden">
-                  <span className="font-semibold text-white flex-shrink-0">SHA-256 Fingerprint:</span>
+                  <span className="font-semibold text-gray-900 flex-shrink-0">SHA-256 Fingerprint:</span>
                   <code className="text-[11px] font-mono text-gray-500 truncate">
                     {previewSource.content_hash}
                   </code>
@@ -959,7 +959,7 @@ export const SourcesPage = () => {
             {previewSource.extracted_pages && previewSource.extracted_pages.length > 1 && (
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white">Extracted Pages ({previewSource.extracted_pages.length}):</span>
+                  <span className="font-semibold text-gray-900">Extracted Pages ({previewSource.extracted_pages.length}):</span>
                   <span className="text-gray-500 text-[11px]">
                     Showing Page {previewSource.extracted_pages[selectedPreviewPage]?.page} of {previewSource.extracted_pages.length}
                   </span>
@@ -972,7 +972,7 @@ export const SourcesPage = () => {
                       className={`text-xs px-2.5 py-1 rounded font-medium transition-colors ${
                         selectedPreviewPage === idx
                           ? 'bg-[#3B82F6] text-white shadow-xs'
-                          : 'bg-white text-gray-500 border border-gray-200/90 hover:bg-gray-50'
+                          : 'bg-white text-gray-700 border border-gray-200/90 hover:bg-gray-50'
                       }`}
                     >
                       Page {p.page} ({p.char_count || p.text?.length || 0} ch)
@@ -985,7 +985,7 @@ export const SourcesPage = () => {
             {/* Extracted Text Content */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-white">
+                <span className="text-xs font-semibold text-gray-900">
                   {previewSource.extracted_pages && previewSource.extracted_pages.length > 1
                     ? `Page ${previewSource.extracted_pages[selectedPreviewPage]?.page} Text Content:`
                     : 'Full Extracted Text:'}
@@ -1009,7 +1009,7 @@ export const SourcesPage = () => {
                 </Button>
               </div>
 
-              <div className="max-h-[380px] overflow-y-auto p-4 rounded-lg bg-gray-50 border border-gray-200/90 font-mono text-xs text-white whitespace-pre-wrap leading-relaxed select-text">
+              <div className="max-h-[380px] overflow-y-auto p-4 rounded-lg bg-gray-50 border border-gray-200/90 font-mono text-xs text-gray-900 whitespace-pre-wrap leading-relaxed select-text">
                 {previewSource.extracted_pages && previewSource.extracted_pages.length > 1
                   ? previewSource.extracted_pages[selectedPreviewPage]?.text || 'No text extracted on this page.'
                   : previewSource.extracted_text || previewSource.abstract || 'No extracted text content available.'}
@@ -1054,7 +1054,7 @@ export const SourcesPage = () => {
               <select
                 value={targetProjectId}
                 onChange={(e) => setTargetProjectId(e.target.value)}
-                className="bg-white border border-gray-200/90 rounded-md px-2.5 py-1 text-xs text-white focus:outline-none focus:border-[#3B82F6]"
+                className="bg-white border border-gray-200/90 rounded-md px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:border-[#3B82F6]"
               >
                 {projects.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -1087,7 +1087,7 @@ export const SourcesPage = () => {
                         {paper.publication_year} • {paper.cited_by_count} citations
                       </span>
                     </div>
-                    <h5 className="text-xs font-bold text-white">{paper.title}</h5>
+                    <h5 className="text-xs font-bold text-gray-900">{paper.title}</h5>
                     {paper.authors && (
                       <p className="text-[11px] text-gray-500 mt-0.5">{paper.authors.join(', ')}</p>
                     )}
