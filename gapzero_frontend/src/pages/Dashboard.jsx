@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FolderGit2,
   Layers,
@@ -10,25 +10,33 @@ import {
   Sparkles,
   ArrowRight,
   Plus,
+  Search,
+  BookOpen,
+  Compass,
+  FileText,
   Activity,
   CheckCircle2,
   TrendingUp,
-  ExternalLink
+  ExternalLink,
+  ShieldCheck,
+  Microscope,
+  Atom,
+  Binary
 } from 'lucide-react';
 import projectService from '../services/projectService';
 import dashboardService from '../services/dashboardService';
 import { useAuth } from '../hooks/useAuth';
-import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { EmptyState } from '../components/ui/EmptyState';
 
 export const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchDashboardData();
@@ -50,47 +58,98 @@ export const Dashboard = () => {
     }
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    navigate(`/sources?q=${encodeURIComponent(searchQuery.trim())}`);
+  };
+
   const recentProjects = stats?.recent_projects || projects.slice(0, 6);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 text-[#202124]">
-      {/* Top Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-gray-200/80">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-[#202124] tracking-tight">Research Intelligence Dashboard</h1>
-            <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#EBF7FF] text-[#0083B0] border border-[#BCE4FA]">
-              AGYAAN LAB
-            </span>
+    <div className="space-y-8 max-w-7xl mx-auto pb-16 text-[#202124]">
+      {/* ─── FORMAL PUBMED-INSPIRED HERO BANNER (INSPIRATION IMAGE 1) ─────────── */}
+      <section className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#0B2545] via-[#133C55] to-[#134074] text-white p-7 sm:p-10 shadow-lg border border-[#134074]/50">
+        {/* Subtle Molecular Constellation Network Background */}
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="molecular-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <circle cx="10" cy="10" r="2" fill="#FFFFFF" />
+                <circle cx="50" cy="50" r="2" fill="#FFFFFF" />
+                <line x1="10" y1="10" x2="50" y2="50" stroke="#FFFFFF" strokeWidth="0.5" strokeDasharray="3 3" />
+                <line x1="50" y1="10" x2="10" y2="50" stroke="#FFFFFF" strokeWidth="0.5" strokeDasharray="3 3" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#molecular-grid)" />
+          </svg>
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+          {/* Institutional Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-mono tracking-wider text-[#20BEFF]">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            AGYAAN LAB · NEGATIVE-SPACE SCIENTIFIC RESEARCH INTELLIGENCE
           </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Real-time telemetry across empirical claims, unanswered hypotheses, cross-source tensions, and verification milestones.
+
+          {/* Headline */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+            Discover What Lies in the Scientific Negative Space
+          </h1>
+
+          <p className="text-sm sm:text-base text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            Deconstruct peer-reviewed literature into verifiable atomic claims. Uncover unaddressed hypotheses, cross-study empirical contradictions, and publication freshness boundaries.
           </p>
-        </div>
 
-        <div className="flex items-center gap-2.5">
-          <Link
-            to="/new-research"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#202124] text-white px-4 py-2 text-sm font-medium hover:bg-black transition-all shadow-xs"
-          >
-            <Plus className="w-4 h-4" />
-            <span>New Research</span>
-          </Link>
-          <Link
-            to="/intelligence"
-            className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 text-[#202124] px-4 py-2 text-sm font-medium hover:bg-gray-50 transition-all shadow-2xs"
-          >
-            <Sparkles className="w-4 h-4 text-[#20BEFF]" />
-            <span>Intelligence Hub</span>
-          </Link>
-        </div>
-      </div>
+          {/* PubMed-Style Central Discovery Bar */}
+          <form onSubmit={handleSearchSubmit} className="pt-2 max-w-2xl mx-auto">
+            <div className="flex items-center bg-white rounded-full p-1.5 shadow-2xl border border-white/20 focus-within:ring-3 focus-within:ring-[#20BEFF]/50 transition-all">
+              <div className="pl-4 text-gray-400">
+                <Search className="w-5 h-5" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search literature, claims, contradictions, or topics..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-3 py-2 text-sm text-[#202124] placeholder-gray-400 focus:outline-none bg-transparent"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-[#0083B0] hover:bg-[#006080] text-white px-6 py-2.5 text-sm font-semibold transition-all flex items-center gap-1.5 flex-shrink-0 cursor-pointer shadow-xs"
+              >
+                <span>Search</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </form>
 
+          {/* Quick Category Badges (like PubMed's Learn, Find, Download, Explore) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-3 text-xs text-gray-300">
+            <Link to="/new-research" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
+              <Plus className="w-3.5 h-3.5 text-[#20BEFF]" /> New Project
+            </Link>
+            <Link to="/findings" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-300" /> Negative Gaps
+            </Link>
+            <Link to="/evidence" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
+              <Scale className="w-3.5 h-3.5 text-rose-300" /> Contradictions
+            </Link>
+            <Link to="/checklist" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" /> Verification Tasks
+            </Link>
+            <Link to="/reports" className="flex items-center gap-1 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-full">
+              <FileText className="w-3.5 h-3.5 text-blue-300" /> Final Reports
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── KEY TELEMETRY METRIC CARDS ────────────────────────────────────────── */}
       {loading ? (
         <LoadingSpinner size="lg" message="Loading research telemetry..." />
       ) : (
         <>
-          {/* Key Metric Cards (All 6 Required Metrics in Kaggle White Cards) */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
             {/* 1. Total Research Projects */}
             <div className="bg-white border border-gray-200/90 rounded-2xl p-4 shadow-xs hover:border-gray-300 hover:shadow-sm transition-all">
@@ -165,41 +224,137 @@ export const Dashboard = () => {
             </div>
           </div>
 
-          {/* Quick Action Banner (Kaggle Cream Card) */}
-          <div className="bg-[#F9F8F4] border border-gray-200/90 rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <h3 className="text-base font-bold text-[#202124] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#20BEFF]" />
-                Four-Module Negative-Space Intelligence Engine Ready
-              </h3>
-              <p className="text-xs text-gray-600 max-w-2xl leading-relaxed">
-                Scan your literature corpus to automatically detect empirical gaps, reconcile contradictory metrics, audit publication years, and generate prioritized verification tasks.
-              </p>
-            </div>
-            <div className="flex items-center gap-2.5 flex-shrink-0">
-              <Link
-                to="/intelligence"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#202124] text-white px-5 py-2 text-xs md:text-sm font-medium hover:bg-black transition-all shadow-xs"
-              >
-                <span>Launch Engine</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <Link
-                to="/evidence"
-                className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-white text-[#202124] px-4 py-2 text-xs md:text-sm font-medium hover:bg-gray-50 transition-all shadow-2xs"
-              >
-                <span>Evidence Explorer</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Recent Research Projects Grid */}
-          <div className="space-y-3 pt-2">
+          {/* ─── CREATIVE RESEARCH TILES (USING 3 UPLOADED IMAGES) ───────────── */}
+          <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold text-[#202124] uppercase tracking-wider">
-                Recent Research Projects ({recentProjects.length})
-              </h2>
-              <Link to="/projects" className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium">
+              <div>
+                <h2 className="text-lg font-bold text-[#202124] tracking-tight flex items-center gap-2">
+                  <Atom className="w-5 h-5 text-blue-600" />
+                  Frontier Intelligence & Epistemic Disciplines
+                </h2>
+                <p className="text-xs text-gray-500">
+                  Visualizing multi-dimensional research pipelines across biological, molecular, and digital domains.
+                </p>
+              </div>
+              <Link to="/intelligence" className="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                Engine Telemetry <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Card 1: DNA / Genetic & Claim Deconstruction (Uploaded Image 2) */}
+              <div className="group bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-xs hover:shadow-md hover:border-gray-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div className="h-44 overflow-hidden relative bg-gray-100">
+                    <img
+                      src="/assets/dna-analysis.jpg"
+                      alt="DNA & Atomic Claim Analysis"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                      Genomics & Empirical Claims
+                    </div>
+                  </div>
+                  <div className="p-5 space-y-2">
+                    <h3 className="text-base font-bold text-[#202124] group-hover:text-blue-600 transition-colors">
+                      Atomic Claim Extraction
+                    </h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      Deconstruct research papers into subject-attribute-value triplets. Every claim is verified against verbatim source sentences, rejecting fabricated citations.
+                    </p>
+                  </div>
+                </div>
+                <div className="p-5 pt-0">
+                  <Link
+                    to="/evidence"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                  >
+                    <span>Inspect Evidence Explorer</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 2: Molecular Crystal Lattice (Uploaded Image 3) */}
+              <div className="group bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-xs hover:shadow-md hover:border-gray-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div className="h-44 overflow-hidden relative bg-gray-100">
+                    <img
+                      src="/assets/molecular-lattice.jpg"
+                      alt="Molecular Lattice & Negative Space"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3 bg-[#0B2545]/85 backdrop-blur-md text-white text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                      Lattice & Negative Space
+                    </div>
+                  </div>
+                  <div className="p-5 space-y-2">
+                    <h3 className="text-base font-bold text-[#202124] group-hover:text-blue-600 transition-colors">
+                      Hypothesis Void Discovery
+                    </h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      Maps the negative space of scientific literature. Exposes what hypotheses remain untested, benchmark deficits, and unexplored reaction conditions.
+                    </p>
+                  </div>
+                </div>
+                <div className="p-5 pt-0">
+                  <Link
+                    to="/findings"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0083B0] hover:text-[#006080] transition-colors"
+                  >
+                    <span>View Information Gaps</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 3: Digital Interface & Scientific Computing (Uploaded Image 4) */}
+              <div className="group bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-xs hover:shadow-md hover:border-gray-300 transition-all flex flex-col justify-between">
+                <div>
+                  <div className="h-44 overflow-hidden relative bg-gray-100">
+                    <img
+                      src="/assets/digital-intel.jpg"
+                      alt="Digital Research Intelligence"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3 bg-blue-900/80 backdrop-blur-md text-white text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                      AI & Contradiction Matrix
+                    </div>
+                  </div>
+                  <div className="p-5 space-y-2">
+                    <h3 className="text-base font-bold text-[#202124] group-hover:text-blue-600 transition-colors">
+                      Neutral Contradiction Engine
+                    </h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      Cross-references disparate studies side-by-side. Highlights conflicting parameters and measurement anomalies without automated bias.
+                    </p>
+                  </div>
+                </div>
+                <div className="p-5 pt-0">
+                  <Link
+                    to="/checklist"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors"
+                  >
+                    <span>Verification Roadmap</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ─── RECENT RESEARCH PROJECTS GRID ───────────────────────────────────── */}
+          <div className="space-y-4 pt-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-[#202124] tracking-tight">
+                  Recent Research Projects ({recentProjects.length})
+                </h2>
+                <p className="text-xs text-gray-500">
+                  Ongoing investigations under empirical surveillance and gap modeling.
+                </p>
+              </div>
+              <Link to="/projects" className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-semibold">
                 View All Projects <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -215,20 +370,23 @@ export const Dashboard = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {recentProjects.map((p) => (
-                  <div key={p.id} className="bg-white border border-gray-200/90 rounded-2xl p-5 flex flex-col justify-between hover:border-gray-300 hover:shadow-xs transition-all space-y-3">
-                    <div className="space-y-2">
+                  <div
+                    key={p.id}
+                    className="bg-white border border-gray-200/90 rounded-2xl p-5 flex flex-col justify-between hover:border-gray-300 hover:shadow-xs transition-all space-y-3"
+                  >
+                    <div className="space-y-2.5">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                           {p.domain?.replace('_', ' ') || 'General'}
                         </span>
                         {p.gap_score !== null && p.gap_score !== undefined && (
-                          <span className="font-mono text-xs font-bold text-[#F9AB00]">
+                          <span className="font-mono text-xs font-bold text-[#F9AB00] bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
                             {p.gap_score}% Deficit
                           </span>
                         )}
                       </div>
 
-                      <h3 className="text-sm font-bold text-[#202124] line-clamp-1 leading-snug">
+                      <h3 className="text-sm font-bold text-[#202124] line-clamp-2 leading-snug">
                         {p.title}
                       </h3>
 
